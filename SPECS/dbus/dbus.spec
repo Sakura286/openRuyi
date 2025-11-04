@@ -51,7 +51,7 @@ BuildOption(conf): -Dlaunchd=disabled
 BuildOption(conf): -Dmodular_tests=disabled
 
 BuildRequires:  meson
-BuildRequires:  audit-devel libcap-ng-devel expat-devel >= 2.1.0 pkgconfig sysuser-tools xmlto
+BuildRequires:  audit-devel libcap-ng-devel expat-devel >= 2.1.0 pkgconfig xmlto
 %if %{with systemd}
 BuildRequires:  pkgconfig(libsystemd) >= 209
 %endif
@@ -76,7 +76,7 @@ Requires:       %{name} = %{version}
 Provides:       user(messagebus)
 Provides:       group(messagebus)
 %if %{with systemd}
-%sysusers_requires
+%{?systemd_requires}
 %endif
 %description common
 This package provides the core configuration and setup files for D-Bus.
@@ -97,8 +97,7 @@ This package contains the header files and libraries needed for D-Bus developmen
 
 %if %{with systemd}
 %build -p
-cp %{SOURCE1} bus/sysusers.d/dbus.conf
-%sysusers_generate_pre %{SOURCE1} messagebus dbus.conf
+install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/dbus.conf
 %endif
 
 %install -a
@@ -121,7 +120,8 @@ fi
 /sbin/ldconfig
 
 %if %{with systemd}
-%pre common -f messagebus.pre
+%pre common
+%sysusers_create_package dbus %{SOURCE1}
 %endif
 %post common
 if [ ! -L %{_localstatedir}/lib/dbus/machine-id ]; then
