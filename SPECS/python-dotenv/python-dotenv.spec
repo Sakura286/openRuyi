@@ -30,7 +30,7 @@ key-value pairs from a @code{.env} file and set them as environment variables.
 sed -i -e '/ipython/d' requirements.txt tox.ini
 
 %generate_buildrequires
-%pyproject_buildrequires -t
+%pyproject_buildrequires
 
 
 %check
