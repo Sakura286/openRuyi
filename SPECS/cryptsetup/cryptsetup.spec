@@ -58,6 +58,7 @@ disk encryption using dm-crypt kernel module.
 
 %package        devel
 Requires:       %{name}-libs = %{version}-%{release}
+Requires:       pkgconfig(libudev)
 Requires:       pkgconfig
 Summary:        Headers and libraries for using encrypted file systems
 
