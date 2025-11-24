@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
+# SPDX-FileContributor: Jingkun Zheng <zhengjingkun@iscas.ac.cn>
 # SPDX-FileContributor: Julian Zhu <julian.oerv@isrc.iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 #
@@ -29,6 +30,9 @@ BuildRequires:  automake
 BuildRequires:  libtool
 # for tests.
 BuildRequires:  openssl-devel
+%ifarch x86_64
+BuildRequires:  nasm
+%endif
 
 %description
 ISA-L_crypto is a collection of optimized low-level functions
