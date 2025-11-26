@@ -26,13 +26,10 @@ BuildRequires:  libtool
 BuildRequires:  ncurses-devel
 
 %description
-Texinfo is a documentation system that can produce both online
-information and printed output from a single source file. The GNU
-Project uses the Texinfo file format for most of its documentation.
-
-Install texinfo if you want a documentation system for producing both
-online and print documentation from the same source file and/or if you
-are going to write documentation for the GNU Project.
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features:
+multiple windows, multi-level undo, block highlighting and more.
 
 %package     -n xxd
 Summary:        A hex dump utility
