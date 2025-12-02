@@ -1,0 +1,5 @@
+[Base]
+name=openRuyi Base
+baseurl=https://vine.oerv.ac.cn/OpenRuyi:/Factory:/Bootstrap/x86_64/
+enabled=1
+gpgcheck=0
