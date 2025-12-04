@@ -8,6 +8,7 @@
 %__cmake /usr/bin/cmake
 %__ctest /usr/bin/ctest
 %__cmake_builddir %{!?__cmake_in_source_build:%{_vpath_builddir}}%{?__cmake_in_source_build:.}
+%__cmake_build_type RelWithDebInfo
 
 # - Set default compile flags
 # - CMAKE_*_FLAGS_RELEASE are added *after* the *FLAGS environment variables
@@ -21,6 +22,7 @@
   %__cmake \\\
         %{!?__cmake_in_source_build:-S "%{_vpath_srcdir}"} \\\
         %{!?__cmake_in_source_build:-B "%{__cmake_builddir}"} \\\
+        %{?__cmake_build_type:-DCMAKE_BUILD_TYPE="%{__cmake_build_type}"} \\\
         -DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \\\
         -DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \\\
         -DCMAKE_Fortran_FLAGS_RELEASE:STRING="-DNDEBUG" \\\
