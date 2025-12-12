@@ -13,6 +13,8 @@ License:        Apache-2.0
 URL:            https://grpc.io/
 #!RemoteAsset
 Source:         https://github.com/grpc/grpc/archive/refs/tags/v%{version}.tar.gz
+# From openSUSE:Factory:RISCV/grpc to fix unresolved deps: pkgconfig(opentelemetry_api)
+Patch0:         telemetry.patch
 BuildSystem:    cmake
 
 BuildOption(conf): -DgRPC_INSTALL:BOOL=ON
