@@ -43,6 +43,9 @@ sed -i 's/-rpath $(libdir)/-rpath $(libdir) -version-number %{ltversion}/' \
 %conf -p
 autoreconf -fi
 
+%check
+# No tests here.
+
 %files
 %doc TODO README ChangeLog*
 %license COPYRIGHT
