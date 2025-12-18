@@ -18,12 +18,9 @@ VCS:            git:https://gitlab.freedesktop.org/mesa/mesa
 Source:         https://archive.mesa3d.org/mesa-%{version}.tar.xz
 BuildSystem:    meson
 
-# FIXME:  enable more drivers
-# All vulkan drivers and zink are blocked by lack of Vulkan packages
-# iris, anv, nvk, powervr is blocked by lack of libclc
 # nvk is blocked by Rust packaging
-BuildOption(conf):  -Dgallium-drivers=llvmpipe,softpipe,r300,r600,radeonsi,nouveau,virgl
-BuildOption(conf):  -Dvulkan-drivers=
+BuildOption(conf):  -Dgallium-drivers=llvmpipe,softpipe,r300,r600,radeonsi,nouveau,virgl,iris,etnaviv,zink
+BuildOption(conf):  -Dvulkan-drivers=amd,intel,swrast,imagination,virtio,gfxstream
 BuildOption(conf):  -Dplatforms=x11,wayland
 
 BuildOption(conf):  -Degl=enabled
@@ -49,28 +46,39 @@ BuildOption(conf):  -Dlmsensors=enabled
 BuildOption(conf):  -Dzlib=enabled
 BuildOption(conf):  -Dzstd=enabled
 BuildOption(conf):  -Dallow-kcmp=enabled
+BuildOption(conf):  -Dspirv-tools=enabled
+BuildOption(conf):  -Ddisplay-info=enabled
 
 # FIXME:  enable it when Rust dependency packaging is ready
 BuildOption(conf):  -Dgallium-rusticl=false
-# FIXME:  enable it when libva is packaged
-BuildOption(conf):  -Dgallium-va=disabled
+BuildOption(conf):  -Dgallium-va=enabled
 
+# FIXME:  26.0 new option that should be set to false for Distro builds
 # BuildOption(conf):  -Dvulkan-manifest-per-architecture=false
-# BuildOption(conf):  -Dvulkan-layers=device-select,overlay,screenshot,anti-lag,vram-report-limit
-# BuildOption(conf):  -Dxlib-lease=enabled
+BuildOption(conf):  -Dvulkan-layers=device-select,overlay,screenshot,anti-lag,vram-report-limit
+BuildOption(conf):  -Dxlib-lease=enabled
 
 BuildRequires:  meson
 BuildRequires:  python3-devel
 BuildRequires:  python3-mako
 BuildRequires:  python3-PyYAML
+BuildRequires:  python3-pycparser
 BuildRequires:  flex
 BuildRequires:  bison
+BuildRequires:  glslang
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(libdrm)
+BuildRequires:  pkgconfig(libdrm_amdgpu)
+BuildRequires:  pkgconfig(libdrm_intel)
 BuildRequires:  pkgconfig(expat)
+BuildRequires:  pkgconfig(libclc)
 BuildRequires:  pkgconfig(libelf)
+BuildRequires:  pkgconfig(libpng)
+BuildRequires:  pkgconfig(libdisplay-info)
 BuildRequires:  pkgconfig(libunwind)
 BuildRequires:  pkgconfig(libglvnd)
+BuildRequires:  pkgconfig(LLVMSPIRVLib)
+BuildRequires:  pkgconfig(SPIRV-Tools)
 BuildRequires:  pkgconfig(x11) >= 1.6
 BuildRequires:  pkgconfig(xcb) >= 1.13
 BuildRequires:  pkgconfig(xrandr) >= 1.3
@@ -82,9 +90,12 @@ BuildRequires:  pkgconfig(xxf86vm)
 BuildRequires:  pkgconfig(wayland-protocols)
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-egl-backend)
+BuildRequires:  pkgconfig(libva)
+BuildRequires:  pkgconfig(vulkan)
 BuildRequires:  lm_sensors-devel
 BuildRequires:  zstd-devel
 BuildRequires:  llvm-devel
+BuildRequires:  clang-devel
 
 %description
 Mesa is a 3D graphics library containing implementation of OpenGL (along with
@@ -163,6 +174,30 @@ BuildArch:      noarch
 This package contains development-related files for the DRI loader interface,
 including a header file describing the interface and a pkgconfig file.
 
+%package        va
+Summary:        The gallium-based libva hardware video codec driver
+Requires:       %{name}-gallium = %{version}-%{release}
+
+%description    va
+This package contains libva drivers based on Gallium.
+
+%package        vulkan-drivers
+Summary:        Vulkan drivers provided by Mesa
+# See the comment at gallium subpackage above about why open-coding version
+Requires:       %{name}-drirc
+
+%description    vulkan-drivers
+This package contains Vulkan drivers provided as part of Mesa project, which
+are to be loaded by the Khronos Vulkan loader.
+
+%package        vulkan-layers
+Summary:        Vulkan layers provided by Mesa
+
+%description    vulkan-layers
+This package contains Vulkan layers provided as part of Mesa project, which
+are to be loaded by the Khronos Vulkan loader, and can be used even for
+non-Mesa drivers.
+
 %files -n libgbm
 %{_libdir}/libgbm.so.1*
 
@@ -173,7 +208,7 @@ including a header file describing the interface and a pkgconfig file.
 %{_libdir}/pkgconfig/gbm.pc
 
 %files drirc
-%{_datadir}/drirc.d/00-mesa-defaults.conf
+%{_datadir}/drirc.d/*.conf
 
 %files gallium
 %{_libdir}/libgallium-%{version}.so
@@ -194,6 +229,18 @@ including a header file describing the interface and a pkgconfig file.
 %files dril-devel
 %{_includedir}/GL/internal/dri_interface.h
 %{_libdir}/pkgconfig/dri.pc
+
+%files va
+%{_libdir}/dri/*_drv_video.so
+
+%files vulkan-drivers
+%{_libdir}/libvulkan_*.so
+%{_datadir}/vulkan/icd.d/*.json
+
+%files vulkan-layers
+%{_libdir}/libVkLayer_*.so
+%{_datadir}/vulkan/*_layer.d/*.json
+%{_bindir}/mesa-*-control.py
 
 %changelog
 %{?autochangelog}
