@@ -5,6 +5,8 @@
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
+%global _test_target test
+
 # We can't build these right now
 # Change these to 1 once we can
 %bcond docs 0
@@ -33,6 +35,8 @@ Patch0:         0001-git-2.51-sanitize-sideband-channel-messages.patch
 
 BuildOption(build):  all
 
+BuildRequires:  acl
+BuildRequires:  bash
 BuildRequires:  make
 BuildRequires:  perl-devel
 BuildRequires:  perl-macros
@@ -42,6 +46,7 @@ BuildRequires:  systemd-rpm-macros
 BuildRequires:  perl(Error)
 BuildRequires:  perl(lib)
 BuildRequires:  perl(Test)
+BuildRequires:  perl(Mail::Address)
 BuildRequires:  pkgconfig(openssl)
 BuildRequires:  pkgconfig(python)
 BuildRequires:  pkgconfig(libcurl)
