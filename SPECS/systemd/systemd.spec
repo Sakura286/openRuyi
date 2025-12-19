@@ -182,7 +182,7 @@ BuildRequires:  python3dist(jinja2)
 BuildRequires:  python3dist(lxml)
 %if %{with docs}
 BuildRequires:  pkgconfig(libxslt)
-BuildRequires:  docbook-style-xsl
+BuildRequires:  docbook-xsl
 %endif
 BuildRequires:  pkgconfig
 BuildRequires:  gperf
