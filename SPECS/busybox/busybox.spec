@@ -11,15 +11,16 @@ Release:        %autorelease
 Summary:        Minimalist variant of UNIX utilities linked in a single executable
 License:        GPL-2.0-or-later
 URL:            https://www.busybox.net/
-# https://busybox.net/ is down currently. A mirror site is used temporarily.
 #!RemoteAsset
-Source0:        https://ftp.icm.edu.pl/packages/busybox/%{name}-%{version}.tar.bz2
+Source0:        https://busybox.net/downloads/%{name}-%{version}.tar.bz2
 #!RemoteAsset
-Source1:        https://ftp.icm.edu.pl/packages/busybox/%{name}-%{version}.tar.bz2.sig
-# All patches are from Fedora.
-Patch1:         busybox-1.36.1-no-cbq.patch
-Patch2:         busybox-1.37.0-fix-conditional-for-sha1_process_block64_shaNI.patch
+Source1:        https://busybox.net/downloads/%{name}-%{version}.tar.bz2.sig
 BuildSystem:    autotools
+
+# Disables CBQ-related help/output in BusyBox tc
+Patch0:         busybox-1.36.1-no-cbq.patch
+# Restricts the SHA-NI SHA1 fast-path check to GCC x86/x86_64
+Patch1:         busybox-1.37.0-fix-conditional-for-sha1_process_block64_shaNI.patch
 
 BuildOption(check):  SKIP_KNOWN_BUGS=1
 BuildOption(check):  SKIP_INTERNET_TESTS=1
