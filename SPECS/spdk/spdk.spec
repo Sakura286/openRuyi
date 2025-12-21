@@ -27,8 +27,13 @@ BuildRequires:  libaio-devel
 BuildRequires:  openssl-devel
 BuildRequires:  fuse3
 BuildRequires:  fuse3-devel
-BuildRequires:  python3-pip
+BuildRequires:  python-devel
+BuildRequires:  python-pip
+BuildRequires:  python-setuptools
+BuildRequires:  python-wheel
+BuildRequires:  python-hatchling
 BuildRequires:  util-linux-devel
+BuildRequires:  patchelf
 
 Requires:       dpdk
 Requires:       numactl
@@ -45,7 +50,6 @@ Requires:       fuse3
 The Storage Performance Development Kit provides a set of tools
 and libraries for writing high performance, scalable, user-mode storage
 applications.
-
 
 %package        devel
 Summary:        Storage Performance Development Kit development files
@@ -72,10 +76,6 @@ BuildArch:      noarch
 %description    tools
 %{summary}
 
-
-%prep -a
-sed -i '/DIRS-y += python/d' Makefile
-
 # not utilize a standard configure script.
 %conf
 export LD=ld.bfd
@@ -83,17 +83,19 @@ export CC="gcc -fuse-ld=bfd"
 export CXX="g++ -fuse-ld=bfd"
 
 ./configure --prefix=%{_usr} \
+	--libdir=%{_libdir} \
 	--with-dpdk \
 	--disable-examples \
 	--disable-tests \
 	--disable-unit-tests \
-	--with-shared \
-	--disable-apps
+	--with-shared
+
+%install -p
+find . -name "*.mk" -o -name "Makefile" | xargs sed -i 's/pip install/pip install --no-build-isolation/g'
 
 %install -a
 
 # Create self-contained spdk-setup script (similar to PKGBUILD approach)
-mkdir -p %{buildroot}%{_bindir}
 echo '#!/usr/bin/env bash' > %{buildroot}%{_bindir}/spdk-setup
 cat scripts/common.sh scripts/setup.sh >> %{buildroot}%{_bindir}/spdk-setup
 sed -ri '/^rootdir/d;/^source/d;s,\$rootdir,%{_usr},' %{buildroot}%{_bindir}/spdk-setup
@@ -110,35 +112,34 @@ mkdir -p %{buildroot}%{_datadir}/%{name}
 find scripts -type f -regextype egrep -regex '.*(spdkcli|rpc).*[.]py' \
 	-exec cp --parents -t %{buildroot}%{_datadir}/%{name} {} ";"
 
-# symlinks to tools
-mkdir -p %{buildroot}%{_sbindir}
-ln -sf -r %{_datadir}/%{name}/scripts/rpc.py %{buildroot}%{_sbindir}/%{name}-rpc
-ln -sf -r %{_datadir}/%{name}/scripts/spdkcli.py %{buildroot}%{_sbindir}/%{name}-cli
-
 # no tests
 %check
 
 %files
 %license %{_datadir}/licenses/%{name}/LICENSE
 %{_bindir}/spdk-setup
+%{python_sitelib}/spdk*/*
+%{_bindir}/nvmf_tgt
+%{_bindir}/iscsi_tgt
+%{_bindir}/vhost
+%{_bindir}/spdk_*
 %{_libdir}/*.so.*
 %{_datadir}/bash-completion/completions/spdk
-
 
 %files devel
 %{_libdir}/pkgconfig/*.pc
 %{_includedir}/%{name}
 %{_libdir}/*.so
 
-
 %files static
 %{_libdir}/*.a
 
-
 %files tools
 %{_datadir}/%{name}/scripts
-%{_sbindir}/%{name}-rpc
-%{_sbindir}/%{name}-cli
+%{_bindir}/spdk-cli
+%{_bindir}/spdk-mcp
+%{_bindir}/spdk-rpc
+%{_bindir}/spdk-sma
 
 %changelog
 %{?autochangelog}
