@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
-# SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: yyjeqhc <jialin.oerv@isrc.iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -13,14 +13,15 @@ License:        MPL-2.0
 URL:            https://firefox-source-docs.mozilla.org/nspr/index.html
 #!RemoteAsset
 Source0:        https://ftp.mozilla.org/pub/nspr/releases/v4.37/src/%{name}-4.37.tar.gz#/%{name}-%{version}.tar.gz
-Patch:                    0001-nspr-gcc-atomics.patch
 BuildSystem:    autotools
 
-BuildOption(conf): --enable-64bit --enable-optimize --disable-debug
-BuildOption(conf): --includedir=%{_includedir}/nspr
+# Use GCC atomic built-ins for x86/x86_64
+Patch:          0001-nspr-gcc-atomics.patch
 
-BuildOption(build): -C nspr
-BuildOption(install): -C nspr
+BuildOption(conf):  --enable-64bit --enable-optimize --disable-debug
+BuildOption(conf):  --includedir=%{_includedir}/nspr
+BuildOption(build):  -C nspr
+BuildOption(install):  -C nspr
 
 BuildRequires:  gcc
 
@@ -28,11 +29,11 @@ BuildRequires:  gcc
 NetScape Portable Runtime (NSPR) provides platform independence for non-GUI
 operating system facilities, including threads, I/O, and memory management.
 
-%package devel
+%package        devel
 Summary:        Development libraries and tools for NSPR
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description devel
+%description    devel
 This package contains the header files, pkg-config file, and development
 tools needed to build applications that use the NSPR libraries.
 
