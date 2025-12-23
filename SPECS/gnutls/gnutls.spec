@@ -12,10 +12,9 @@ Release:        %autorelease
 Summary:        A TLS protocol implementation
 License:        GPL-3.0-or-later AND LGPL-2.1-or-later
 URL:            https://www.gnutls.org/
+VCS:            git:https://gitlab.com/gnutls/gnutls
 #!RemoteAsset
 Source0:        https://www.gnupg.org/ftp/gcrypt/%{name}/v3.8/%{name}-%{version}.tar.xz
-
-
 BuildSystem:    autotools
 
 BuildOption(conf): --disable-static
@@ -23,24 +22,25 @@ BuildOption(conf): --disable-openssl-compatibility
 BuildOption(conf): --with-default-trust-store-pkcs11="pkcs11:"
 BuildOption(conf): --disable-gtk-doc
 
-BuildRequires:  gcc-c++
-BuildRequires:  libidn2-devel
-BuildRequires:  libtasn1-devel
-BuildRequires:  libtool
-BuildRequires:  libunistring-devel
-BuildRequires:  make
-BuildRequires:  nettle-devel
-BuildRequires:  p11-kit-devel
-BuildRequires:  pkgconfig
-BuildRequires:  texinfo
-BuildRequires:  zlib-devel
-BuildRequires:  libzstd-devel
 BuildRequires:  bison
 BuildRequires:  cmocka-cmake
-BuildRequires:  brotli-devel
+BuildRequires:  gcc-c++
+BuildRequires:  make
+BuildRequires:  libtool
+BuildRequires:  libunistring-devel
+BuildRequires:  pkgconfig
+BuildRequires:  pkgconfig(libbrotlidec)
+BuildRequires:  pkgconfig(libidn2)
+BuildRequires:  pkgconfig(libtasn1)
+BuildRequires:  pkgconfig(libunbound)
+BuildRequires:  pkgconfig(libzstd)
+BuildRequires:  pkgconfig(nettle)
+BuildRequires:  pkgconfig(p11-kit-1)
+BuildRequires:  pkgconfig(zlib)
 # trousers-devel for TPM 1.2 is optional, can be added if available
 # BuildRequires:  trousers-devel
-BuildRequires:  unbound-devel
+BuildRequires:  texinfo
+# Tests
 BuildRequires:  ca-certificates-mozilla
 
 %description
@@ -51,9 +51,9 @@ applications, as well as the command-line tools for administration.
 %package        devel
 Summary:        Development files for GnuTLS
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       libtasn1-devel
-Requires:       nettle-devel
-Requires:       p11-kit-devel
+Requires:       pkgconfig(libtasn1)
+Requires:       pkgconfig(nettle)
+Requires:       pkgconfig(p11-kit-1)
 
 %description    devel
 This package contains the header files, programming documentation, and
