@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
+# SPDX-FileContributor: yyjeqhc <jialin.oerv@isrc.iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -17,8 +18,9 @@ Source0:        https://files.pythonhosted.org/packages/source/s/%{srcname}/%{sr
 BuildArch:      noarch
 BuildSystem:    pyproject
 
-BuildOption(install): -l %{srcname}
-
+BuildOption(install):  -l %{srcname}
+# skip the tests as we have no django yet.
+BuildOption(check):  -e semantic_version.django_fields
 BuildRequires:  pyproject-rpm-macros
 BuildRequires:  python3-devel
 BuildRequires:  python3-pip
