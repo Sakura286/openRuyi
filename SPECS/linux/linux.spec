@@ -21,13 +21,13 @@
 %global kver %{version}-%{release}
 %global kernel_make_flags LD=ld.bfd KBUILD_BUILD_VERSION=%{release}
 Name:             linux
-Version:          6.18.1
+Version:          6.18.2
 Release:          %autorelease
 Summary:          The Linux Kernel
 License:          GPL-2.0-only
 URL:              https://www.kernel.org/
 
-#!RemoteAsset:    sha256:d0a78bf3f0d12aaa10af3b5adcaed5bc767b5b78705e5ef885d5e930b72e25d5
+#!RemoteAsset:    sha256:558c6bbab749492b34f99827fe807b0039a744693c21d3a7e03b3a48edaab96a
 Source0:          https://cdn.kernel.org/pub/linux/kernel/v6.x/%{name}-%{version}.tar.xz
 Source1:          config.%{_arch}
 
@@ -103,6 +103,7 @@ for booting.
 cp %{SOURCE1} .config
 echo "-%{release}" > localversion
 
+%conf
 %make_build %{kernel_make_flags} olddefconfig
 
 %build
