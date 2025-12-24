@@ -18,6 +18,9 @@ VCS:            git:https://gitlab.freedesktop.org/mesa/mesa
 Source:         https://archive.mesa3d.org/mesa-%{version}.tar.xz
 BuildSystem:    meson
 
+# Fixes etnaviv disasm unit test failure of excepting "-nan"
+Patch1:         0001-isaspec-deocde-try-to-preserve-NaN-sign-when-printin.patch
+
 # nvk is blocked by Rust packaging
 BuildOption(conf):  -Dgallium-drivers=llvmpipe,softpipe,r300,r600,radeonsi,nouveau,virgl,iris,etnaviv,zink
 BuildOption(conf):  -Dvulkan-drivers=amd,intel,swrast,imagination,virtio,gfxstream
