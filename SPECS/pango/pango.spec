@@ -44,7 +44,7 @@ quality text handling and graphics rendering.
 
 %package        devel
 Summary:        Development files for pango
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The pango-devel package includes the header files for the pango package.
