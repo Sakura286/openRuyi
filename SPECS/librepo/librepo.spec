@@ -39,6 +39,8 @@ BuildRequires: pkgconfig(libselinux)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: doxygen
+# Tests
+BuildRequires:  gnupg
 
 %if %{with zchunk}
 BuildRequires: pkgconfig(zck)
