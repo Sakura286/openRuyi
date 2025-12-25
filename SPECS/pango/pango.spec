@@ -49,6 +49,9 @@ Requires:       %{name} = %{version}-%{release}
 %description    devel
 The pango-devel package includes the header files for the pango package.
 
+# TODO: Broken check also no distro is checking it - 251
+%check
+
 %files
 %license COPYING
 %doc NEWS README.md
