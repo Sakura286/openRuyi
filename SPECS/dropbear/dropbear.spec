@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: MulanPSL-2.0
 
 Name:           dropbear
-Version:        2025.88
+Version:        2025.89
 Release:        %autorelease
 Summary:        A lightweight SSH server and client
 License:        MIT
