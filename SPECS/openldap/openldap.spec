@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
-# SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: yyjeqhc <jialin.oerv@isrc.iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -34,6 +34,7 @@ Source12:       ldap-user.conf
 Source13:       fixup-modulepath.sh
 Source14:       slapd-ldif-update-crc.sh
 Source15:       update-crc.sh
+BuildSystem:    autotools
 
 Patch0:         0001-reproducible.patch
 Patch1:         0002-LDAPI-socket-location.patch
@@ -41,41 +42,46 @@ Patch2:         0003-pie-compile.patch
 Patch3:         0004-In-monitor-backend-do-not-return-Connection0-entries.patch
 Patch4:         0005-Clear-shared-key-only-in-close-function.patch
 Patch5:         0006-gcc14-v2.patch
-BuildSystem:    autotools
 
-BuildOption(conf): --sysconfdir=%{_sysconfdir}/openldap
-BuildOption(conf): --libexecdir=%{_libexecdir}
-BuildOption(conf): --localstatedir=%{slapdrundir}
-BuildOption(conf): --enable-wrappers=no
-BuildOption(conf): --enable-spasswd
-BuildOption(conf): --enable-modules
-BuildOption(conf): --enable-shared
-BuildOption(conf): --enable-dynamic
-BuildOption(conf): --with-tls=openssl
-BuildOption(conf): --with-cyrus-sasl
-BuildOption(conf): --enable-crypt
-BuildOption(conf): --enable-ipv6=yes
-BuildOption(conf): --enable-dynacl
-BuildOption(conf): --enable-aci
-BuildOption(conf): --enable-ldap=mod
-BuildOption(conf): --enable-meta=mod
-BuildOption(conf): --enable-perl=mod
-BuildOption(conf): --enable-sock=mod
-BuildOption(conf): --enable-sql=mod
-BuildOption(conf): --enable-mdb=mod
-BuildOption(conf): --enable-relay=mod
-BuildOption(conf): --enable-overlays=mod
-BuildOption(conf): --enable-syncprov=mod
-BuildOption(conf): --enable-ppolicy=mod
-BuildOption(conf): --with-yielding-select
-BuildOption(conf): --with-argon2=libargon2
+BuildOption(conf):  --sysconfdir=%{_sysconfdir}/openldap
+BuildOption(conf):  --libexecdir=%{_libexecdir}
+BuildOption(conf):  --localstatedir=%{slapdrundir}
+BuildOption(conf):  --enable-wrappers=no
+BuildOption(conf):  --enable-spasswd
+BuildOption(conf):  --enable-modules
+BuildOption(conf):  --enable-shared
+BuildOption(conf):  --enable-dynamic
+BuildOption(conf):  --with-tls=openssl
+BuildOption(conf):  --with-cyrus-sasl
+BuildOption(conf):  --enable-crypt
+BuildOption(conf):  --enable-ipv6=yes
+BuildOption(conf):  --enable-dynacl
+BuildOption(conf):  --enable-aci
+BuildOption(conf):  --enable-ldap=mod
+BuildOption(conf):  --enable-meta=mod
+BuildOption(conf):  --enable-perl=mod
+BuildOption(conf):  --enable-sock=mod
+BuildOption(conf):  --enable-sql=mod
+BuildOption(conf):  --enable-mdb=mod
+BuildOption(conf):  --enable-relay=mod
+BuildOption(conf):  --enable-overlays=mod
+BuildOption(conf):  --enable-syncprov=mod
+BuildOption(conf):  --enable-ppolicy=mod
+BuildOption(conf):  --with-yielding-select
+BuildOption(conf):  --with-argon2=libargon2
 
-BuildOption(install): STRIP="" "sysconfdir=%{_sysconfdir}/openldap" "libexecdir=%{_libexecdir}"
+BuildOption(install):  STRIP="" "sysconfdir=%{_sysconfdir}/openldap" "libexecdir=%{_libexecdir}"
 
-BuildRequires:  libargon2-devel cyrus-sasl-devel db-devel mandoc libtool unixODBC-devel
-BuildRequires:  pkgconfig(krb5) pkgconfig(systemd) pkgconfig(openssl)
+BuildRequires:  libargon2-devel
+BuildRequires:  cyrus-sasl-devel
+BuildRequires:  db-devel
+BuildRequires:  mandoc
+BuildRequires:  libtool
+BuildRequires:  unixODBC-devel
+BuildRequires:  pkgconfig(krb5)
+BuildRequires:  pkgconfig(systemd)
+BuildRequires:  pkgconfig(openssl)
 Requires:       /usr/bin/awk
-Requires:       libldap2 = %{version}
 Recommends:     cyrus-sasl
 
 %description
@@ -122,7 +128,7 @@ The primary purpose of this OpenLDAP backend is to present information
 stored in a Relational (SQL) Database as an LDAP subtree without the need
 to do any programming.
 
-%package -n     libldap-data
+%package     -n libldap-data
 Summary:        Configuration file for system-wide defaults for all uses of libldap
 BuildArch:      noarch
 
@@ -155,15 +161,14 @@ vc            implements the verify credentials extended operation
 
 %package        client
 Summary:        OpenLDAP client utilities
-Requires:       libldap2 = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    client
 OpenLDAP client utilities such as ldapadd, ldapsearch, ldapmodify.
 
 %package        devel
 Summary:        Libraries, Header Files and Documentation for OpenLDAP
-Conflicts:      openldap-devel
-Requires:       libldap2 = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Recommends:     cyrus-sasl-devel
 
 %description    devel
@@ -173,37 +178,12 @@ documentation.
 %package        static
 Summary:        Static libraries for the OpenLDAP libraries
 Requires:       cyrus-sasl-devel
-Requires:       openssl-devel
+Requires:       pkgconfig(openssl)
 Requires:       %{name}-devel = %version
 
 %description    static
 This package provides the static versions of the OpenLDAP libraries
 for development.
-
-%package -n     libldap2
-Summary:        OpenLDAP Client Libraries
-Recommends:     libldap-data >= %{version}
-
-%description -n libldap2
-This package contains the OpenLDAP client libraries.
-
-%package -n     libldapcpp-devel
-Summary:        C++ wrapper around openLDAP API
-Requires:       libldapcpp0 = %{version}
-Requires:       %{name}-devel
-
-%description -n libldapcpp-devel
-This package contains files needed for development with the LDAP C++
-library.
-
-%package -n     libldapcpp0
-Summary:        C++ wrapper around openLDAP API
-Provides:       ldapcpplib = %{version}
-Obsoletes:      ldapcpplib <= 0.0.5
-
-%description -n libldapcpp0
-This package provides a C++ library for accessing LDAP (Version 3)
-Servers
 
 %build -p
 cp %{SOURCE4} .
@@ -434,10 +414,6 @@ ln -fs libldap.so "%{buildroot}%{_libdir}/libldap_r.so"
 %files static
 %_libdir/liblber.a
 %_libdir/libldap*.a
-
-%files -n libldap2
-%{_libdir}/liblber.so.*
-%{_libdir}/libldap.so.*
 
 %changelog
 %{?autochangelog}
