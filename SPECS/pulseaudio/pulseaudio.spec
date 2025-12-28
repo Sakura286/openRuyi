@@ -17,6 +17,11 @@ Source0:        http://freedesktop.org/software/pulseaudio/releases/pulseaudio-%
 Source1:        pulseaudio.sysusers
 BuildSystem:    meson
 
+# ../src/tests/once-test.c:72:F:once:once_test:0:
+# Assertion 'pthread_setaffinity_np(pthread_self(), sizeof(mask), &mask) == 0' failed
+# fail in qemu-system.
+Patch0:         0001-skip-a-fail-test.patch
+
 BuildOption(conf):  -Dclient=true
 BuildOption(conf):  -Dvalgrind=disabled
 BuildOption(conf):  -Dsystemd=enabled
