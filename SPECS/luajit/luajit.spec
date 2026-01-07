@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
-# SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
+# SPDX-FileCopyrightText: (C) 2025, 2026 Institute of Software, Chinese Academy of Sciences (ISCAS)
+# SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
 # SPDX-FileContributor: Mahno <bestwow2014@gmail.com>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: gns <wangbingzhen.riscv@iscas.ac.cn>
@@ -12,7 +12,7 @@ Name:           luajit
 # This also avoids having to package both vanilla LuaJIT and OR LuaJIT.
 %global major 2.1
 # The commit that could be patched
-%global minor 20251030
+%global minor 20251229
 Version:        %{major}+openresty%{minor}
 Release:        %autorelease
 Summary:        Just-In-Time Compiler for Lua

@@ -1,14 +1,14 @@
-From c0e3d9397065ea3f4ab7eb11aa397ebd6b249f00 Mon Sep 17 00:00:00 2001
+From b6c4a8546d08cec0f8fa09da727bd95d45e5e380 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 01/22] riscv(support): add RISC-V 64 arch base definition
+Subject: [PATCH 01/23] riscv(support): add RISC-V 64 arch base definition
 
 ---
  src/lj_arch.h | 22 ++++++++++++++++++++++
  1 file changed, 22 insertions(+)
 
 diff --git a/src/lj_arch.h b/src/lj_arch.h
-index cb312273c..5d635a002 100644
+index f61053931..127d0fe8d 100644
 --- a/src/lj_arch.h
 +++ b/src/lj_arch.h
 @@ -33,6 +33,8 @@
@@ -29,7 +29,7 @@ index cb312273c..5d635a002 100644
  #else
  #error "Architecture not supported (in this version), see: https://luajit.org/status.html#architectures"
  #endif
-@@ -501,6 +505,20 @@
+@@ -506,6 +510,20 @@
  #define LJ_ARCH_NUMMODE		LJ_NUMMODE_DUAL
  #define LJ_TARGET_GC64		1
  #define LJ_ARCH_NOJIT		1	/* NYI */
@@ -50,7 +50,7 @@ index cb312273c..5d635a002 100644
  
  #else
  #error "No target architecture defined"
-@@ -585,6 +603,10 @@
+@@ -590,6 +608,10 @@
  #error "Only n64 ABI supported for MIPS64"
  #undef LJ_TARGET_MIPS
  #endif
@@ -62,10 +62,10 @@ index cb312273c..5d635a002 100644
  #endif
  
 
-From 6d482d54a67df9bcb79323c28c806bcc7b0c14c1 Mon Sep 17 00:00:00 2001
+From 9067a3c153efcda9bcfcc88f42a02da8a69fd4fe Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 02/22] riscv(dynasm): add RISC-V support
+Subject: [PATCH 02/23] riscv(dynasm): add RISC-V support
 
 ---
  dynasm/dasm_riscv.h     | 435 ++++++++++++++++++
@@ -1541,10 +1541,10 @@ index 000000000..25274395d
 +riscv64 = true -- Using a global is an ugly, but effective solution.
 +return require("dasm_riscv")
 
-From 476c29faa5943d913ff210cc2bdf0cb979086aa4 Mon Sep 17 00:00:00 2001
+From 8fd04c642f6d0289f3c1be7abdab4308d8155eb2 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 03/22] riscv(interp): add register definition
+Subject: [PATCH 03/23] riscv(interp): add register definition
 
 ---
  src/vm_riscv64.dasc | 81 +++++++++++++++++++++++++++++++++++++++++++++
@@ -1639,10 +1639,10 @@ index 000000000..41c14eebb
 +|.define FTMP3,		f3
 +|.define FTMP4,		f4
 
-From 1ad41c61b1cba942904ad845ba7a7614eecc0927 Mon Sep 17 00:00:00 2001
+From d67c9590bfdb5d5182b19d852172fe28ed938331 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 04/22] riscv(interp): add frame definition
+Subject: [PATCH 04/23] riscv(interp): add frame definition
 
 ---
  src/lj_frame.h      |  9 +++++
@@ -1761,10 +1761,10 @@ index 41c14eebb..63977f5f6 100644
 +|  ret
 +|.endmacro
 
-From c39b7284b0a8ee490d44cf6f292547b2eaee1aad Mon Sep 17 00:00:00 2001
+From f67b7b0a8a1b8c2f37aca3f5911bfda36189f391 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 05/22] riscv(interp): add helper macros and typedefs
+Subject: [PATCH 05/23] riscv(interp): add helper macros and typedefs
 
 ---
  src/vm_riscv64.dasc | 353 ++++++++++++++++++++++++++++++++++++++++++++
@@ -2132,19 +2132,19 @@ index 63977f5f6..562d610dd 100644
 +|
 +|//-----------------------------------------------------------------------
 
-From fe2baf1cbe407a9c5f827e26802a0e4bd2804b30 Mon Sep 17 00:00:00 2001
+From 3b0eba767b2a11e6a6607763533094910684083a Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 06/22] riscv(interp): add base assembly interpreter VM
+Subject: [PATCH 06/23] riscv(interp): add base assembly interpreter VM
 
 ---
  src/lj_vm.h         |    3 +
  src/lj_vmmath.c     |    3 +-
- src/vm_riscv64.dasc | 3584 ++++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 3586 insertions(+), 4 deletions(-)
+ src/vm_riscv64.dasc | 3624 ++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 3626 insertions(+), 4 deletions(-)
 
 diff --git a/src/lj_vm.h b/src/lj_vm.h
-index 9cc42613d..774944725 100644
+index 01da1bd44..a4e26dab0 100644
 --- a/src/lj_vm.h
 +++ b/src/lj_vm.h
 @@ -37,6 +37,9 @@ LJ_ASMF int lj_vm_cpuid(uint32_t f, uint32_t res[4]);
@@ -2154,11 +2154,11 @@ index 9cc42613d..774944725 100644
 +#if LJ_TARGET_RISCV64
 +void lj_vm_fence_rw_rw();
 +#endif
- LJ_ASMF double lj_vm_foldarith(double x, double y, int op);
+ LJ_ASMF LJ_CONSTF double lj_vm_foldarith(double x, double y, int op);
  #if LJ_HASJIT
- LJ_ASMF double lj_vm_foldfpm(double x, int op);
+ LJ_ASMF LJ_CONSTF double lj_vm_foldfpm(double x, int op);
 diff --git a/src/lj_vmmath.c b/src/lj_vmmath.c
-index 2c9b96cce..a31a4adf5 100644
+index 1495102fb..14893d773 100644
 --- a/src/lj_vmmath.c
 +++ b/src/lj_vmmath.c
 @@ -69,7 +69,8 @@ double lj_vm_foldarith(double x, double y, int op)
@@ -2172,7 +2172,7 @@ index 2c9b96cce..a31a4adf5 100644
  {
    uint32_t y, ua, ub;
 diff --git a/src/vm_riscv64.dasc b/src/vm_riscv64.dasc
-index 562d610dd..3c26b0dfd 100644
+index 562d610dd..dc3fa493e 100644
 --- a/src/vm_riscv64.dasc
 +++ b/src/vm_riscv64.dasc
 @@ -437,9 +437,11 @@
@@ -2190,7 +2190,7 @@ index 562d610dd..3c26b0dfd 100644
  |.endmacro
  |
  |// Set current VM state. Uses TMP0.
-@@ -515,3 +517,3579 @@
+@@ -515,3 +517,3619 @@
  |.endmacro
  |
  |//-----------------------------------------------------------------------
@@ -3882,6 +3882,46 @@ index 562d610dd..3c26b0dfd 100644
 +  |->vm_ceil:
 +  |  vm_round rup
 +  |
++  |
++  |//-----------------------------------------------------------------------
++  |//-- Number conversion functions --------------------------------------------
++  |//-----------------------------------------------------------------------
++  |
++  |// int64_t lj_vm_num2int_check(double x)
++  |->vm_num2int_check:
++  |  fcvt.w.d CRET1, FARG1, rtz
++  |  fcvt.d.w FARG2, CRET1
++  |  feq.d CARG2, FARG1, FARG2
++  |  beqz CARG2, >1
++  |  ret
++  |1:
++  |  lui CRET1, 0x80000
++  |  slli CRET1, CRET1, 8
++  |  addi CRET1, CRET1, 0x80
++  |  slli CRET1, CRET1, 24
++  |  ret
++  |
++  |// int64_t lj_vm_num2i64(double x)
++  |->vm_num2i64:
++  |  fcvt.l.d CRET1, FARG1, rtz
++  |  ret
++  |
++  |// uint64_t lj_vm_num2u64(double x)
++  |->vm_num2u64:
++  |  fcvt.lu.d CRET1, FARG1, rtz
++  |  bnez CRET1, >1
++  |  fcvt.l.d CRET1, FARG1, rtz
++  |1:
++  |  ret
++  |
++  |// int32_t lj_vm_tobit(double x)
++  |->vm_tobit:
++  |  lui CARG2, 0x43380	// 2^52 + 2^51.
++  |  slli CARG2, CARG2, 32
++  |  fmv.d.x FARG2, CARG2
++  |  fadd.d FARG2, FARG1, FARG2
++  |  fmv.x.w CRET1, FARG2
++  |  ret
 +  |
 +  |//-----------------------------------------------------------------------
 +  |//-- Miscellaneous functions --------------------------------------------
@@ -5771,10 +5811,10 @@ index 562d610dd..3c26b0dfd 100644
 +
 +}
 
-From b728b9165decfd600ee036466129f7d0d972bec7 Mon Sep 17 00:00:00 2001
+From 01663d4112bfe8677fb0a667657c9d53f66ce676 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 07/22] riscv(support): add target definition
+Subject: [PATCH 07/23] riscv(support): add target definition
 
 ---
  src/lj_target.h       |   4 +-
@@ -6353,10 +6393,10 @@ index 000000000..22948dc5a
 +
 +#endif
 
-From 6690add76a89e440fa3be0559247d00a9a85d62e Mon Sep 17 00:00:00 2001
+From 982221cf0fba25f5a099f957b0b01b9ef631b207 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 08/22] riscv(ffi): add call convention and support framework
+Subject: [PATCH 08/23] riscv(ffi): add call convention and support framework
 
 ---
  src/lj_ccall.c      | 418 +++++++++++++++++++++++++++++++++++++++++++-
@@ -6968,7 +7008,7 @@ index b0a159e22..2052a570f 100644
      if (ctr->size <= 4 &&
  	(LJ_ABI_SOFTFP || ctype_isinteger_or_bool(ctr->info)))
 diff --git a/src/vm_riscv64.dasc b/src/vm_riscv64.dasc
-index 3c26b0dfd..0b444909e 100644
+index dc3fa493e..ea6545972 100644
 --- a/src/vm_riscv64.dasc
 +++ b/src/vm_riscv64.dasc
 @@ -811,14 +811,29 @@ static void build_subroutines(BuildCtx *ctx)
@@ -7028,7 +7068,7 @@ index 3c26b0dfd..0b444909e 100644
    |
    |->cont_stitch:			// Trace stitching.
    |
-@@ -2218,6 +2244,130 @@ static void build_subroutines(BuildCtx *ctx)
+@@ -2258,6 +2284,130 @@ static void build_subroutines(BuildCtx *ctx)
    |.endif
    |
    |//-----------------------------------------------------------------------
@@ -7159,7 +7199,7 @@ index 3c26b0dfd..0b444909e 100644
  }
  
  /* Generate the code for a single instruction. */
-@@ -2342,6 +2492,13 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -2382,6 +2532,13 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
        |  beqz TMP0, ->BC_ISNEN_Z
      }
      |// Either or both types are not numbers.
@@ -7173,7 +7213,7 @@ index 3c26b0dfd..0b444909e 100644
      |  lui TMP3, (-(BCBIAS_J*4 >> 12)) & 0xfffff		// -BCBIAS_J*4
      |  decode_BC4b TMP2
      |  addw TMP2, TMP2, TMP3		// (jump-0x8000)<<2
-@@ -2394,10 +2551,17 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -2434,10 +2591,17 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |   sub RD, KBASE, RD
      |    lhu TMP2, -4+OFS_RD(PC)
      |   ld CARG2, -8(RD)		// KBASE-8-str_const*8
@@ -7191,7 +7231,7 @@ index 3c26b0dfd..0b444909e 100644
      |  xor TMP0, CARG1, CARG2		// TMP2=0: A==D; TMP2!=0: A!=D
      |   addw TMP2, TMP2, TMP3
      if (vk) {
-@@ -2452,7 +2616,11 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -2492,7 +2656,11 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |
      |4:  // RA is not an integer.
      |    addw TMP2, TMP2, TMP3
@@ -7203,7 +7243,7 @@ index 3c26b0dfd..0b444909e 100644
      |  fmv.d.x FTMP0, CARG1
      |   fmv.d.x FTMP2, CARG2
      |  bne CARG4, TISNUM, >5
-@@ -2465,11 +2633,26 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -2505,11 +2673,26 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |  j <1
      |
      |6: // RA is an integer, RD is a number.
@@ -7230,7 +7270,7 @@ index 3c26b0dfd..0b444909e 100644
      break;
  
    case BC_ISEQP: case BC_ISNEP:
-@@ -2483,6 +2666,10 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -2523,6 +2706,10 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |  gettp TMP1, TMP1
      |    addi PC, PC, 4
      |   xor TMP0, TMP1, TMP0		// TMP0=0 A=D; TMP0!=0 A!=D
@@ -7241,7 +7281,7 @@ index 3c26b0dfd..0b444909e 100644
      |  decode_BC4b TMP2
      |  lui TMP3, (-(BCBIAS_J*4 >> 12)) & 0xfffff		// -BCBIAS_J*4
      |  addw TMP2, TMP2, TMP3		// TMP2=(jump-0x8000)<<2
-@@ -2823,6 +3010,16 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -2863,6 +3050,16 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |  ins_next
      break;
    case BC_KCDATA:
@@ -7259,10 +7299,10 @@ index 3c26b0dfd..0b444909e 100644
    case BC_KSHORT:
      |  // RA = dst*8, RD = int16_literal*8
 
-From f5ac627d1619d864cfc66488c92f10a445383a6c Mon Sep 17 00:00:00 2001
+From 839f1ed422223a587ae101c19090611afb105ad0 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 09/22] riscv(support): add extension detection
+Subject: [PATCH 09/23] riscv(support): add extension detection
 
 ---
  src/lib_jit.c | 124 ++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -7270,10 +7310,10 @@ Subject: [PATCH 09/22] riscv(support): add extension detection
  2 files changed, 135 insertions(+)
 
 diff --git a/src/lib_jit.c b/src/lib_jit.c
-index 122b7cfe1..df25905b1 100644
+index e487305f4..cbe298ecf 100644
 --- a/src/lib_jit.c
 +++ b/src/lib_jit.c
-@@ -697,6 +697,111 @@ JIT_PARAMDEF(JIT_PARAMINIT)
+@@ -706,6 +706,111 @@ JIT_PARAMDEF(JIT_PARAMINIT)
  #include <sys/utsname.h>
  #endif
  
@@ -7385,7 +7425,7 @@ index 122b7cfe1..df25905b1 100644
  /* Arch-dependent CPU feature detection. */
  static uint32_t jit_cpudetect(void)
  {
-@@ -769,6 +874,25 @@ static uint32_t jit_cpudetect(void)
+@@ -778,6 +883,25 @@ static uint32_t jit_cpudetect(void)
  #endif
  #elif LJ_TARGET_S390X
    /* No optional CPU features to detect (for now). */
@@ -7412,7 +7452,7 @@ index 122b7cfe1..df25905b1 100644
  #error "Missing CPU detection for this architecture"
  #endif
 diff --git a/src/lj_jit.h b/src/lj_jit.h
-index c622b7ed0..b6aaf21dc 100644
+index 700c9f6de..df72c1969 100644
 --- a/src/lj_jit.h
 +++ b/src/lj_jit.h
 @@ -68,6 +68,17 @@
@@ -7434,22 +7474,66 @@ index c622b7ed0..b6aaf21dc 100644
  
  #define JIT_F_CPUSTRING		""
 
-From a36fb2b2a9d29fba2737d0f455e4e179911b0a3f Mon Sep 17 00:00:00 2001
+From cef4a610e619fc5c9604807687c876f8e6e6c350 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
-Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 10/22] riscv(jit): add insn emitter
+Date: Wed, 26 Nov 2025 16:25:31 +0800
+Subject: [PATCH 10/23] riscv(jit): add mandatory constants
 
 ---
- src/lj_emit_riscv.h | 574 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 574 insertions(+)
+ src/lj_jit.h   | 4 ++--
+ src/lj_trace.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/lj_jit.h b/src/lj_jit.h
+index df72c1969..3bef0842f 100644
+--- a/src/lj_jit.h
++++ b/src/lj_jit.h
+@@ -375,13 +375,13 @@ enum {
+ #if LJ_TARGET_MIPS
+   LJ_K64_2P31,		/* 2^31 */
+ #endif
+-#if LJ_TARGET_ARM64 || LJ_TARGET_MIPS64
++#if LJ_TARGET_ARM64 || LJ_TARGET_MIPS64 || LJ_TARGET_RISCV64
+   LJ_K64_VM_EXIT_HANDLER,
+   LJ_K64_VM_EXIT_INTERP,
+ #endif
+   LJ_K64__MAX,
+ };
+-#define LJ_K64__USED	(LJ_TARGET_X86ORX64 || LJ_TARGET_ARM64 || LJ_TARGET_MIPS)
++#define LJ_K64__USED	(LJ_TARGET_X86ORX64 || LJ_TARGET_ARM64 || LJ_TARGET_MIPS || LJ_TARGET_RISCV64)
+ 
+ enum {
+ #if LJ_TARGET_X86ORX64 || LJ_TARGET_MIPS64
+diff --git a/src/lj_trace.c b/src/lj_trace.c
+index e9e4668a7..ca512e4dd 100644
+--- a/src/lj_trace.c
++++ b/src/lj_trace.c
+@@ -351,7 +351,7 @@ void lj_trace_initstate(global_State *g)
+   J->k32[LJ_K32_VM_EXIT_HANDLER] = (uintptr_t)(void *)lj_vm_exit_handler;
+   J->k32[LJ_K32_VM_EXIT_INTERP] = (uintptr_t)(void *)lj_vm_exit_interp;
+ #endif
+-#if LJ_TARGET_ARM64 || LJ_TARGET_MIPS64
++#if LJ_TARGET_ARM64 || LJ_TARGET_MIPS64 || LJ_TARGET_RISCV64
+   J->k64[LJ_K64_VM_EXIT_HANDLER].u64 = (uintptr_t)lj_ptr_sign((void *)lj_vm_exit_handler, 0);
+   J->k64[LJ_K64_VM_EXIT_INTERP].u64 = (uintptr_t)lj_ptr_sign((void *)lj_vm_exit_interp, 0);
+ #endif
+
+From d5d6a9c859e43d637e3ba607a43e9de30f3193a5 Mon Sep 17 00:00:00 2001
+From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
+Date: Thu, 27 Nov 2025 20:48:19 +0800
+Subject: [PATCH 11/23] riscv(jit): add insn emitter
+
+---
+ src/lj_emit_riscv.h | 576 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 576 insertions(+)
  create mode 100644 src/lj_emit_riscv.h
 
 diff --git a/src/lj_emit_riscv.h b/src/lj_emit_riscv.h
 new file mode 100644
-index 000000000..5cbfe95e9
+index 000000000..ab27c24e4
 --- /dev/null
 +++ b/src/lj_emit_riscv.h
-@@ -0,0 +1,574 @@
+@@ -0,0 +1,576 @@
 +/*
 +** RISC-V instruction emitter.
 +** Copyright (C) 2005-2025 Mike Pall. See Copyright Notice in luajit.h
@@ -7771,6 +7855,8 @@ index 000000000..5cbfe95e9
 +/* Prefer rematerialization of BASE/L from global_State over spills. */
 +#define emit_canremat(ref)	((ref) <= REF_BASE)
 +
++#define glofs(as, k) \
++  ((intptr_t)((uintptr_t)(k) - (uintptr_t)&J2GG(as->J)->g))
 +
 +/* Load a 32 bit constant into a GPR. */
 +#define emit_loadi(as, r, i)	emit_loadk32(as, r, i);
@@ -8025,22 +8111,22 @@ index 000000000..5cbfe95e9
 +
 +#define emit_spsub(as, ofs)	emit_addptr(as, RID_SP, -(ofs))
 
-From 73582466225e586e22901835b4e431cd07fcdced Mon Sep 17 00:00:00 2001
+From ff8686e2d39e4dd017678b4b74c3666fd95d8d93 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 11/22] riscv(jit): add IR assembler
+Subject: [PATCH 12/23] riscv(jit): add IR assembler
 
 ---
  src/lj_asm.c         |    4 +
- src/lj_asm_riscv64.h | 2037 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 2041 insertions(+)
+ src/lj_asm_riscv64.h | 2048 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 2052 insertions(+)
  create mode 100644 src/lj_asm_riscv64.h
 
 diff --git a/src/lj_asm.c b/src/lj_asm.c
-index 4e3e9c74a..51b35ba92 100644
+index ecb8d2949..7bdbcb0fd 100644
 --- a/src/lj_asm.c
 +++ b/src/lj_asm.c
-@@ -227,6 +227,8 @@ static Reg rset_pickrandom(ASMState *as, RegSet rs)
+@@ -231,6 +231,8 @@ static Reg rset_pickrandom(ASMState *as, RegSet rs)
  #include "lj_emit_ppc.h"
  #elif LJ_TARGET_MIPS
  #include "lj_emit_mips.h"
@@ -8049,7 +8135,7 @@ index 4e3e9c74a..51b35ba92 100644
  #else
  #error "Missing instruction emitter for target CPU"
  #endif
-@@ -1710,6 +1712,8 @@ static void asm_loop(ASMState *as)
+@@ -1719,6 +1721,8 @@ static void asm_loop(ASMState *as)
  #include "lj_asm_mips.h"
  #elif LJ_TARGET_S390X
  #include "lj_asm_s390x.h"
@@ -8060,10 +8146,10 @@ index 4e3e9c74a..51b35ba92 100644
  #endif
 diff --git a/src/lj_asm_riscv64.h b/src/lj_asm_riscv64.h
 new file mode 100644
-index 000000000..2ee63fa10
+index 000000000..a199b85fb
 --- /dev/null
 +++ b/src/lj_asm_riscv64.h
-@@ -0,0 +1,2037 @@
+@@ -0,0 +1,2048 @@
 +/*
 +** RISC-V IR assembler (SSA IR -> machine code).
 +** Copyright (C) 2005-2025 Mike Pall. See Copyright Notice in luajit.h
@@ -8165,18 +8251,30 @@ index 000000000..2ee63fa10
 +static void asm_exitstub_setup(ASMState *as, ExitNo nexits)
 +{
 +  ExitNo i;
++  MCode *target = (MCode *)(void *)lj_vm_exit_handler;
 +  MCode *mxp = as->mctop;
 +  if (mxp - (nexits + 4 + MCLIM_REDZONE) < as->mclim)
 +    asm_mclimit(as);
 +  for (i = nexits-1; (int32_t)i >= 0; i--)
 +    *--mxp = RISCVI_JAL | RISCVF_D(RID_RA) | RISCVF_IMMJ((uintptr_t)(4*(-4-i)));
-+  ptrdiff_t delta = (char *)lj_vm_exit_handler - (char *)(mxp-3);
-+  /* 1: sw ra, 0(sp); auipc+jalr ->vm_exit_handler; lui x0, traceno; jal <1; jal <1; ... */
++  ptrdiff_t delta = (char *)target - (char *)(mxp-3);
++  /* !ind: 1: sw ra, 0(sp); auipc+jalr ->vm_exit_handler; lui x0, traceno; jal <1; jal <1; ...
++   ** ind: 1: sw ra, 0(sp); ld tmp, K64_VXH(gl); jalr tmp; lui x0, traceno; jal <1; jal <1; ...
++   ** Note: RID_TMP is RID_RA!
++   */
 +  *--mxp = RISCVI_LUI | RISCVF_IMMU(as->T->traceno);
-+  *--mxp = RISCVI_JALR | RISCVF_D(RID_RA) | RISCVF_S1(RID_TMP)
-+         | RISCVF_IMMI(RISCVF_LO((uintptr_t)(void *)delta));
-+  *--mxp = RISCVI_AUIPC | RISCVF_D(RID_TMP)
-+         | RISCVF_IMMU(RISCVF_HI((uintptr_t)(void *)delta));
++  if (checki32auipc(delta)) {
++    *--mxp = RISCVI_JALR | RISCVF_D(RID_RA) | RISCVF_S1(RID_TMP)
++           | RISCVF_IMMI(RISCVF_LO((uintptr_t)(void *)delta));
++    *--mxp = RISCVI_AUIPC | RISCVF_D(RID_TMP)
++           | RISCVF_IMMU(RISCVF_HI((uintptr_t)(void *)delta));
++  } else {
++    *--mxp = RISCVI_JALR | RISCVF_D(RID_RA) | RISCVF_S1(RID_TMP) | RISCVF_IMMI(0);
++    *--mxp = RISCVI_LD | RISCVF_D(RID_TMP) | RISCVF_S1(RID_GL)
++           | RISCVF_IMMI(glofs(as, &as->J->k64[LJ_K64_VM_EXIT_HANDLER]));
++    lj_assertA(checki12(glofs(as, &as->J->k64[LJ_K64_VM_EXIT_HANDLER])),
++               "exit handler address offset overflow");
++  }
 +  *--mxp = RISCVI_SD | RISCVF_S2(RID_RA) | RISCVF_S1(RID_SP);
 +  as->mctop = mxp;
 +}
@@ -8194,7 +8292,6 @@ index 000000000..2ee63fa10
 +  MCode *p = as->mcp;
 +  if (LJ_UNLIKELY(p == as->invmcp)) {
 +    as->loopinv = 1;
-+    as->mcp = ++p;
 +    *p = RISCVI_JAL | RISCVF_IMMJ((char *)target - (char *)p);
 +    riscvi = riscvi^RISCVF_FUNCT3(1);  /* Invert cond. */
 +    target = p - 1;  /* Patch target later in asm_loop_fixup. */
@@ -8576,14 +8673,18 @@ index 000000000..2ee63fa10
 +    } else {
 +      Reg left = ra_alloc1(as, lref, RSET_FPR);
 +      Reg dest = ra_dest(as, ir, RSET_GPR);
-+      RISCVIns riscvi = irt_is64(ir->t) ?
-+  (st == IRT_NUM ?
-+   (irt_isi64(ir->t) ? RISCVI_FCVT_L_D : RISCVI_FCVT_LU_D) :
-+   (irt_isi64(ir->t) ? RISCVI_FCVT_L_S : RISCVI_FCVT_LU_S)) :
-+  (st == IRT_NUM ?
-+   (irt_isint(ir->t) ? RISCVI_FCVT_W_D : RISCVI_FCVT_WU_D) :
-+   (irt_isint(ir->t) ? RISCVI_FCVT_W_S : RISCVI_FCVT_WU_S));
-+      emit_ds(as, riscvi|RISCVF_RM(RISCVRM_RTZ), dest, left);
++      lj_assertA(!irt_isu32(ir->t), "bad CONV u32.fp emitted");
++      if (irt_isu64(ir->t)) {
++  MCLabel l_end = emit_label(as);
++  emit_ds(as, st == IRT_NUM ? RISCVI_FCVT_L_D : RISCVI_FCVT_L_S, dest, left);
++  emit_branch(as, RISCVI_BNE, dest, RID_ZERO, l_end, -1);
++  emit_ds(as, st == IRT_NUM ? RISCVI_FCVT_LU_D : RISCVI_FCVT_LU_S, dest, left);
++      } else {
++  RISCVIns riscvi = irt_is64(ir->t) ?
++    (st == IRT_NUM ? RISCVI_FCVT_L_D : RISCVI_FCVT_L_S) :
++    (st == IRT_NUM ? RISCVI_FCVT_W_D : RISCVI_FCVT_W_S);
++  emit_ds(as, riscvi|RISCVF_RM(RISCVRM_RTZ), dest, left);
++      }
 +    }
 +  } else if (st >= IRT_I8 && st <= IRT_U16) { /* Extend to 32 bit integer. */
 +    Reg dest = ra_dest(as, ir, RSET_GPR);
@@ -9312,7 +9413,7 @@ index 000000000..2ee63fa10
 +    emit_ds(as, RISCVI_FCVT_D_L, ftmp, RID_TMP);
 +  }
 +  emit_ds(as, riscvi, RID_TMP, left);
-+  emit_branch(as, RISCVI_BLT, RID_ZERO, RID_TMP, l_end, 0);
++  emit_branch(as, RISCVI_BLT, RID_ZERO, RID_TMP, l_end, -1);
 +  emit_dsi(as, RISCVI_ADDI, RID_TMP, RID_TMP, -1075);
 +  emit_dsi(as, RISCVI_ANDI, RID_TMP, RID_TMP, 0x7ff);
 +  emit_dsi(as, RISCVI_SRLI, RID_TMP, RID_TMP, 52);
@@ -9987,33 +10088,37 @@ index 000000000..2ee63fa10
 +/* Fixup the tail code. */
 +static void asm_tail_fixup(ASMState *as, TraceNo lnk)
 +{
-+  MCode *p = as->mctop;
-+  MCode *target = lnk ? traceref(as->J,lnk)->mcode : (MCode *)lj_vm_exit_interp;
++  MCode *mcp = as->mctail;
++  MCode *target;
 +  int32_t spadj = as->T->spadjust;
-+  if (spadj == 0) {
-+    p[-3] = RISCVI_NOP;
-+    // as->mctop = p-2;
-+  } else {
-+    /* Patch stack adjustment. */
-+    p[-3] = RISCVI_ADDI | RISCVF_D(RID_SP) | RISCVF_S1(RID_SP) | RISCVF_IMMI(spadj);
++  if (spadj) { /* Emit stack adjustment */
++    *mcp++ = RISCVI_ADDI | RISCVF_D(RID_SP) | RISCVF_S1(RID_SP) | RISCVF_IMMI(spadj);
 +  }
-+  /* Patch exit jump. */
-+  ptrdiff_t delta = (char *)target - (char *)(p - 2);
-+  p[-2] = RISCVI_AUIPC | RISCVF_D(RID_TMP) | RISCVF_IMMU(RISCVF_HI(delta));
-+  p[-1] = RISCVI_JALR | RISCVF_S1(RID_TMP) | RISCVF_IMMI(RISCVF_LO(delta));
++  /* Emit exit jump. */
++  target = lnk ? traceref(as->J,lnk)->mcode : (MCode *)lj_vm_exit_interp;
++  ptrdiff_t delta = (char *)target - (char *)mcp;
++  if (lnk || checki32auipc(delta)) {
++    *mcp++ = RISCVI_AUIPC | RISCVF_D(RID_TMP) | RISCVF_IMMU(RISCVF_HI(delta));
++    *mcp++ = RISCVI_JALR | RISCVF_S1(RID_TMP) | RISCVF_IMMI(RISCVF_LO(delta));
++  } else {
++    *mcp++ = RISCVI_LD | RISCVF_D(RID_TMP) | RISCVF_S1(RID_GL) | RISCVF_IMMI(glofs(as, &as->J->k64[LJ_K64_VM_EXIT_INTERP]));
++    *mcp++ = RISCVI_JALR | RISCVF_S1(RID_TMP);
++  }
++  while (as->mctop > mcp)  *--as->mctop = RISCVI_NOP; /* NOP out unused space. */
 +}
 +
 +/* Prepare tail of code. */
-+static void asm_tail_prep(ASMState *as)
++static void asm_tail_prep(ASMState *as, TraceNo lnk)
 +{
-+  MCode *p = as->mctop - 2;  /* Leave room for exitstub. */
++  MCode *p = as->mctop - 1;  /* Leave room for exitstub. */
 +  if (as->loopref) {
-+    as->invmcp = as->mcp = p;
++    as->invmcp = as->mcp = p; /* A single jump */
 +  } else {
-+    as->mcp = p-1;  /* Leave room for stack pointer adjustment. */
++    as->mcp = (p -= 2);  /* Stack pointer adjustment and AUIPC+JALR */
 +    as->invmcp = NULL;
++    p[0] = p[1] = p[2] = RISCVI_EBREAK;
 +  }
-+  p[0] = p[1] = RISCVI_NOP;  /* Prevent load/store merging. */
++  as->mctail = p;
 +}
 +
 +/* -- Trace setup --------------------------------------------------------- */
@@ -10088,25 +10193,18 @@ index 000000000..2ee63fa10
 +  }
 +	/* Ignore jump slot overflow. Child trace is simply not attached. */
 +      }
-+    } else if (p+2 == pe) {
-+      if (p[0] == RISCVI_NOP && p[1] == RISCVI_NOP) {
-+  ptrdiff_t delta = (char *)target - (char *)p;
-+  lj_assertJ(checki32(delta), "jump target out of range");
-+  p[0] = RISCVI_AUIPC | RISCVF_D(RID_TMP) | RISCVF_IMMU(RISCVF_HI(delta));
-+  p[1] = RISCVI_JALR | RISCVF_S1(RID_TMP) | RISCVF_IMMI(RISCVF_LO(delta));
-+  if (!cstart) cstart = p;
-+      }
 +    }
 +  }
 +  if (cstart) lj_mcode_sync(cstart, px+1);
 +  lj_mcode_patch(J, mcarea, 1);
 +}
 
-From 44acb77afafb1ac8a77bf015bd90dccfc84d1adb Mon Sep 17 00:00:00 2001
+From b3126f6d374114522978cd0fc98bf1353d48aa0b Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 12/22] riscv(interp): add VM builder support
+Subject: [PATCH 13/23] riscv(interp): add VM builder support
 
+Co-authored-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 ---
  src/host/buildvm.c     |  2 ++
  src/host/buildvm_asm.c | 31 +++++++++++++++++++++++++++++++
@@ -10175,17 +10273,17 @@ index 4affc153b..7ecec51d0 100644
    emit_asm_align(ctx, 4);
  
 
-From d49a5757a3cdb260a833eeebcdb97c0fe8eca329 Mon Sep 17 00:00:00 2001
+From 577eb1a82e198f38458eae7dfa143bd1b921d30d Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 13/22] riscv(misc): add bytecode listing support
+Subject: [PATCH 14/23] riscv(misc): add bytecode listing support
 
 ---
  src/jit/bcsave.lua | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/src/jit/bcsave.lua b/src/jit/bcsave.lua
-index 5084ab3e2..74bcaf553 100644
+index 11ccc2ce6..6d94dc0c1 100644
 --- a/src/jit/bcsave.lua
 +++ b/src/jit/bcsave.lua
 @@ -103,6 +103,7 @@ local map_arch = {
@@ -10197,17 +10295,17 @@ index 5084ab3e2..74bcaf553 100644
  
  local map_os = {
 
-From 61b370650c2b2ad08f5c20eb76d888585dbb4a60 Mon Sep 17 00:00:00 2001
+From c9910b7499f558d822fb8a2f73aafd6aabf9b580 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 14/22] riscv(jit): add hooks in interpreter
+Subject: [PATCH 15/23] riscv(jit): add hooks in interpreter
 
 ---
  src/vm_riscv64.dasc | 388 ++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 388 insertions(+)
 
 diff --git a/src/vm_riscv64.dasc b/src/vm_riscv64.dasc
-index 0b444909e..99d4e41ad 100644
+index ea6545972..8e11830bd 100644
 --- a/src/vm_riscv64.dasc
 +++ b/src/vm_riscv64.dasc
 @@ -448,6 +448,24 @@
@@ -10537,7 +10635,7 @@ index 0b444909e..99d4e41ad 100644
    |
    |
    |//-----------------------------------------------------------------------
-@@ -2243,6 +2522,67 @@ static void build_subroutines(BuildCtx *ctx)
+@@ -2283,6 +2562,67 @@ static void build_subroutines(BuildCtx *ctx)
    |  ret
    |.endif
    |
@@ -10605,7 +10703,7 @@ index 0b444909e..99d4e41ad 100644
    |//-----------------------------------------------------------------------
    |//-- FFI helper functions -----------------------------------------------
    |//-----------------------------------------------------------------------
-@@ -3730,6 +4070,9 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -3770,6 +4110,9 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
  
    case BC_ITERN:
      |  // RA = base*8, (RB = (nresults+1)*8, RC = (nargs+1)*8 (2+1)*8)
@@ -10615,7 +10713,7 @@ index 0b444909e..99d4e41ad 100644
      |->vm_IITERN:
      |  add RA, BASE, RA
      |  ld TAB:RB, -16(RA)
-@@ -3814,8 +4157,26 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -3854,8 +4197,26 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |   li TMP1, BC_ITERC
      |  sb TMP3, -4+OFS_OP(PC)
      |   add PC, TMP0, TMP2
@@ -10642,7 +10740,7 @@ index 0b444909e..99d4e41ad 100644
      break;
  
    case BC_VARG:
-@@ -3981,6 +4342,9 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -4021,6 +4382,9 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
    /* -- Loops and branches ------------------------------------------------ */
  
    case BC_FORL:
@@ -10652,7 +10750,7 @@ index 0b444909e..99d4e41ad 100644
      |  // Fall through. Assumes BC_IFORL follows.
      break;
  
-@@ -4101,6 +4465,9 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -4141,6 +4505,9 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      break;
  
    case BC_ITERL:
@@ -10662,7 +10760,7 @@ index 0b444909e..99d4e41ad 100644
      |  // Fall through. Assumes BC_IITERL follows.
      break;
  
-@@ -4125,6 +4492,12 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -4165,6 +4532,12 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      break;
  
    case BC_LOOP:
@@ -10675,7 +10773,7 @@ index 0b444909e..99d4e41ad 100644
      |  // Fall through. Assumes BC_ILOOP follows.
      break;
  
-@@ -4134,6 +4507,18 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -4174,6 +4547,18 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      break;
  
    case BC_JLOOP:
@@ -10694,7 +10792,7 @@ index 0b444909e..99d4e41ad 100644
      break;
  
    case BC_JMP:
-@@ -4145,6 +4530,9 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -4185,6 +4570,9 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
    /* -- Function headers -------------------------------------------------- */
  
    case BC_FUNCF:
@@ -10705,20 +10803,20 @@ index 0b444909e..99d4e41ad 100644
      |  // Fall through. Assumes BC_IFUNCF/BC_IFUNCV follow.
      break;
 
-From 30db288916c69b4afc39c81e31a753a15033af9b Mon Sep 17 00:00:00 2001
+From 46b73271ffd7163ebb5b108cbf3476551ae19b63 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 15/22] riscv(interp): add DWARF info
+Subject: [PATCH 16/23] riscv(interp): add DWARF info
 
 ---
  src/vm_riscv64.dasc | 132 +++++++++++++++++++++++++++++++++++++++++++-
  1 file changed, 131 insertions(+), 1 deletion(-)
 
 diff --git a/src/vm_riscv64.dasc b/src/vm_riscv64.dasc
-index 99d4e41ad..1122e6ceb 100644
+index 8e11830bd..fe3ed4173 100644
 --- a/src/vm_riscv64.dasc
 +++ b/src/vm_riscv64.dasc
-@@ -4676,5 +4676,135 @@ static int build_backend(BuildCtx *ctx)
+@@ -4716,5 +4716,135 @@ static int build_backend(BuildCtx *ctx)
  /* Emit pseudo frame-info for all assembler functions. */
  static void emit_asm_debug(BuildCtx *ctx)
  {
@@ -10856,10 +10954,10 @@ index 99d4e41ad..1122e6ceb 100644
 +  }
  }
 
-From 4ac9ffebc1250029f9da719c6291e0903eefbd67 Mon Sep 17 00:00:00 2001
+From 9bf0c3f5b0de551eeb8970245d743ec7b5920f29 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 16/22] riscv(jit): add GDBJIT support
+Subject: [PATCH 17/23] riscv(jit): add GDBJIT support
 
 ---
  src/lj_gdbjit.c | 15 +++++++++++++++
@@ -10906,10 +11004,10 @@ index 9e68932a8..7d677c7c7 100644
  #error "Unsupported target architecture"
  #endif
 
-From da0e80cf1d8135c6e1494df0cf48ba1be87f12fc Mon Sep 17 00:00:00 2001
+From e8a687f6f4dbce576f2d6ea2d552178b3940497d Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 17/22] riscv(support,linux): add Linux specfic icache sync
+Subject: [PATCH 18/23] riscv(support,linux): add Linux specfic icache sync
  codepath
 
 ---
@@ -10917,7 +11015,7 @@ Subject: [PATCH 17/22] riscv(support,linux): add Linux specfic icache sync
  1 file changed, 17 insertions(+)
 
 diff --git a/src/lj_mcode.c b/src/lj_mcode.c
-index 0a9ced697..295c64af5 100644
+index c3032f4e2..cd54dee29 100644
 --- a/src/lj_mcode.c
 +++ b/src/lj_mcode.c
 @@ -38,6 +38,12 @@
@@ -10952,10 +11050,10 @@ index 0a9ced697..295c64af5 100644
    __clear_cache(start, end);
  #else
 
-From ac6762f89f89cdcb993b57afc6ce139e0d33faba Mon Sep 17 00:00:00 2001
+From 89b2d89832bd95bee436561c7d8b2a58fd45127c Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 18/22] riscv(support,linux): make mremap() non-moving due to
+Subject: [PATCH 19/23] riscv(support,linux): make mremap() non-moving due to
  VA space woes
 
 ---
@@ -10976,10 +11074,10 @@ index cb704f7b3..9039d8053 100644
  #else
  #define CALL_MREMAP_MV		CALL_MREMAP_MAYMOVE
 
-From ba66ca5e1957149a84511f7b200f3f65146df039 Mon Sep 17 00:00:00 2001
+From 8656e3d9ed5e806894aa677e1d7da3597d1980d9 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 19/22] riscv(misc): add disassmbler support
+Subject: [PATCH 20/23] riscv(misc): add disassmbler support
 
 ---
  src/jit/dis_riscv.lua   | 979 ++++++++++++++++++++++++++++++++++++++++
@@ -11997,10 +12095,10 @@ index 000000000..fd6ce2768
 +}
 \ No newline at end of file
 
-From c8647fd606af74825579057ba8c0be8320862002 Mon Sep 17 00:00:00 2001
+From 56d9248e64133ef23e95f132ce28ff7cd92918e9 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 20/22] riscv(misc): add support in Makefile
+Subject: [PATCH 21/23] riscv(misc): add support in Makefile
 
 ---
  Makefile     | 1 +
@@ -12020,7 +12118,7 @@ index c41b3345d..dd33fedcb 100644
  
  ifeq (,$(findstring Windows,$(OS)))
 diff --git a/src/Makefile b/src/Makefile
-index 456ee40fc..f53dd4219 100644
+index b1570e42e..6594eecd8 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -52,6 +52,7 @@ CCOPT_arm=
@@ -12049,7 +12147,7 @@ index 456ee40fc..f53dd4219 100644
  
  ifneq (,$(findstring LJ_TARGET_PS3 1,$(TARGET_TESTARCH)))
    TARGET_SYS= PS3
-@@ -498,6 +503,9 @@ ifeq (ppc,$(TARGET_LJARCH))
+@@ -495,6 +500,9 @@ ifeq (ppc,$(TARGET_LJARCH))
      DASM_AFLAGS+= -D ELFV2
    endif
  endif
@@ -12060,10 +12158,10 @@ index 456ee40fc..f53dd4219 100644
  endif
  
 
-From 0f35819982fad1f87d393c5c3449d51886e0ccfc Mon Sep 17 00:00:00 2001
+From 437aa2a0bc2b1ba6c88f01163bea0abdc62c20ed Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 21/22] riscv(support,linux): use HWPROBE for ISE detection
+Subject: [PATCH 22/23] riscv(support,linux): use HWPROBE for ISE detection
 
 Current SIGILL handler appears to have weird issues with libluajit on
 some platform. Considering 6.6 kernel is becoming more common, switch
@@ -12074,10 +12172,10 @@ to HWPROBE for better compatibility.
  2 files changed, 67 insertions(+), 41 deletions(-)
 
 diff --git a/src/lib_jit.c b/src/lib_jit.c
-index df25905b1..ee892c838 100644
+index cbe298ecf..138a38e0d 100644
 --- a/src/lib_jit.c
 +++ b/src/lib_jit.c
-@@ -698,23 +698,26 @@ JIT_PARAMDEF(JIT_PARAMINIT)
+@@ -707,23 +707,26 @@ JIT_PARAMDEF(JIT_PARAMINIT)
  #endif
  
  #if LJ_TARGET_RISCV64 && LJ_TARGET_POSIX
@@ -12115,7 +12213,7 @@ index df25905b1..ee892c838 100644
  #else
    return 0;
  #endif
-@@ -725,11 +728,8 @@ static int riscv_zba()
+@@ -734,11 +737,8 @@ static int riscv_zba()
  #if defined(__riscv_b) || defined(__riscv_zba)
    /* Don't bother checking for Zba -- would crash before getting here. */
    return 1;
@@ -12129,7 +12227,7 @@ index df25905b1..ee892c838 100644
  #else
    return 0;
  #endif
-@@ -740,11 +740,8 @@ static int riscv_zbb()
+@@ -749,11 +749,8 @@ static int riscv_zbb()
  #if defined(__riscv_b) || defined(__riscv_zbb)
    /* Don't bother checking for Zbb -- would crash before getting here. */
    return 1;
@@ -12143,7 +12241,7 @@ index df25905b1..ee892c838 100644
  #else
    return 0;
  #endif
-@@ -755,10 +752,8 @@ static int riscv_zicond()
+@@ -764,10 +761,8 @@ static int riscv_zicond()
  #if defined(__riscv_zicond)
    /* Don't bother checking for Zicond -- would crash before getting here. */
    return 1;
@@ -12156,7 +12254,7 @@ index df25905b1..ee892c838 100644
  #else
    return 0;
  #endif
-@@ -769,6 +764,8 @@ static int riscv_zfa()
+@@ -778,6 +773,8 @@ static int riscv_zfa()
  #if defined(__riscv_zfa)
    /* Don't bother checking for Zfa -- would crash before getting here. */
    return 1;
@@ -12165,7 +12263,7 @@ index df25905b1..ee892c838 100644
  #else
    return 0;
  #endif
-@@ -782,23 +779,19 @@ static int riscv_xthead()
+@@ -791,23 +788,19 @@ static int riscv_xthead()
    && defined(__riscv_xtheadmac))
    /* Don't bother checking for XThead -- would crash before getting here. */
    return 1;
@@ -12196,7 +12294,7 @@ index df25905b1..ee892c838 100644
  }
  #endif
  
-@@ -877,17 +870,21 @@ static uint32_t jit_cpudetect(void)
+@@ -886,17 +879,21 @@ static uint32_t jit_cpudetect(void)
  
  #elif LJ_TARGET_RISCV64
  #if LJ_HASJIT
@@ -12224,7 +12322,7 @@ index df25905b1..ee892c838 100644
    /* Detect V/P? */
    /* V have no hardware available, P not ratified yet. */
 diff --git a/src/lj_jit.h b/src/lj_jit.h
-index b6aaf21dc..9948e3c07 100644
+index 3bef0842f..aadf16431 100644
 --- a/src/lj_jit.h
 +++ b/src/lj_jit.h
 @@ -79,6 +79,35 @@
@@ -12264,17 +12362,17 @@ index b6aaf21dc..9948e3c07 100644
  
  #define JIT_F_CPUSTRING		""
 
-From f3a16497b679a274899ac8022bc3a9edd7f27245 Mon Sep 17 00:00:00 2001
+From 34a1d1c5673991cef9bf42f16119823a1a0549e3 Mon Sep 17 00:00:00 2001
 From: gns <wangbingzhen.riscv@isrc.iscas.ac.cn>
 Date: Thu, 27 Nov 2025 20:48:19 +0800
-Subject: [PATCH 22/22] riscv(interp): strip excessive extended branch (^B+J)
+Subject: [PATCH 23/23] riscv(interp): strip excessive extended branch (^B+J)
 
 ---
  src/vm_riscv64.dasc | 104 ++++++++++++++++++++++----------------------
  1 file changed, 52 insertions(+), 52 deletions(-)
 
 diff --git a/src/vm_riscv64.dasc b/src/vm_riscv64.dasc
-index 1122e6ceb..934dfe91c 100644
+index fe3ed4173..b5c1dd7ad 100644
 --- a/src/vm_riscv64.dasc
 +++ b/src/vm_riscv64.dasc
 @@ -552,7 +552,7 @@ static void build_subroutines(BuildCtx *ctx)
@@ -12661,7 +12759,7 @@ index 1122e6ceb..934dfe91c 100644
    |  ins_callt				// Returned 0: retry fast path.
    |
    |// Reconstruct previous base for vmeta_call during tailcall.
-@@ -4293,7 +4293,7 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -4333,7 +4333,7 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |
      |->BC_RETV_Z:  // Non-standard return case.
      |  andi TMP2, TMP1, FRAME_TYPEP
@@ -12670,7 +12768,7 @@ index 1122e6ceb..934dfe91c 100644
      |  // Return from vararg function: relocate BASE down.
      |  sub BASE, BASE, TMP1
      |   ld PC, FRAME_PC(BASE)
-@@ -4546,7 +4546,7 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -4586,7 +4586,7 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |  ld TMP2, L->maxstack
      |   lbu TMP1, -4+PC2PROTO(numparams)(PC)
      |    ld KBASE, -4+PC2PROTO(k)(PC)
@@ -12679,7 +12777,7 @@ index 1122e6ceb..934dfe91c 100644
      |   slliw TMP1, TMP1, 3			// numparams*8
      |2:
      |  bltu NARGS8:RC, TMP1, >3		// Check for missing parameters.
-@@ -4583,7 +4583,7 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -4623,7 +4623,7 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |   addi TMP3, RC, 16+FRAME_VARG
      |    ld KBASE, -4+PC2PROTO(k)(PC)
      |   sd TMP3, 8(TMP1)                // Store delta + FRAME_VARG.
@@ -12688,7 +12786,7 @@ index 1122e6ceb..934dfe91c 100644
      |  lbu TMP2, -4+PC2PROTO(numparams)(PC)
      |   mv RA, BASE
      |   mv RC, TMP1
-@@ -4629,7 +4629,7 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
+@@ -4669,7 +4669,7 @@ static void build_ins(BuildCtx *ctx, BCOp op, int defop)
      |   add RC, BASE, NARGS8:RC
      |  sd BASE, L->base		// base of currently excuting function
      |   sd RC, L->top
