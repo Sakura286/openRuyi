@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
-# SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
+# SPDX-FileCopyrightText: (C) 2025, 2026 Institute of Software, Chinese Academy of Sciences (ISCAS)
+# SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
 # SPDX-FileContributor: Suyun114 <ziyu.oerv@isrc.iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 #
@@ -19,7 +19,7 @@ Patch1:         add-riscv64-support.patch
 Patch2:         riscv-hotplug.patch
 BuildSystem:    autotools
 
-BuildOption(conf):  --without-lzma
+BuildOption(conf):  --without-lzma LD=ld.bfd
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -36,11 +36,18 @@ the loaded kernel after it panics.
 %conf -p
 autoreconf -fvi
 
+# No rule to make target 'check'.  Stop.
+%check
+
 %files
 %{_sbindir}/kexec
 %{_mandir}/man8/kexec.8*
 %{_sbindir}/vmcore-dmesg
 %{_mandir}/man8/vmcore-dmesg.8*
+%ifarch x86_64
+%{_libdir}/kexec-tools/kexec_test
+%endif
+
 %doc News
 %license COPYING
 %doc TODO
