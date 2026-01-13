@@ -58,10 +58,10 @@ index 4929fad..0f7913c 100644
 +			[AC_DEFINE([HAVE_RVV], [0], [Disable RVV instructions])
 +			AM_CONDITIONAL([HAVE_RVV], [false]) rvv=no]
 +		)
-+		if test "x$rvv" = "xyes"; then
-+		  CFLAGS+=" -march=rv64gcv"
-+		  CCASFLAGS+=" -march=rv64gcv"
-+		fi
++		# if test "x$rvv" = "xyes"; then
++		#  CFLAGS+=" -march=rv64gcv"
++		#  CCASFLAGS+=" -march=rv64gcv"
++		# fi
 +		AC_MSG_RESULT([$rvv])
 +		;;
 +

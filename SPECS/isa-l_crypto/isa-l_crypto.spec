@@ -1,10 +1,15 @@
-# SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
-# SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
+# SPDX-FileCopyrightText: (C) 2025, 2026 Institute of Software, Chinese Academy of Sciences (ISCAS)
+# SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
 # SPDX-FileContributor: Jingkun Zheng <zhengjingkun@iscas.ac.cn>
 # SPDX-FileContributor: Julian Zhu <julian.oerv@isrc.iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
+
+# It's a known issue that LTO causes test failure,
+# and the workaround is to disable LTO for now.
+# https://github.com/intel/isa-l_crypto/issues/165
+%define _lto_cflags %{nil}
 
 Name:           isa-l_crypto
 Version:        2.25.0
@@ -24,6 +29,12 @@ Patch3: 0003-sha1_mb-Add-missing-ISAL_-prefixes-to-base-aliases.patch
 Patch11: 0001-build-add-riscv64-vector-build-check.patch
 Patch12: 0002-multibinary-add-run-time-cpu-feature-detect-for-risc.patch
 Patch13: 0003-mh_sha256-add-an-mh_sha256-assembly-implementation-w.patch
+
+# https://github.com/intel/isa-l_crypto/pull/169
+Patch14: 0002-mh_sha256-prevent-potential-unaligned-accesses-on-ve.patch
+
+# https://github.com/intel/isa-l_crypto/pull/168
+Patch15: 0001-mh_sha1-add-an-mh_sha1-assembly-implementation-with-.patch
 
 BuildSystem:    autotools
 
@@ -59,7 +70,7 @@ This package contains the development files needed to build against the shared l
 
 %check
 %make_build check
-%make_build tests
+%make_build test
 
 %files
 %{_libdir}/libisal_crypto.so.2*
