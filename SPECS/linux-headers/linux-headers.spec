@@ -1,5 +1,6 @@
-# SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
-# SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
+# SPDX-FileCopyrightText: (C) 2025, 2026 Institute of Software, Chinese Academy of Sciences (ISCAS)
+# SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
+# SPDX-FileContributor: Han Gao <gaohan@iscas.ac.cn>
 # SPDX-FileContributor: Jingwiw <wangjingwei@iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 #
@@ -13,12 +14,12 @@
 %endif
 
 Name:           linux-headers
-Version:        6.18.2
+Version:        6.18.5
 Release:        %autorelease
 Summary:        Header files for the Linux kernel for use by userspace
 License:        GPL-2.0-only AND LGPL-2.1-only AND MIT AND BSD-2-Clause AND BSD-3-Clause
 URL:            https://www.kernel.org/
-#!RemoteAsset:  sha256:558c6bbab749492b34f99827fe807b0039a744693c21d3a7e03b3a48edaab96a
+#!RemoteAsset:  sha256:189d1f409cef8d0d234210e04595172df392f8cb297e14b447ed95720e2fd940
 Source0:        https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-%{version}.tar.xz
 
 BuildRequires: rsync
