@@ -14,8 +14,8 @@ URL:            https://github.com/scop/bash-completion
 #!RemoteAsset
 Source0:        https://github.com/scop/bash-completion/releases/download/%{version}/%{name}-%{version}.tar.xz
 Source1:        macros.bash-completion
-BuildSystem:    autotools
 BuildArch:      noarch
+BuildSystem:    autotools
 
 BuildRequires:  automake
 BuildRequires:  make
@@ -26,10 +26,9 @@ Requires:       bash
 bash-completion is a collection of shell functions that take advantage
 of the programmable completion feature of bash.
 
-
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name} =  %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 This package contains development files for %{name}.
