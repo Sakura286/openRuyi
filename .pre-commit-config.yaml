@@ -1,5 +1,6 @@
-# SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
-# SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
+# SPDX-FileCopyrightText: (C) 2025, 2026 Institute of Software, Chinese Academy of Sciences (ISCAS)
+# SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
+# SPDX-FileContributor: yyjeqhc <jialin.oerv@isrc.iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: lzyprime <2383518170@qq.com>
 #
@@ -43,17 +44,12 @@ repos:
     -   id: check-case-conflict
     -   id: check-toml
     -   id: check-yaml
-# TODO:
--   repo: https://github.com/fsfe/reuse-tool
-    rev: v6.1.0
+-   repo: local
     hooks:
-      - id: reuse
-        name: Run reuse annotate
-        pass_filenames: true
+    -   id: reuse-add-annotate
+        name: "Add REUSE license headers"
+        language: python
+        entry: scripts/pre-commit-hooks/reuse-add-annotate.py
         files: \.spec$
-        args: ["annotate", "--copyright-prefix", "spdx-c",
-               "--merge-copyrights",
-               "--style" ,"python",
-               "-c" ,"openRuyi Project Contributors" ,
-               "-c" ,"Institute of Software, Chinese Academy of Sciences (ISCAS)",
-               -l, "MulanPSL-2.0" ]
+        pass_filenames: true
+        additional_dependencies: ['reuse>=6.0.0']
