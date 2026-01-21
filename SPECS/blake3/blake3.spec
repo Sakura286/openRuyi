@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Mahno <bestwow2014@gmail.com>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -9,18 +10,18 @@ Name:           blake3
 Version:        1.8.2
 Release:        %autorelease
 Summary:        Official C implementation of the BLAKE3 cryptographic hash function
-
 License:        Apache-2.0
-URL:            https://github.com/BLAKE3-team/BLAKE3/
+URL:            https://github.com/BLAKE3-team/BLAKE3
 #!RemoteAsset
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+# tbb is not enabled, will be supported in the future
+BuildSystem:    cmake
+
+BuildOption(conf):  -S c
+
 BuildRequires:  cmake
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
-BuildRequires:  libasan8 libubsan1
-# tbb is not enabled, will be supported in the future
-BuildSystem:    cmake
-BuildOption(conf): -S c
 
 %description
 BLAKE3 is a cryptographic hash function that is:
@@ -35,12 +36,12 @@ BLAKE3 is a cryptographic hash function that is:
 - One algorithm with no variants, which is fast on x86-64 and also on smaller
   architectures.
 
-%package devel
-Summary:        %{summary} - development files
-Requires:       %{name}
+%package        devel
+Summary:        Development files for the %{name} library
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description devel
-Development files for the %{name} library.
+%description    devel
+This package provides the development files for the %{name} library.
 
 %build -p
 export ASMFLAGS="%{build_cflags}"
