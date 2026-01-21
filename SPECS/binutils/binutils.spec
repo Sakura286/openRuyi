@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: laokz <zhangkai@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -21,10 +22,15 @@ License:        GFDL-1.3-only AND GPL-3.0-or-later
 Version:        2.45
 Release:        %autorelease
 URL:            https://www.gnu.org/software/binutils/
+VCS:            git:https://sourceware.org/git/binutils-gdb.git
 #!RemoteAsset
 Source0:        https://ftpmirror.gnu.org/gnu/binutils/binutils-%{version}.tar.bz2
 #!RemoteAsset
 Source1:        https://ftpmirror.gnu.org/gnu/binutils/binutils-%{version}.tar.bz2.sig
+BuildSystem:    autotools
+
+BuildOption(build): -C build-dir
+
 BuildRequires:  gcc-c++
 BuildRequires:  bison
 BuildRequires:  dejagnu
@@ -33,30 +39,28 @@ BuildRequires:  flex
 BuildRequires:  glibc-static
 BuildRequires:  texinfo
 BuildRequires:  zlib-devel-static
-BuildRequires:  libzstd-devel
+BuildRequires:  pkgconfig(libzstd)
+
 %if %{with libalternatives}
 Requires:       alts
 %else
 PreReq:         update-alternatives
 %endif
 
-BuildSystem:  autotools
-BuildOption(build): -C build-dir
-
 %description
 C compiler utilities: ar, as, gprof, ld, nm, objcopy, objdump, ranlib,
 size, strings, and strip. These utilities are needed whenever you want
 to compile a program or kernel.
 
-%package devel
+%package        devel
 Summary:        GNU binutils (BFD development files)
 License:        GPL-3.0-or-later
-Requires:       binutils = %{version}-%{release}
-Requires:       zlib-devel
-Requires:       libzstd-devel
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       pkgconfig(zlib)
+Requires:       pkgconfig(libzstd)
 Provides:       binutils:${%_includedir}/bfd.h
 
-%description devel
+%description    devel
 This package includes header files and static libraries necessary to
 build programs which use the GNU BFD library, which is part of
 binutils.
