@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -10,15 +11,17 @@ Release:        %autorelease
 Summary:        GNU Command Line Calculator
 License:        GPL-2.0-or-later
 URL:            https://www.gnu.org/software/bc/
+# VCS: No VCS link available
 #!RemoteAsset
 Source0:        https://ftpmirror.gnu.org/gnu/bc/bc-%{version}.tar.gz
 #!RemoteAsset
 Source1:        https://ftpmirror.gnu.org/gnu/bc/bc-%{version}.tar.gz.sig
+BuildSystem:    autotools
+
 BuildRequires:  bison
 BuildRequires:  ed
 BuildRequires:  flex
 BuildRequires:  texinfo
-BuildSystem:    autotools
 
 %description
 bc is an interpreter that supports numbers of arbitrary precision and
