@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -20,20 +21,23 @@ Source0:        http://www.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v%
 Source1:        https://thunk.org/tytso/tytso-key.asc#/%{name}.keyring
 BuildSystem:    autotools
 
-BuildOption(conf): --with-root-prefix=''
-BuildOption(conf): --enable-elf-shlibs
-BuildOption(conf): --disable-libblkid
-BuildOption(conf): --disable-libuuid
-BuildOption(conf): --disable-uuidd
-BuildOption(conf): --disable-fsck
-BuildOption(conf): --without-crond-dir
-
+BuildOption(conf):  --with-root-prefix=''
+BuildOption(conf):  --enable-elf-shlibs
+BuildOption(conf):  --disable-libblkid
+BuildOption(conf):  --disable-libuuid
+BuildOption(conf):  --disable-uuidd
+BuildOption(conf):  --disable-fsck
+BuildOption(conf):  --without-crond-dir
 %if %{with systemd}
-BuildOption(conf): --with-systemd-unit-dir=%{_unitdir}
+BuildOption(conf):  --with-systemd-unit-dir=%{_unitdir}
 %endif
-BuildOption(build): CFLAGS="%{optflags}"
+BuildOption(build):  CFLAGS="%{optflags}"
 
-BuildRequires:  libarchive-devel util-linux-devel pkg-config xz texinfo
+BuildRequires:  libarchive-devel
+BuildRequires:  util-linux-devel
+BuildRequires:  pkg-config
+BuildRequires:  xz
+BuildRequires:  texinfo
 BuildRequires:  perl
 %if %{with systemd}
 BuildRequires:  systemd-rpm-macros
@@ -46,7 +50,7 @@ Suggests:       e2fsprogs-scrub
 %description
 Utilities needed to create and maintain ext2, ext3, and ext4 file systems.
 
-%package -n e2fsprogs-scrub
+%package     -n e2fsprogs-scrub
 Summary:        Ext2fs scrubbing scripts and service files
 License:        GPL-2.0-only
 %if %{with systemd}
@@ -61,34 +65,40 @@ Requires:       util-linux
 Scripts and systemd service files for background scrubbing of LVM volumes
 with ext2, ext3, and ext4 filesystems.
 
-%package -n libext2fs2
-Summary:        Ext2fs library
+%package        devel
+Summary:        Development files for e2fsprogs
+License:        LGPL-2.0-only
+Requires:       pkgconfig(com_err)
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+
+%description    devel
+This package contains the header files and libraries needed to develop
+applications that use the e2fsprogs libraries.
+
+It mainly includes the libext2fs development files.
+
+%package        libs
+Summary:        Ext2fs shared library
 License:        LGPL-2.0-only
 
-%description -n libext2fs2
-The basic Ext2fs shared library.
+%description    libs
+This package contains the shared libraries needed to run applications
+that use the e2fsprogs libraries.
 
-%package -n libext2fs-devel
-Summary:        Development files for libext2fs
-License:        LGPL-2.0-only
-Requires:       libcom_err-devel
-Requires:       libext2fs2 = %{version}
+It mainly includes the basic Ext2fs shared library.
 
-%description -n libext2fs-devel
-Development files for libext2fs.
-
-%package -n libcom_err2
+%package     -n libcom_err
 Summary:        E2fsprogs error reporting library
 License:        MIT
 
-%description -n libcom_err2
+%description -n libcom_err
 com_err is an error message display library.
 
-%package -n libcom_err-devel
+%package     -n libcom_err-devel
 Summary:        Development files for libcom_err
 License:        MIT
 Requires:       glibc-devel
-Requires:       libcom_err2 = %{version}
+Requires:       libcom_err%{?_isa} = %{version}-%{release}
 
 %description -n libcom_err-devel
 Development files for the com_err error message display library.
@@ -138,19 +148,19 @@ rm -f %{buildroot}%{_libdir}/e2initrd_helper
 %{_unitdir}/e2scrub_reap.service
 %endif
 
-%files -n libext2fs2
+%files libs
 %{_libdir}/libext2fs.so.*
 %{_libdir}/libe2p.so.*
 
-%files -n libext2fs-devel
+%files devel
 %{_libdir}/libext2fs.so
 %{_libdir}/libe2p.so
-/usr/include/ext2fs
-/usr/include/e2p
+%{_includedir}/ext2fs
+%{_includedir}/e2p
 %{_libdir}/pkgconfig/e2p.pc
 %{_libdir}/pkgconfig/ext2fs.pc
 
-%files -n libcom_err2
+%files -n libcom_err
 %{_libdir}/libcom_err.so.*
 %{_libdir}/libss.so.*
 
