@@ -64,7 +64,7 @@ fonts. It supports a range of font formats, including PostScript
 
 %package        devel
 Summary:        Development files for fontforge
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 %if %{with doc}
 Requires:       %{name}-doc = %{version}-%{release}
 %endif
