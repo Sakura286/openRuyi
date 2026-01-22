@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,13 +12,15 @@ Release:        %autorelease
 Summary:        Embeddable Javascript engine
 License:        MIT
 URL:            https://duktape.org/
+VCS:            git:https://github.com/svaarala/duktape
 #!RemoteAsset
 Source:         https://duktape.org/%name-%{version}.tar.xz
-Patch:          0001-duktape-link-m.patch
 BuildSystem:    autotools
 
-BuildOption(build):   -f Makefile.sharedlibrary
-BuildOption(install): -f Makefile.sharedlibrary INSTALL_PREFIX=%{_prefix}
+Patch:          0001-duktape-link-m.patch
+
+BuildOption(build):  -f Makefile.sharedlibrary
+BuildOption(install):  -f Makefile.sharedlibrary INSTALL_PREFIX=%{_prefix}
 
 BuildRequires:  gcc
 BuildRequires:  make
@@ -28,7 +31,7 @@ compact footprint.
 
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 This package contains header files and libraries needed to develop
