@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -10,29 +11,30 @@ Release:        %autorelease
 Summary:        The GNU versions of find utilities (find and xargs)
 License:        GPL-3.0-or-later
 URL:            https://www.gnu.org/software/findutils/
+VCS:            git:https://https.git.savannah.gnu.org/git/findutils.git
 #!RemoteAsset
 Source0:        https://ftpmirror.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
 #!RemoteAsset
 Source1:        https://ftpmirror.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz.sig
 #!RemoteAsset
 Source2:        https://savannah.gnu.org/project/release-gpgkeys.php?group=%{name}&download=1&file=./%{name}.keyring
+BuildSystem:    autotools
+
 # adds a new option -xautofs to find to not descend into directories on autofs file systems
 Patch0:         findutils-xautofs.patch
 # https://git.savannah.gnu.org/cgit/findutils.git/commit/?id=e5d6eb919b9
 Patch1:         findutils-avoid-crash-system-loop.patch
 
-BuildRequires:  automake
-
-BuildSystem:    autotools
 BuildOption(conf): --libexecdir=%{_libdir}/find
 BuildOption(conf): --localstatedir=%{_localstatedir}/lib
 
+BuildRequires:  automake
 # BuildRequire dejagnu for 'runtest' to execute all tests.
 BuildRequires:  dejagnu
 BuildRequires:  texinfo
-Provides:       find = %{version}
-Obsoletes:      find < %{version}
 BuildRequires:  libselinux-devel
+
+Provides:       find = %{version}-%{release}
 
 %description
 The findutils package contains programs which will help you locate
