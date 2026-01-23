@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,16 +12,24 @@ Release:         %autorelease
 Summary:         Library for reading, mastering and writing optical discs
 License:         GPL-2.0-or-later
 URL:             https://libburnia-project.org/
+VCS:             git:https://dev.lovelyhq.com/libburnia/libburn.git
 #!RemoteAsset
 Source:          https://files.libburnia-project.org/releases/libburn-%{version}.tar.gz
-Patch:           0001-libburn-1.5.6-c23.patch
 BuildSystem:     autotools
 
-BuildOption(conf): --disable-static
-BuildOption(conf): --disable-doxygen-docs
-BuildOption(build): CFLAGS="%{optflags} -Wno-error=format-overflow"
+Patch:           0001-libburn-1.5.6-c23.patch
 
-BuildRequires:   gcc make intltool gettext autoconf automake libtool
+BuildOption(conf):  --disable-static
+BuildOption(conf):  --disable-doxygen-docs
+BuildOption(build):  CFLAGS="%{optflags} -Wno-error=format-overflow"
+
+BuildRequires:   gcc
+BuildRequires:   make
+BuildRequires:   intltool
+BuildRequires:   gettext
+BuildRequires:   autoconf
+BuildRequires:   automake
+BuildRequires:   libtool
 
 Requires(post):  update-alternatives
 Requires(preun): update-alternatives
@@ -31,7 +40,7 @@ CD, DVD, and Blu-Ray discs.
 
 %package         devel
 Summary:         Development files for %{name}
-Requires:        %{name} = %{version}
+Requires:        %{name}%{?_isa} = %{version}-%{release}
 Requires:        pkgconfig
 
 %description     devel
