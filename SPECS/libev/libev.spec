@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,6 +12,7 @@ Release:        %autorelease
 Summary:        An event loop library
 License:        BSD-2-Clause
 URL:            http://software.schmorp.de/pkg/libev.html
+# VCS: TODO: Add cvs link here
 #!RemoteAsset
 Source:         http://dist.schmorp.de/%{name}/Attic/%{name}-%{version}.tar.gz
 # Upstream has received patches to add pkg-config support for years but it always ignored them (yes, no answer at all). But since every distribution creates it we just follow.
@@ -21,7 +23,7 @@ Source2:        http://dist.schmorp.de/%{name}/Attic/%{name}-%{version}.tar.gz.s
 Source3:        http://dist.schmorp.de/signing-key.pub
 BuildSystem:    autotools
 
-BuildOption(conf): --disable-static
+BuildOption(conf):  --disable-static
 
 BuildRequires:  pkgconfig
 
@@ -30,7 +32,7 @@ An event loop that is loosely modeled after libevent.
 
 %package        devel
 Summary:        Development files for libev
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 An event loop that is loosely modeled after libevent. Features
@@ -45,14 +47,13 @@ available.
 
 This package holds the development files for libev.
 
-%package libevent-devel
-Summary:          Compatibility development header with libevent for %{name}.
-Requires:         %{name}-devel%{?_isa} = %{version}-%{release}
-
+%package        libevent-devel
+Summary:        Compatibility development header with libevent for %{name}.
+Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
 # The event.h file actually conflicts with the one from libevent-devel
-Conflicts:        libevent-devel
+Conflicts:      libevent-devel
 
-%description libevent-devel
+%description    libevent-devel
 This package contains a development header to make libev compatible with
 libevent.
 
