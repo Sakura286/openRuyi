@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
 # SPDX-FileContributor: Xuhai Chang <xuhai.oerv@isrc.iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,26 +12,26 @@ Release:        %autorelease
 Summary:        Utility and C library to create and read several streaming archive formats
 License:        BSD-2-Clause
 URL:            https://www.libarchive.org/
+VCS:            git:https://github.com/libarchive/libarchive
 #!RemoteAsset
 Source0:        https://github.com/libarchive/libarchive/releases/download/v%{version}/libarchive-%{version}.tar.xz
 #!RemoteAsset
 Source1:        https://github.com/libarchive/libarchive/releases/download/v%{version}/libarchive-%{version}.tar.xz.asc
-
 BuildSystem:  autotools
-BuildOption(conf): --disable-static
 
+BuildOption(conf):  --disable-static
 
-BuildRequires:  acl-devel
-BuildRequires:  bzip2-devel
-BuildRequires:  lz4-devel
+BuildRequires:  pkgconfig(libacl)
+BuildRequires:  pkgconfig(bzip2)
+BuildRequires:  pkgconfig(liblz4)
 BuildRequires:  libtool
-BuildRequires:  libxml2-devel
-BuildRequires:  libattr-devel
-BuildRequires:  libzstd-devel
+BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(libattr)
+BuildRequires:  pkgconfig(libzstd)
 BuildRequires:  pkgconfig
-BuildRequires:  xz-devel
-BuildRequires:  zlib-devel
-BuildRequires:  openssl-devel
+BuildRequires:  pkgconfig(liblzma)
+BuildRequires:  pkgconfig(zlib)
+BuildRequires:  pkgconfig(openssl)
 
 %description
 Libarchive is a programming library that can create and read several
@@ -43,19 +44,19 @@ and 6.
 
 This package contains the bsdtar cmdline utility.
 
-%package -n bsdtar
+%package     -n bsdtar
 Summary:        Utility to read several different streaming archive formats
-Requires:       %{name} >= %{version}
+Requires:       %{name}%{?_isa} >= %{version}-%{release}
 
 %description -n bsdtar
 This package contains the bsdtar cmdline utility.
 
-%package devel
+%package        devel
 Summary:        Development files for libarchive
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       glibc-devel
 
-%description devel
+%description    devel
 Libarchive is a programming library that can create and read several
 different streaming archive formats, including most popular tar
 variants and several cpio formats. It can also write shar archives and
