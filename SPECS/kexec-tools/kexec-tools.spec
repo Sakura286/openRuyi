@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
 # SPDX-FileContributor: Suyun114 <ziyu.oerv@isrc.iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,21 +12,23 @@ Release:        %autorelease
 Summary:        Tools for loading replacement kernels into memory
 License:        GPL-2.0-or-later
 URL:            https://projects.horms.net/projects/kexec/
+VCS:            git:https://git.kernel.org/pub/scm/utils/kernel/kexec/kexec-tools.git
 #!RemoteAsset
 Source:         https://kernel.org/pub/linux/utils/kernel/kexec/%{name}-%{version}.tar.xz
 #!RemoteAsset
 Source1:        https://kernel.org/pub/linux/utils/kernel/kexec/%{name}-%{version}.tar.sign
+BuildSystem:    autotools
+
 Patch1:         add-riscv64-support.patch
 Patch2:         riscv-hotplug.patch
-BuildSystem:    autotools
 
 BuildOption(conf):  --without-lzma LD=ld.bfd
 
 BuildRequires:  autoconf
 BuildRequires:  automake
-BuildRequires:  xz-devel
-BuildRequires:  zlib-devel
-BuildRequires:  libzstd-devel
+BuildRequires:  pkgconfig(liblzma)
+BuildRequires:  pkgconfig(zlib)
+BuildRequires:  pkgconfig(libzstd)
 
 %description
 Kexec is a user space utility for loading another kernel and asking the
