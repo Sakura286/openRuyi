@@ -37,7 +37,7 @@ kernel.
 %package        devel
 Summary:        iproute2 development files
 License:        GPL-2.0-or-later
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The libnetlink static library.
