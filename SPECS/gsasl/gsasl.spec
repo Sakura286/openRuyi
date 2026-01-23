@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,18 +12,23 @@ Release:        %autorelease
 Summary:        GNU SASL library
 License:        LGPL-2.1-or-later
 URL:            https://www.gnu.org/software/gsasl/
+VCS:            git:https://gitlab.com/gsasl/gsasl
 #!RemoteAsset
 Source0:        https://ftpmirror.gnu.org/gnu/gsasl/%{name}-%{version}.tar.gz
 #!RemoteAsset
 Source1:        https://ftpmirror.gnu.org/gnu/gsasl/%{name}-%{version}.tar.gz.sig
-
 BuildSystem:    autotools
 
-BuildOption(conf): --disable-static
-BuildOption(conf): --disable-rpath
-BuildOption(conf): --with-gssapi-impl=mit
+BuildOption(conf):  --disable-static
+BuildOption(conf):  --disable-rpath
+BuildOption(conf):  --with-gssapi-impl=mit
 
-BuildRequires:  gcc krb5-devel libgcrypt-devel libidn2-devel pkgconfig gettext
+BuildRequires:  gcc
+BuildRequires:  pkgconfig(krb5)
+BuildRequires:  pkgconfig(libgcrypt)
+BuildRequires:  pkgconfig(libidn2)
+BuildRequires:  pkgconfig
+BuildRequires:  gettext
 
 %description
 The GNU SASL library includes support for the SASL framework and various
@@ -31,13 +37,12 @@ LOGIN, and NTLM.
 
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       pkgconfig
 
 %description    devel
 This package contains libraries and header files for developing applications
 that use the GNU SASL library.
-
 
 %install -a
 %find_lang %{name} --generate-subpackages
