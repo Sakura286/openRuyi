@@ -9,8 +9,8 @@ Name:           hdparm
 Version:        9.65
 Release:        %autorelease
 Summary:        A utility for displaying and/or setting hard disk parameters
-License:        LicenseRef-BSD AND GPL-3.0-or-later
-URL:            https://sourceforge.net/projects/%{name}/
+License:        hdparm
+URL:            https://sourceforge.net/projects/hdparm/
 #!RemoteAsset
 Source:         https://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 BuildSystem:    autotools
