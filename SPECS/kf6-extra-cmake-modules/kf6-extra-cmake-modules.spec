@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: jingyupu <pujingyu@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -13,27 +14,25 @@ URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/frameworks/extra-cmake-modules
 #!RemoteAsset
 Source0:        https://invent.kde.org/frameworks/extra-cmake-modules/-/archive/v%{version}/extra-cmake-modules-%{version}.tar.gz
+BuildArch: noarch
 BuildSystem:    cmake
 
+BuildOption(conf):  -DQT_MAJOR_VERSION=6
 
-BuildRequires:  cmake >= 3.16
+BuildRequires:  cmake
 BuildRequires:  kf6-filesystem
 BuildRequires:  gcc-c++
 BuildRequires:  gcc-PIE
 BuildRequires:  qt6-base
+# BuildRequires:  python-sphinx
 
 Requires:       gcc-c++
 Requires:       gcc-PIE
-Requires:       cmake >= 3.16
+Requires:       cmake
 Requires:       kf6-filesystem
-# BuildRequires:  python-sphinx
+
 
 Provides:       extra-cmake-modules = %{version}
-Obsoletes:      extra-cmake-modules < %{version}
-
-BuildOption(conf): -DQT_MAJOR_VERSION=6
-
-BuildArch: noarch
 
 # TODO: Fix tests.
 %check
