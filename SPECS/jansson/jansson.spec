@@ -10,19 +10,23 @@ Release:        %autorelease
 Summary:        A C library for encoding, decoding and manipulating JSON data
 License:        MIT
 URL:            https://www.digip.org/jansson/
+VCS:            git:https://github.com/akheron/jansson
 #!RemoteAsset
 Source0:        https://github.com/akheron/jansson/releases/download/v%{version}/%{name}-%{version}.tar.bz2
+BuildSystem:    autotools
+
+BuildOption(conf):  --disable-static
+
 BuildRequires:  gcc
 BuildRequires:  bzip2
-BuildSystem:    autotools
-BuildOption(conf): --disable-static
 
 %description
 Jansson is a C library for encoding, decoding and manipulating JSON data.
 
 %package        devel
 Summary:        files for jansson development
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
 %description    devel
 files for jansson development
 
