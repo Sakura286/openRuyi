@@ -5,12 +5,12 @@
 # SPDX-License-Identifier: MulanPSL-2.0
 
 Name:           dav1d
-Version:        1.5.2
+Version:        1.5.3
 Release:        %autorelease
 Summary:        A fast and small AV1 decoder
 License:        BSD-2-Clause
 URL:            https://code.videolan.org/videolan/dav1d
-#!RemoteAsset
+#!RemoteAsset:  sha256:cbe212b02faf8c6eed5b6d55ef8a6e363aaab83f15112e960701a9c3df813686
 Source:         https://github.com/videolan/dav1d/archive/refs/tags/%{version}.tar.gz
 BuildSystem:    meson
 
