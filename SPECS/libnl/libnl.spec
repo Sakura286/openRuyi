@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Jingwiw <wangjingwei@iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -15,8 +16,8 @@ License:        LGPL-2.1-only
 URL:            https://github.com/thom311/libnl
 #!RemoteAsset
 Source0:        https://github.com/thom311/libnl/archive/refs/tags/%{name}3_11_0.tar.gz#/%{name}-%{version}.tar.gz
-
 BuildSystem:    autotools
+
 BuildOption(conf):  --disable-static
 
 BuildRequires:  gcc
@@ -24,7 +25,7 @@ BuildRequires:  flex
 BuildRequires:  bison
 BuildRequires:  libtool
 %if %{with python}
-BuildRequires:  python3-devel
+BuildRequires:  pkgconfig(python3)
 BuildRequires:  python3-setuptools
 BuildRequires:  swig
 %endif
@@ -34,27 +35,32 @@ The libnl suite is a collection of libraries providing APIs to the Netlink
 protocol, which is the primary IPC mechanism for interacting with the Linux
 kernel networking subsystems. This package contains all the runtime libraries.
 
-%package cli
+%package        cli
 Summary:        Command-line interface utilities for libnl
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-%description cli
+
+%description    cli
 This package provides command-line utilities (like nl-link-list, nl-route-list)
 and their specific support libraries for inspecting and manipulating Netlink
 from the shell.
 
 %if %{with python}
-%package -n python3-%{name}
-Summary:        Python 3 bindings for libnl
+%package -n python-%{name}
+Summary:        Python bindings for libnl
+Provides:       python3-%{name} = %{version}-%{release}
+%python_provide python3-%{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-%description -n python3-%{name}
-This package contains the Python 3 bindings for the libnl3 library suite.
+
+%description -n python-%{name}
+This package contains the Python bindings for the libnl3 library suite.
 %endif
 
-%package devel
+%package        devel
 Summary:        Development files for the libnl library suite
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       %{name}-cli%{?_isa} = %{version}-%{release}
-%description devel
+
+%description    devel
 This package provides all the header files, pkg-config files, and unversioned
 libraries needed to develop applications that use the libnl suite.
 
@@ -90,7 +96,7 @@ popd
 %{_mandir}/man8/*
 
 %if %{with python}
-%files -n python3-%{name}
+%files -n python-%{name}
 %{python3_sitearch}/netlink/
 %{python3_sitearch}/netlink-*.dist-info
 %endif
