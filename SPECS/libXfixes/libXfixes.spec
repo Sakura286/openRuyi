@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Dingli Zhang <dingli@iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,11 +12,12 @@ Release:        %autorelease
 Summary:        X Fixes library
 License:        MIT
 URL:            https://www.x.org/
+VCS:            git:https://gitlab.freedesktop.org/xorg/lib/libxfixes.git
 #!RemoteAsset
-Source0:         https://www.x.org/archive/individual/lib/%{name}-%{version}.tar.xz
-
+Source0:        https://www.x.org/archive/individual/lib/%{name}-%{version}.tar.xz
 BuildSystem:    autotools
-BuildOption(conf): --disable-static
+
+BuildOption(conf):  --disable-static
 
 BuildRequires:  pkgconfig(fixesproto) >= 6.0
 BuildRequires:  pkgconfig(x11) >= 1.6
@@ -26,12 +28,12 @@ BuildRequires:  pkgconfig(xproto) >= 7.0.22
 %description
 X Fixes library.
 
-%package devel
+%package        devel
 Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       pkgconfig
 
-%description devel
+%description    devel
 libXfixes development package
 
 %files
