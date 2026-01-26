@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -10,15 +11,19 @@ Release:        %autorelease
 Summary:        A Portable Foreign Function Interface Library
 License:        MIT
 URL:            https://sourceware.org/libffi
+VCS:            git:https://github.com/libffi/libffi
 #!RemoteAsset
-Source0:  https://github.com/libffi/libffi/releases/download/v%{version}/%{name}-%{version}.tar.gz
-
+Source0:        https://github.com/libffi/libffi/releases/download/v%{version}/%{name}-%{version}.tar.gz
 Buildsystem:    autotools
 
-BuildRequires:    gcc gcc-c++ dejagnu
-BuildRequires:  make
+BuildOption(conf):  --disable-multi-os-directory
+BuildOption(conf):  --disable-static
+BuildOption(conf):  --disable-exec-static-tramp
 
-BuildOption(conf): --disable-multi-os-directory --disable-static --disable-exec-static-tramp
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
+BuildRequires:  dejagnu
+BuildRequires:  make
 
 %description
 Compilers for high level languages generate code that follows certain conventions. These
@@ -42,11 +47,11 @@ language. The libffi library really only provides the lowest, machine dependent 
 fully featured foreign function interface. A layer must exist above libffi that handles type
 conversions for values passed between the two languages.
 
-%package  devel
-Summary:  Development files for libffi
-Requires: %{name} = %{version}-%{release}
+%package        devel
+Summary:        Development files for libffi
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description      devel
+%description    devel
 The devel package with header files and libraries is for developing apps which needs libffi.
 
 %install -a
