@@ -41,8 +41,8 @@ Token Interface (Cryptoki)".
 
 %package        devel
 Summary:        Files for developing with libp11
-Requires:       %{name} = %{version}-%{release}
-Requires:       openssl-devel
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       pkgconfig(openssl)
 
 %description    devel
 This devel package contains libraries and header files for
