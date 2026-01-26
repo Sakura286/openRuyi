@@ -3,6 +3,7 @@
 # SPDX-FileContributor: Han Gao <gaohan@iscas.ac.cn>
 # SPDX-FileContributor: Yafen Fang <yafen@iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -14,6 +15,7 @@ Release:        %autorelease
 Summary:        Firmware files used by the Linux kernel
 License:        GPL-1.0-or-later AND GPL-2.0-or-later AND MIT AND LicenseRef-openRuyi-Redistributable-no-modification-permitted
 URL:            https://www.kernel.org/
+VCS:            git:https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
 #!RemoteAsset:  sha256:48e05166db539f4ee8d29ac9d236a94442c5b1b1a160a966f6fe6b42bd714331
 Source0:        https://www.kernel.org/pub/linux/kernel/firmware/%{name}-%{version}.tar.xz
 
@@ -25,6 +27,7 @@ BuildRequires:  rdfind
 
 Requires:       linux-firmware-whence = %{version}-%{release}
 Requires:       ((linux-firmware = %{version}-%{release}) if linux-firmware)
+
 Recommends:     qcom-wwan-firmware
 Recommends:     amd-gpu-firmware
 Recommends:     amd-ucode-firmware
@@ -51,238 +54,235 @@ License:        GPL-1.0-or-later AND GPL-2.0-or-later AND MIT AND LicenseRef-ope
 This package contains the WHENCE license file which documents the vendor license details.
 
 # GPU firmwares
-%package        -n amd-gpu-firmware
+%package     -n amd-gpu-firmware
 Summary:        Firmware for AMD GPUs
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n amd-gpu-firmware
+%description -n amd-gpu-firmware
 Firmware for AMD amdgpu and radeon GPUs.
 
-%package        -n intel-gpu-firmware
+%package     -n intel-gpu-firmware
 Summary:        Firmware for Intel GPUs
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n intel-gpu-firmware
+%description -n intel-gpu-firmware
 Firmware for Intel GPUs including GuC (Graphics Microcontroller), HuC (HEVC/H.265
 Microcontroller) and DMC (Display Microcontroller) firmware for Skylake and later
 platforms.
 
-%package        -n nvidia-gpu-firmware
+%package     -n nvidia-gpu-firmware
 Summary:        Firmware for NVIDIA GPUs
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n nvidia-gpu-firmware
+%description -n nvidia-gpu-firmware
 Firmware for NVIDIA GPUs.
 
 # Microcode updates
-%package        -n amd-ucode-firmware
+%package     -n amd-ucode-firmware
 Summary:        Microcode updates for AMD CPUs
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n amd-ucode-firmware
+%description -n amd-ucode-firmware
 Microcode updates for AMD CPUs, AMD SEV and AMD TEE.
 
 # WiFi/Bluetooth/WWAN firmwares
-%package        -n atheros-firmware
+%package     -n atheros-firmware
 Summary:        Firmware for Qualcomm Atheros WiFi/Bluetooth adapters
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n atheros-firmware
+%description -n atheros-firmware
 Firmware for Qualcomm Atheros ath6k/ath9k/ath10k/ath11k WiFi adapters.
 
-%package        -n brcmfmac-firmware
+%package     -n brcmfmac-firmware
 Summary:        Firmware for Broadcom/Cypress brcmfmac WiFi/Bluetooth adapters
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n brcmfmac-firmware
+%description -n brcmfmac-firmware
 Firmware for Broadcom/Cypress brcmfmac WiFi/Bluetooth adapters.
 
-%package        -n iwlegacy-firmware
+%package     -n iwlegacy-firmware
 Summary:        Firmware for Intel(R) Wireless WiFi Link 3945(A)BG and 4965AGN adapters
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n iwlegacy-firmware
+%description -n iwlegacy-firmware
 This package contains the firmware required by the iwlegacy driver
 for Linux. This includes the 3945(A)BG and 4965AGN WiFi NICs. Usage
 of the firmware is subject to the terms and conditions contained
 inside the provided LICENSE file. Please read it carefully.
 
-%package        -n iwlwifi-firmware
+%package     -n iwlwifi-firmware
 Summary:        Firmware for modern Intel(R) Wireless WiFi adapters
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
-Obsoletes:      iwlwifi-dvm-firmware < %{version}-%{release}
-Obsoletes:      iwlwifi-mvm-firmware < %{version}-%{release}
-Obsoletes:      iwlwifi-mld-firmware < %{version}-%{release}
 
-%description    -n iwlwifi-firmware
+%description -n iwlwifi-firmware
 This package contains the firmware required by the iwlwifi driver.
 Usage of the firmware is subject to the terms and conditions contained
 inside the provided LICENSE file. Please read it carefully.
 
-%package        -n libertas-firmware
+%package     -n libertas-firmware
 Summary:        Firmware for Marvell Libertas SD/USB WiFi Network Adapters
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n libertas-firmware
+%description -n libertas-firmware
 Firmware for the Marvell Libertas series of WiFi Network Adapters
 Including the SD 8686/8787 and USB 8388/8388.
 
-%package        -n mt7xxx-firmware
+%package     -n mt7xxx-firmware
 Summary:        Firmware for Mediatek 7600/7900 series WiFi/Bluetooth adapters
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n mt7xxx-firmware
+%description -n mt7xxx-firmware
 Firmware for Mediatek 7600/7900 series WiFi/Bluetooth adapters
 
-%package        -n nxpwireless-firmware
+%package     -n nxpwireless-firmware
 Summary:        Firmware for NXP WiFi/Bluetooth/UWB adapters
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n nxpwireless-firmware
+%description -n nxpwireless-firmware
 Firmware for NXP WiFi/Bluetooth/UWB adapters.
 
-%package        -n realtek-firmware
+%package     -n realtek-firmware
 Summary:        Firmware for Realtek WiFi/Bluetooth adapters
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n realtek-firmware
+%description -n realtek-firmware
 Firmware for Realtek WiFi/Bluetooth adapters
 
-%package        -n qcom-wwan-firmware
+%package     -n qcom-wwan-firmware
 Summary:        Firmware for Qualcomm Wireless WAN modems
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n qcom-wwan-firmware
+%description -n qcom-wwan-firmware
 Firmware for Qualcomm Snapdragon X-series (SDX) wireless WAN modems used
 across numerous WWAN cards from numerous vendors.
 
-%package        -n tiwilink-firmware
+%package     -n tiwilink-firmware
 Summary:        Firmware for Texas Instruments WiFi/Bluetooth adapters
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n tiwilink-firmware
+%description -n tiwilink-firmware
 Firmware for Texas Instruments WiFi/Bluetooth adapters
 
 # SMART NIC and network switch firmwares
-%package        -n liquidio-firmware
+%package     -n liquidio-firmware
 Summary:        Firmware for Cavium LiquidIO Intelligent Server Adapter
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n liquidio-firmware
+%description -n liquidio-firmware
 Firmware for Cavium LiquidIO Intelligent Server Adapter
 
-%package        -n mlxsw_spectrum-firmware
+%package     -n mlxsw_spectrum-firmware
 Summary:        Firmware for Mellanox Spectrum 1/2/3 Switches
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n mlxsw_spectrum-firmware
+%description -n mlxsw_spectrum-firmware
 Firmware for Mellanox Spectrumi series 1/2/3 ethernet switches.
 
-%package        -n mrvlprestera-firmware
+%package     -n mrvlprestera-firmware
 Summary:        Firmware for Marvell Prestera Switchdev/ASIC devices
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n mrvlprestera-firmware
+%description -n mrvlprestera-firmware
 Firmware for Marvell Prestera Switchdev/ASIC devices
 
-%package        -n netronome-firmware
+%package     -n netronome-firmware
 Summary:        Firmware for Netronome Smart NICs
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n netronome-firmware
+%description -n netronome-firmware
 Firmware for Netronome Smart NICs
 
-%package        -n qcom-accel-firmware
+%package     -n qcom-accel-firmware
 Summary:        Firmware for Qualcomm Technologies data center / Open-vRAN Accelerators
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n qcom-accel-firmware
+%description -n qcom-accel-firmware
 Firmware for Qualcomm Technologies data center and Open-vRAN accelerators
 including the X100 5G RAN Accelerator Card, the QRU100 5G RAN Platform
 and the Cloud AI 100.
 
-%package        -n qed-firmware
+%package     -n qed-firmware
 Summary:        Firmware for Marvell FastLinQ adapters family
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n qed-firmware
+%description -n qed-firmware
 Firmware for Marvell FastLinQ adapters family (QDE), this device
 supports RoCE (RDMA over Converged Ethernet), iSCSI, iWARP, FCoE
 and ethernet including SRIOV, DCB etc.
 
 # Silicon Vendor specific
-%package        -n mediatek-firmware
+%package     -n mediatek-firmware
 Summary:        Firmware for Mediatek SoCs
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n mediatek-firmware
+%description -n mediatek-firmware
 Firmware for various compoents in Mediatek SoCs, in particular SCP.
 
-%package        -n qcom-firmware
+%package     -n qcom-firmware
 Summary:        Firmware for Qualcomm SoCs
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 Requires:       atheros-firmware = %{version}-%{release}
 
-%description    -n qcom-firmware
+%description -n qcom-firmware
 Firmware for various compoents in Qualcomm SoCs including Adreno GPUs,
 Venus video encode/decode, Audio DSP, Compute DSP, modem, Sensor DSPs.
 
 # Vision and ISP hardware
-%package        -n intel-vsc-firmware
+%package     -n intel-vsc-firmware
 Summary:        Firmware files for Intel Visual Sensing Controller (IVSC)
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n intel-vsc-firmware
+%description -n intel-vsc-firmware
 Firmware files for Intel Visual Sensing Controller (IVSC) for
 Tiger Lake, Alder Lake and Raptor Lake SoCs and the IPU3/6 firmware.
 
 # Sound codec hardware
-%package        -n cirrus-audio-firmware
+%package     -n cirrus-audio-firmware
 Summary:        Firmware for Cirrus audio amplifiers and codecs
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n cirrus-audio-firmware
+%description -n cirrus-audio-firmware
 Firmware for Cirrus audio amplifiers and codecs
 
-%package        -n intel-audio-firmware
+%package     -n intel-audio-firmware
 Summary:        Firmware for Intel audio DSP amplifiers and codecs
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n intel-audio-firmware
+%description -n intel-audio-firmware
 Firmware for Intel audio DSP amplifiers and codecs
 
 # Random other hardware
-%package        -n dvb-firmware
+%package     -n dvb-firmware
 Summary:        Firmware for various DVB broadcast receivers
 License:        LicenseRef-openRuyi-Redistributable-no-modification-permitted
 Requires:       linux-firmware-whence = %{version}-%{release}
 
-%description    -n dvb-firmware
+%description -n dvb-firmware
 Firmware for various DVB broadcast receivers. These include the
 Siano DTV devices, devices based on Conexant chipsets (cx18,
 cx23885, cx23840, cx231xx), Xceive xc4000/xc5000, DiBcom dib0700,
