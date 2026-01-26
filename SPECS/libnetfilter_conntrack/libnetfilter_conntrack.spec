@@ -35,7 +35,7 @@ interface (API) to the in-kernel connection tracking state table.
 
 %package        devel
 Summary:        Netfilter conntrack userspace library
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 libnetfilter_conntrack is a userspace library providing a programming
