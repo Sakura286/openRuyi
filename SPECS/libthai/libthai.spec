@@ -30,7 +30,7 @@ output methods as well as basic character and string supports.
 
 %package        devel
 Summary:        Thai language support routines
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The libthai-devel package includes the header files and developer docs
