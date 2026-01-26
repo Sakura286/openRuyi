@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -14,17 +15,17 @@ URL:            https://gitlab.gnome.org/GNOME/libnotify
 Source:         https://download.gnome.org/sources/libnotify/0.8/libnotify-%{version}.tar.xz
 BuildSystem:    meson
 
-BuildOption(conf): -Dtests=false
-BuildOption(conf): -Dman=false
-BuildOption(conf): -Dgtk_doc=false
-BuildOption(conf): -Ddocbook_docs=disabled
+BuildOption(conf):  -Dtests=false
+BuildOption(conf):  -Dman=false
+BuildOption(conf):  -Dgtk_doc=false
+BuildOption(conf):  -Ddocbook_docs=disabled
 
 BuildRequires:  meson
 BuildRequires:  pkgconfig(gdk-pixbuf-2.0)
-BuildRequires:  pkgconfig(glib-2.0) >= 2.38.0
+BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0)
 
-Requires:       glib >= 2.38.0
+Requires:       glib
 
 %description
 libnotify is a library for sending desktop notifications to a notification
@@ -32,7 +33,7 @@ daemon, as defined in the freedesktop.org Desktop Notifications spec.
 
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 This package contains libraries and header files needed for
