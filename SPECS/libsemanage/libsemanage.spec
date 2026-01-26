@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -13,50 +14,61 @@ Release:        %autorelease
 Summary:        SELinux policy management library and utilities
 License:        LGPL-2.1-or-later
 URL:            https://github.com/SELinuxProject/selinux/wiki/Releases
+VCS:            git:https://github.com/SELinuxProject/selinux
 #!RemoteAsset
 Source0:        https://github.com/SELinuxProject/selinux/releases/download/%{version}/%{name}-%{version}.tar.gz
 Source1:        semanage.conf
-# TODO: We haven't package secilc yet. Workaround.
-Patch0:         fix-test-failure-with-secilc.patch
 BuildSystem:    autotools
 
-BuildRequires:  audit-devel bison flex bzip2-devel libselinux-devel libsepol-devel
-BuildRequires:  pkgconfig make gcc
-BuildRequires:  python3 python3-devel python3-setuptools swig
-BuildRequires:  cunit-devel
+# TODO: We haven't package secilc yet. Workaround.
+Patch0:         fix-test-failure-with-secilc.patch
 
+BuildOption(build):  CFLAGS="%{optflags} -fno-semantic-interposition"
+BuildOption(build):  LIBDIR="%{_libdir}"
+BuildOption(build):  LIBEXECDIR="%{_libexecdir}"
+BuildOption(build):  SHLIBDIR="%{_libdir}"
+BuildOption(install):  LIBDIR="%{_libdir}"
+BuildOption(install):  LIBEXECDIR="%{_libexecdir}"
+BuildOption(install):  SHLIBDIR="%{_libdir}"
+BuildOption(install):  all install-pywrap
 
-BuildOption(build): CFLAGS="%{optflags} -fno-semantic-interposition"
-BuildOption(build): LIBDIR="%{_libdir}"
-BuildOption(build): LIBEXECDIR="%{_libexecdir}"
-BuildOption(build): SHLIBDIR="%{_libdir}"
-
-BuildOption(install): LIBDIR="%{_libdir}"
-BuildOption(install): LIBEXECDIR="%{_libexecdir}"
-BuildOption(install): SHLIBDIR="%{_libdir}"
-BuildOption(install): all install-pywrap
+BuildRequires:  pkgconfig(audit)
+BuildRequires:  bison
+BuildRequires:  flex
+BuildRequires:  pkgconfig(bzip2)
+BuildRequires:  pkgconfig(libselinux)
+BuildRequires:  pkgconfig(libsepol)
+BuildRequires:  pkgconfig
+BuildRequires:  make
+BuildRequires:  gcc
+BuildRequires:  python3
+BuildRequires:  pkgconfig(python3)
+BuildRequires:  python3-setuptools
+BuildRequires:  swig
+BuildRequires:  pkgconfig(cunit)
 
 %description
 libsemanage is the SELinux policy management library. It is used to
 manipulate SELinux policies. This package contains the runtime library,
 configuration files, and policy migration tools.
 
-%package devel
+%package        devel
 Summary:        Development files for the SELinux policy management library
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description devel
+%description    devel
 The libsemanage-devel package contains the header files, static and shared
 libraries needed for developing applications that manipulate SELinux policies.
 
-%package -n python3-libsemanage
-Summary: semanage python 3 bindings for libsemanage
-Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: python3-libselinux
+%package     -n python-libsemanage
+Summary:        semanage python bindings for libsemanage
+Provides:       python3-libsemanage = %{version}-%{release}
 %{?python_provide:%python_provide python3-libsemanage}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       python-libselinux
 
-%description -n python3-libsemanage
-The libsemanage-python3 package contains the python 3 bindings for developing
+%description -n python-libsemanage
+The libsemanage-python package contains the python 3 bindings for developing
 SELinux management applications.
 
 %prep -a
@@ -89,7 +101,7 @@ install -d -m 755 %{buildroot}%{_localstatedir}/lib/selinux
 %{_mandir}/man3/*
 %{_mandir}/man5/*
 
-%files -n python3-libsemanage
+%files -n python-libsemanage
 %{python3_sitearch}/*.so
 %{python3_sitearch}/semanage.py*
 %{_libexecdir}/selinux/semanage_migrate_store
