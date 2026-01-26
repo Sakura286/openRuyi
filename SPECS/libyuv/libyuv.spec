@@ -2,26 +2,29 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
 %global git_commit 94417b9d213364905ce849c25719b819b8dbbaaa
 
-Name:               libyuv
-Summary:            YUV conversion and scaling functionality library
-Version:            0
-Release:            %autorelease
-License:            BSD-3-Clause
-URL:                https://chromium.googlesource.com/libyuv/libyuv
+Name:           libyuv
+Summary:        YUV conversion and scaling functionality library
+Version:        0+git20260126.94417b9
+Release:        %autorelease
+License:        BSD-3-Clause
+URL:            https://chromium.googlesource.com/libyuv/libyuv
 #!RemoteAsset
 Source:         https://chromium.googlesource.com/libyuv/libyuv/+archive/%{git_commit}.tar.gz
-Patch:          0001-fix-install-dir.patch
 BuildSystem:    cmake
 
-BuildOption(conf): -DTEST=ON
+Patch:          0001-fix-install-dir.patch
+
+BuildOption(conf):  -DTEST=ON
+
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
-BuildRequires:  gtest-devel
+BuildRequires:  pkgconfig(gtest)
 
 %description
 This is an open source project that includes YUV conversion and scaling
@@ -31,7 +34,7 @@ devices in portrait mode.
 
 %package        devel
 Summary:        The development files for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 This package contains the header files and development libraries for libyuv.
