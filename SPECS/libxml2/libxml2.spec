@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,28 +12,29 @@ Release:        %autorelease
 Summary:        A Library to Manipulate XML Files
 License:        MIT
 URL:            https://gitlab.gnome.org/GNOME/libxml2
+VCS:            git:https://gitlab.gnome.org/nwellnhof/libxml2.git
 #!RemoteAsset
 Source:         https://download.gnome.org/sources/libxml2/2.14/libxml2-%{version}.tar.xz
 BuildSystem:    autotools
 
-BuildOption(conf): --enable-shared
-BuildOption(conf): --disable-silent-rules
-BuildOption(conf): --disable-static
-BuildOption(conf): --docdir=%{_docdir}/%{name}
-BuildOption(conf): --with-history
-BuildOption(conf): --enable-ipv6
-BuildOption(conf): --with-sax1
-BuildOption(conf): --with-regexps
-BuildOption(conf): --with-threads
-BuildOption(conf): --with-reader
-BuildOption(conf): --with-ftp
-BuildOption(conf): --with-http
-BuildOption(conf): --with-legacy
-BuildOption(conf): --without-python
+BuildOption(conf):  --enable-shared
+BuildOption(conf):  --disable-silent-rules
+BuildOption(conf):  --disable-static
+BuildOption(conf):  --docdir=%{_docdir}/%{name}
+BuildOption(conf):  --with-history
+BuildOption(conf):  --enable-ipv6
+BuildOption(conf):  --with-sax1
+BuildOption(conf):  --with-regexps
+BuildOption(conf):  --with-threads
+BuildOption(conf):  --with-reader
+BuildOption(conf):  --with-ftp
+BuildOption(conf):  --with-http
+BuildOption(conf):  --with-legacy
+BuildOption(conf):  --without-python
 
 BuildRequires:  fdupes
 BuildRequires:  pkgconfig
-BuildRequires:  readline-devel
+BuildRequires:  pkgconfig(readline)
 BuildRequires:  pkgconfig(liblzma)
 BuildRequires:  pkgconfig(zlib)
 
@@ -41,14 +43,14 @@ The XML C library was developed for the GNOME project. It is used by many
 programs to load, save, and manipulate any kind of XML files.
 This package contains the core runtime library and command-line tools.
 
-%package devel
+%package        devel
 Summary:        Development files for libxml2
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       glibc-devel
 Requires:       pkgconfig(liblzma)
 Requires:       pkgconfig(zlib)
 
-%description devel
+%description    devel
 This subpackage contains header files for developing applications that
 want to make use of libxml2.
 
