@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,27 +12,33 @@ Release:        %autorelease
 Summary:        Middleware to access a smart card using SCard API (PC/SC)
 License:        BSD-3-Clause
 URL:            https://pcsclite.apdu.fr/
+VCS:            git:https://github.com/LudovicRousseau/PCSC.git
 #!RemoteAsset
 Source:         https://pcsclite.apdu.fr/files/%{name}-%{version}.tar.xz
 BuildSystem:    meson
 
-BuildOption(conf): -Dpolkit=true
-BuildOption(conf): -Dusbdropdir=%{_libdir}/pcsc/drivers
-BuildOption(conf):    -Dlibsystemd=true
+BuildOption(conf):  -Dpolkit=true
+BuildOption(conf):  -Dusbdropdir=%{_libdir}/pcsc/drivers
+BuildOption(conf):  -Dlibsystemd=true
 
-BuildRequires:  doxygen meson python3 flex duktape
+BuildRequires:  doxygen
+BuildRequires:  meson
+BuildRequires:  python3
+BuildRequires:  flex
+BuildRequires:  duktape
 BuildRequires:  pkgconfig(libudev)
 BuildRequires:  pkgconfig(systemd)
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(libudev)
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(mount)
-Requires:       polkit
-Recommends:     ccid
 
-Requires(post):   systemd
+Requires:       polkit
+Requires(post):  systemd
 Requires(preun):  systemd
-Requires(postun): systemd
+Requires(postun):  systemd
+
+Recommends:     ccid
 
 %description
 PC/SC Lite is a middleware to access a smart card using SCard API (PC/SC).
@@ -39,7 +46,7 @@ This package contains the PC/SC Lite server, runtime library, and utilities.
 
 %package        devel
 Summary:        PC/SC Lite library and header files for development
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       pkgconfig(libudev)
 
 %description    devel
