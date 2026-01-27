@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Yafen Fang <yafen@iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -14,6 +15,7 @@ URL:            https://pagure.io/numad
 #!RemoteAsset:  git+https://pagure.io/numad#aec1497e2b29f57997ae27351ac01abc25026387
 #!CreateArchive
 Source0:        %{name}-%{version}git.tar.gz
+
 Patch1:         0001-recognize-m-option-correctly.patch
 Patch2:         0002-numad_log-fix-buffer-overflow.patch
 Patch3:         0003-avoid-array-index-out-of-bounds.patch
