@@ -2,8 +2,12 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
+
+# Exclude errors for dependencies ending in sh, for example ash, pdksh and so on.
+%define __requires_exclude sh$
 
 Name:           parallel
 Version:        20250822
@@ -11,6 +15,7 @@ Release:        %autorelease
 Summary:        Shell tool for executing jobs in parallel
 License:        GPL-3.0-or-later AND GFDL-1.3-or-later
 URL:            https://www.gnu.org/software/parallel/
+VCS:            git:https://https.git.savannah.gnu.org/git/parallel.git
 #!RemoteAsset
 Source0:        https://ftpmirror.gnu.org/gnu/%{name}/%{name}-%{version}.tar.bz2
 BuildSystem:    autotools
@@ -22,9 +27,6 @@ BuildRequires:  perl
 BuildRequires:  sed
 # bash-completion for %%{bash_completions_dir}
 BuildRequires:  bash-completion
-
-# Exclude errors for dependencies ending in sh, for example ash, pdksh and so on.
-%define __requires_exclude sh$
 
 %description
 GNU Parallel is a shell tool for executing jobs in parallel using one or more
