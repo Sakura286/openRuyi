@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -10,29 +11,29 @@ Version:        126
 Release:        %autorelease
 Summary:        PolicyKit Authorization Framework
 License:        LGPL-2.1-or-later
-URL:            https://gitlab.freedesktop.org/polkit/polkit/
+URL:            https://gitlab.freedesktop.org/polkit/polkit
 #!RemoteAsset
 Source0:        https://github.com/polkit-org/polkit/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source1:        50-default.rules
 BuildSystem:    meson
 
-BuildOption(conf):    -D session_tracking=logind
-BuildOption(conf):    -D systemdsystemunitdir="%{_unitdir}"
-BuildOption(conf):    -D pam_include=system-auth
-BuildOption(conf):    -D pam_module_dir="%{_pam_moduledir}"
-BuildOption(conf):    -D examples=false
-BuildOption(conf):    -D tests=false
-BuildOption(conf):    -D man=false
-BuildOption(conf):    -D c_args="%{build_cflags} -Wno-error=deprecated-declarations"
-BuildOption(conf):    -D introspection=false
-BuildOption(conf):    -D gtk_doc=false
+BuildOption(conf):  -D session_tracking=logind
+BuildOption(conf):  -D systemdsystemunitdir="%{_unitdir}"
+BuildOption(conf):  -D pam_include=system-auth
+BuildOption(conf):  -D pam_module_dir="%{_pam_moduledir}"
+BuildOption(conf):  -D examples=false
+BuildOption(conf):  -D tests=false
+BuildOption(conf):  -D man=false
+BuildOption(conf):  -D c_args="%{build_cflags} -Wno-error=deprecated-declarations"
+BuildOption(conf):  -D introspection=false
+BuildOption(conf):  -D gtk_doc=false
 
 BuildRequires:  python3
 BuildRequires:  meson
 BuildRequires:  systemd-rpm-macros
 BuildRequires:  gcc-c++
-BuildRequires:  expat-devel
-BuildRequires:  pam-devel
+BuildRequires:  pkgconfig(expat)
+BuildRequires:  pkgconfig(pam)
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(duktape) >= 2.2.0
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -45,17 +46,18 @@ BuildRequires:  pkgconfig(libsystemd)
 %description
 PolicyKit is a toolkit for defining and handling authorizations.
 
-%package devel
+%package        devel
 Summary:        Development files for PolicyKit
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description devel
+%description    devel
 Development files for the PolicyKit Authorization Framework.
 
 %install -a
 install -d %{buildroot}%{_localstatedir}/lib/polkit
 install -m0644 %{SOURCE1} %{buildroot}%{_datadir}/polkit-1/rules.d/
 mkdir -p %{buildroot}%{_sysconfdir}/polkit-1/actions
+
 %find_lang polkit-1 --generate-subpackages
 
 %post
