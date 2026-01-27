@@ -136,17 +136,19 @@ export CC=gcc
 export CC_FOR_BUILD=gcc
 export TCLLIBDIR=%{tcl_archdir}/sqlite%{version}
 export CFLAGS="$RPM_OPT_FLAGS $RPM_LD_FLAGS \
-        -DSQLITE_ENABLE_COLUMN_METADATA=1 \
-        -DSQLITE_ENABLE_UNLOCK_NOTIFY \
-        -DSQLITE_ENABLE_DBSTAT_VTAB=1 \
-        -DSQLITE_ENABLE_FTS3_TOKENIZER=1 \
-        -DSQLITE_ENABLE_FTS3_PARENTHESIS \
-        -DSQLITE_SECURE_DELETE \
-        -DSQLITE_ENABLE_STMTVTAB \
-        -DSQLITE_ENABLE_STAT4 \
-        -DSQLITE_MAX_VARIABLE_NUMBER=250000 \
-        -DSQLITE_MAX_EXPR_DEPTH=10000 \
-        -DSQLITE_ENABLE_MATH_FUNCTIONS"
+ -DSQLITE_ENABLE_COLUMN_METADATA=1 \
+ -DSQLITE_ENABLE_UNLOCK_NOTIFY \
+ -DSQLITE_ENABLE_DBSTAT_VTAB=1 \
+ -DSQLITE_ENABLE_FTS3_TOKENIZER=1 \
+ -DSQLITE_ENABLE_FTS3_PARENTHESIS \
+ -DSQLITE_SECURE_DELETE \
+ -DSQLITE_ENABLE_SESSION \
+ -DSQLITE_ENABLE_PREUPDATE_HOOK \
+ -DSQLITE_ENABLE_STMTVTAB \
+ -DSQLITE_ENABLE_STAT4 \
+ -DSQLITE_MAX_VARIABLE_NUMBER=250000 \
+ -DSQLITE_MAX_EXPR_DEPTH=10000 \
+ -DSQLITE_ENABLE_MATH_FUNCTIONS"
 # By default, we use disable-rpath, which will
 # cause failure here, so we overwrite the conf here
 %configure                      \
@@ -155,6 +157,7 @@ export CFLAGS="$RPM_OPT_FLAGS $RPM_LD_FLAGS \
     --enable-fts3               \
     --enable-fts4               \
     --enable-fts5               \
+    --enable-session            \
     --enable-rtree              \
     --soname=legacy
 
