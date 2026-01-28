@@ -22,9 +22,9 @@ Source0:        https://github.com/%{name}/%{name}/archive/v%{version}.tar.gz#/%
 BuildSystem:    autotools
 
 BuildRequires:  gettext
-BuildRequires:  acl-devel
+BuildRequires:  pkgconfig(libacl)
 BuildRequires:  libtool
-BuildRequires:  ncurses-devel
+BuildRequires:  pkgconfig(ncurses)
 
 %description
 VIM (VIsual editor iMproved) is an updated and improved version of the
