@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: yyjeqhc <jialin.oerv@isrc.iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -34,7 +35,7 @@ BuildRequires:  pkgconfig(Qt6Network)
 BuildRequires:  pkgconfig(Qt6OpenGL)
 BuildRequires:  qt6-base-static
 BuildRequires:  qt6-base-private-devel
-BuildRequires:  qt6-declarative-devel
+BuildRequires:  pkgconfig(Qt6Quick)
 BuildRequires:  pkgconfig(Qt6Svg)
 BuildRequires:  wayland-protocols
 
@@ -59,22 +60,22 @@ QtCompositor module for creating Wayland compositors.
 
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
-Requires:       qt6-declarative-devel
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       pkgconfig(Qt6Quick)
 
 %description    devel
 Development files for %{name}.
 
 %package        adwaita-decoration
 Summary:        Qt decoration plugin implementing Adwaita-like client-side decorations
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    adwaita-decoration
 Qt decoration plugin implementing Adwaita-like client-side decorations.
 
 %package        examples
 Summary:        Programming examples for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    examples
 Programming examples for %{name}.
