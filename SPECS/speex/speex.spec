@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Yafen Fang <yafen@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -13,10 +14,10 @@ URL:            http://www.speex.org/
 VCS:            git:https://gitlab.xiph.org/xiph/speex.git
 #!RemoteAsset
 Source0:        https://downloads.xiph.org/releases/speex/speex-%{version}.tar.gz
-
 BuildSystem:    autotools
-BuildOption(conf): --enable-binaries
-BuildOption(conf): --disable-static
+
+BuildOption(conf):  --enable-binaries
+BuildOption(conf):  --disable-static
 
 BuildRequires:  gcc
 BuildRequires:  make
