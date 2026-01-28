@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -11,16 +12,19 @@ Release:        %autorelease
 Summary:        Tool for Converting XML Files to Various Formats
 License:        GPL-2.0-or-later
 URL:            https://pagure.io/xmlto/
+VCS:            git:https://pagure.io/xmlto.git
 #!RemoteAsset
 Source:         https://releases.pagure.org/%{name}/%{name}-%{version}.tar.bz2
 BuildSystem:    autotools
 
-BuildOption(conf): BASH=/bin/bash
+BuildOption(conf):  BASH=/bin/bash
 
-BuildRequires:  autoconf automake
+BuildRequires:  autoconf
+BuildRequires:  automake
 BuildRequires:  fdupes
 BuildRequires:  flex
 BuildRequires:  libxslt
+
 Requires:       libxml2
 Requires:       libxslt
 
