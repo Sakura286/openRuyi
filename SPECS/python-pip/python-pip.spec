@@ -1,5 +1,6 @@
-# SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
-# SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
+# SPDX-FileCopyrightText: (C) 2025, 2026 Institute of Software, Chinese Academy of Sciences (ISCAS)
+# SPDX-FileCopyrightText: (C) 2025, 2026 openRuyi Project Contributors
+# SPDX-FileContributor: yyjeqhc <jialin.oerv@isrc.iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
@@ -15,30 +16,29 @@
 # You can generate it with:
 # %%{_rpmconfigdir}/pythonbundles.py --namespace 'python%%{1}dist' src/pip/_vendor/vendor.txt
 %global bundled() %{expand:
-Provides: bundled(python%{1}dist(cachecontrol)) = 0.14.2
-Provides: bundled(python%{1}dist(certifi)) = 2025.1.31
-Provides: bundled(python%{1}dist(dependency-groups)) = 1.3.1
-Provides: bundled(python%{1}dist(distlib)) = 0.3.9
-Provides: bundled(python%{1}dist(distro)) = 1.9
-Provides: bundled(python%{1}dist(idna)) = 3.10
-Provides: bundled(python%{1}dist(msgpack)) = 1.1
-Provides: bundled(python%{1}dist(packaging)) = 25
-Provides: bundled(python%{1}dist(platformdirs)) = 4.3.7
-Provides: bundled(python%{1}dist(pygments)) = 2.19.1
-Provides: bundled(python%{1}dist(pyproject-hooks)) = 1.2
-Provides: bundled(python%{1}dist(requests)) = 2.32.3
-Provides: bundled(python%{1}dist(resolvelib)) = 1.1
-Provides: bundled(python%{1}dist(rich)) = 14
-Provides: bundled(python%{1}dist(setuptools)) = 70.3
-Provides: bundled(python%{1}dist(tomli)) = 2.2.1
-Provides: bundled(python%{1}dist(tomli-w)) = 1.2
-Provides: bundled(python%{1}dist(truststore)) = 0.10.1
-Provides: bundled(python%{1}dist(typing-extensions)) = 4.13.2
-Provides: bundled(python%{1}dist(urllib3)) = 1.26.20
+Provides:       bundled(python%{1}dist(cachecontrol)) = 0.14.3
+Provides:       bundled(python%{1}dist(certifi)) = 2025.10.5
+Provides:       bundled(python%{1}dist(dependency-groups)) = 1.3.1
+Provides:       bundled(python%{1}dist(distlib)) = 0.4
+Provides:       bundled(python%{1}dist(distro)) = 1.9
+Provides:       bundled(python%{1}dist(idna)) = 3.10
+Provides:       bundled(python%{1}dist(msgpack)) = 1.1.2
+Provides:       bundled(python%{1}dist(packaging)) = 25
+Provides:       bundled(python%{1}dist(platformdirs)) = 4.5
+Provides:       bundled(python%{1}dist(pygments)) = 2.19.2
+Provides:       bundled(python%{1}dist(pyproject-hooks)) = 1.2
+Provides:       bundled(python%{1}dist(requests)) = 2.32.5
+Provides:       bundled(python%{1}dist(resolvelib)) = 1.2.1
+Provides:       bundled(python%{1}dist(rich)) = 14.2
+Provides:       bundled(python%{1}dist(setuptools)) = 70.3
+Provides:       bundled(python%{1}dist(tomli)) = 2.3
+Provides:       bundled(python%{1}dist(tomli-w)) = 1.2
+Provides:       bundled(python%{1}dist(truststore)) = 0.10.4
+Provides:       bundled(python%{1}dist(urllib3)) = 1.26.20
 }
 
 Name:           python-%{srcname}
-Version:        25.1.1
+Version:        25.3
 Release:        %autorelease
 Summary:        A tool for installing and managing Python packages
 License:        MIT AND Python-2.0.1 AND Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MPL-2.0 AND (Apache-2.0 OR BSD-2-Clause)
@@ -57,13 +57,14 @@ Packages" or "Pip Installs Python".
 
 %package     -n python3-%{srcname}
 Summary:        A tool for installing and managing Python3 packages
-BuildRequires:  python3-devel
+BuildRequires:  pkgconfig(python3)
 # python3 bootstrap: this is rebuilt before the final build of python3, which
 # adds the dependency on python3-rpm-generators, so we require it manually
 # Note that the package prefix is always python3-, even if we build for 3.X
 BuildRequires:  python3-rpm-generators
 BuildRequires:  pyproject-rpm-macros
 BuildRequires:  python3-setuptools
+BuildRequires:  python3dist(flit-core)
 %if %{without bash}
 BuildRequires:  bash-completion
 %endif
@@ -95,9 +96,6 @@ A Python wheel of pip to use with venv.
 # Remove windows executable binaries
 rm -v src/pip/_vendor/distlib/*.exe
 sed -i '/\.exe/d' pyproject.toml
-
-# Remove unused test requirements
-sed -Ei '/(pytest-(cov|xdist|rerunfailures)|proxy\.py)/d' tests/requirements.txt
 
 %build
 export PYTHONPATH=./src/
