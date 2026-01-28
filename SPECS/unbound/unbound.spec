@@ -85,8 +85,8 @@ BuildRequires:  systemd-rpm-macros
 BuildRequires:  swig
 BuildRequires:  flex
 %if %{with dnstap}
-BuildRequires:  fstrm-devel
-BuildRequires:  protobuf-c-devel
+BuildRequires:  pkgconfig(libfstrm)
+BuildRequires:  pkgconfig(libprotobuf-c)
 %endif
 BuildRequires:  pkgconfig(openssl)
 BuildRequires:  pkgconfig(libsystemd)
@@ -96,10 +96,10 @@ BuildRequires:  pkgconfig(libevent)
 BuildRequires:  pkgconfig(expat)
 BuildRequires:  pkgconfig(libsodium)
 %if %{with redis}
-BuildRequires:  hiredis-devel
+BuildRequires:  pkgconfig(hiredis)
 %endif
 %if %{with ngtcp2}
-BuildRequires:  ngtcp2-crypto-ossl-devel
+BuildRequires:  pkgconfig(libngtcp2_crypto_ossl)
 %endif
 
 Requires:       openssl
