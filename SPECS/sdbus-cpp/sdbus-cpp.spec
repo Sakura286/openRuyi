@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <1772413353@qq.com>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -13,29 +14,29 @@ License:        LGPL-2.1-or-later WITH LGPL-3.0-linking-exception
 URL:            https://github.com/Kistler-Group/sdbus-cpp
 #!RemoteAsset
 Source0:        https://github.com/Kistler-Group/sdbus-cpp/archive/refs/tags/v%{version}.tar.gz
-
 BuildSystem:    cmake
 
-BuildOption(conf): -DBUILD_TESTING:BOOL=OFF
-BuildOption(conf): -DBUILD_EXAMPLES:BOOL=OFF
-BuildOption(conf): -DBUILD_DOC:BOOL=OFF
+BuildOption(conf):  -DBUILD_TESTING:BOOL=OFF
+BuildOption(conf):  -DBUILD_EXAMPLES:BOOL=OFF
+BuildOption(conf):  -DBUILD_DOC:BOOL=OFF
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(libsystemd)
 BuildRequires:  pkgconfig(libxml-2.0)
-# BuildRequires:  doxygen graphviz
+# BuildRequires:  doxygen
+# BuildRequires:  graphviz
 
 %description
 sdbus-cpp is a modern C++ D-Bus library for Linux, designed as a lightweight
 wrapper around sd-bus, the D-Bus API of systemd.
 
-%package devel
+%package        devel
 Summary:        Development files for %{name}
-Requires:       %{name} = %{version}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description devel
+%description    devel
 This package contains the header files, pkg-config file, and CMake configuration
 files needed to develop applications that use the sdbus-cpp library.
 
