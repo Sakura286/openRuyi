@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: jingyupu <pujingyu@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
@@ -10,17 +11,18 @@ Release:        %autorelease
 Summary:        XCB utility module for client- and WM-side ICCCM helpers
 License:        MIT
 URL:            http://xcb.freedesktop.org/
+VCS:            git:https://gitlab.freedesktop.org/xorg/lib/libxcb-wm.git
 #!RemoteAsset
 Source:         http://xorg.freedesktop.org/releases/individual/xcb/%{name}-%{version}.tar.xz
+BuildSystem:    autotools
+
+BuildOption(conf):  --disable-static
+BuildOption(install):  DESTDIR="%{buildroot}"
 
 BuildRequires:  m4
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(xcb) >= 1.4
 BuildRequires:  pkgconfig(xorg-macros) >= 1.6.0
-
-BuildSystem: autotools
-BuildOption(conf): --disable-static
-BuildOption(install): DESTDIR="%{buildroot}"
 
 %description
 The XCB util modules provide a number of libraries which sit on top
@@ -31,11 +33,11 @@ Included in this package is:
 
 - icccm: Both client and window-manager helpers for ICCCM.
 
-%package devel
+%package        devel
 Summary:        Development files for the XCB EWMH/ICCCM utility modules
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%description devel
+%description    devel
 The XCB util modules provide a number of libraries which sit on top
 of libxcb, the core X protocol library, and some of the extension
 libraries.
