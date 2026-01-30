@@ -23,7 +23,7 @@ Patch0:         0001-Use-system-compatible-include-path-for-xxhash.h.patch
 # BuildOption(conf):  -DMOLD_USE_SYSTEM_MIMALLOC=ON
 
 # use bundled blake3 to decrease dependency
-# BuildRequires:  pkgconfig(tbb)
+# BuildRequires:  pkgconfig(libblake3)
 BuildRequires:  cmake
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
