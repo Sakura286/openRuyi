@@ -1,7 +1,7 @@
-From 4566e72f11b66489a1d0a1ff759f5481362cd791 Mon Sep 17 00:00:00 2001
+From 16e2bcb190de598fd17a27a3b10bca97828d9978 Mon Sep 17 00:00:00 2001
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Date: Fri, 17 Oct 2025 11:16:17 +0800
-Subject: [PATCH 045/227] UPSTREAM: ASoC: dt-bindings: Add bindings for
+Subject: [PATCH 045/231] UPSTREAM: ASoC: dt-bindings: Add bindings for
  SpacemiT K1
 
 Add dt-binding for the i2s driver of SpacemiT's K1 SoC.

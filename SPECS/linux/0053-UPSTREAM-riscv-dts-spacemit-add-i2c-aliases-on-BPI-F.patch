@@ -1,7 +1,7 @@
-From 915c0c565c2cba4ae6b2e19678854170bf8ba198 Mon Sep 17 00:00:00 2001
+From 6dcdbaadb5ef44d66cb1e2d0ce92e8d846af0c44 Mon Sep 17 00:00:00 2001
 From: Aurelien Jarno <aurelien@aurel32.net>
 Date: Fri, 26 Sep 2025 19:54:39 +0200
-Subject: [PATCH 053/227] UPSTREAM: riscv: dts: spacemit: add i2c aliases on
+Subject: [PATCH 053/231] UPSTREAM: riscv: dts: spacemit: add i2c aliases on
  BPI-F3
 
 Add i2c aliases for i2c2 and i2c8 on BPI-F3. This is useful to keep a

@@ -1,7 +1,7 @@
-From 2a0357425ffeda28bfd8ae3881a20f9e2b078a43 Mon Sep 17 00:00:00 2001
+From 43ac0db813275a53ae0ae038d6b01154443c40dc Mon Sep 17 00:00:00 2001
 From: Alex Elder <elder@riscstar.com>
 Date: Mon, 25 Aug 2025 12:20:54 -0500
-Subject: [PATCH 048/227] UPSTREAM: riscv: dts: spacemit: enable the i2c8
+Subject: [PATCH 048/231] UPSTREAM: riscv: dts: spacemit: enable the i2c8
  adapter
 
 Define properties for the I2C adapter that provides access to the

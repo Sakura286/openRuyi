@@ -1,7 +1,7 @@
-From 8fee438779f04ac1fe9353cd17bd35a2afa55fdc Mon Sep 17 00:00:00 2001
+From f9668de0a80259bf076e156afaa435cb67ec7957 Mon Sep 17 00:00:00 2001
 From: Alex Elder <elder@riscstar.com>
 Date: Mon, 27 Oct 2025 08:30:04 -0500
-Subject: [PATCH 041/227] UPSTREAM: spi: fsl-qspi: introduce sfa_size devtype
+Subject: [PATCH 041/231] UPSTREAM: spi: fsl-qspi: introduce sfa_size devtype
  data
 
 In fsl_qspi_default_setup(), four registers define the size of blocks of

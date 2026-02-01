@@ -1,7 +1,7 @@
-From 413d07f025f6f00ea37825c7b926ddb19e7a8ad3 Mon Sep 17 00:00:00 2001
+From 0fdaa1b1174a8c25fbbacfbe492ac4e85bd82e4c Mon Sep 17 00:00:00 2001
 From: Michal Wilczynski <m.wilczynski@samsung.com>
 Date: Tue, 28 Oct 2025 13:22:32 +0100
-Subject: [PATCH 012/227] UPSTREAM: rust: macros: Add support for 'imports_ns'
+Subject: [PATCH 012/231] UPSTREAM: rust: macros: Add support for 'imports_ns'
  to module!
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

@@ -1,7 +1,7 @@
-From 696411ed1776a83ff36db476b9a562e728f2ce83 Mon Sep 17 00:00:00 2001
+From 9303d841d5693552fed4fb2df3b782fc3ad83a5c Mon Sep 17 00:00:00 2001
 From: Alex Elder <elder@riscstar.com>
 Date: Mon, 25 Aug 2025 12:20:56 -0500
-Subject: [PATCH 050/227] UPSTREAM: riscv: dts: spacemit: define regulator
+Subject: [PATCH 050/231] UPSTREAM: riscv: dts: spacemit: define regulator
  constraints
 
 Define basic constraints for the regulators in the SpacemiT P1 PMIC,

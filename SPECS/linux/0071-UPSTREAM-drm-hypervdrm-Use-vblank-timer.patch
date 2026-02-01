@@ -1,7 +1,7 @@
-From b46fb280ab662e4b885d88764104028ba881ef63 Mon Sep 17 00:00:00 2001
+From 52ac17f422e23395beff33dfa4982baa33531a2a Mon Sep 17 00:00:00 2001
 From: Thomas Zimmermann <tzimmermann@suse.de>
 Date: Tue, 16 Sep 2025 10:36:22 +0200
-Subject: [PATCH 071/227] UPSTREAM: drm/hypervdrm: Use vblank timer
+Subject: [PATCH 071/231] UPSTREAM: drm/hypervdrm: Use vblank timer
 
 HyperV's virtual hardware does not provide vblank interrupts. Use a
 vblank timer to simulate the interrupt. Rate-limits the display's

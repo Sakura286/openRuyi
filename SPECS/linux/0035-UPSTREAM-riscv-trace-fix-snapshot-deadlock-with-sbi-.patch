@@ -1,7 +1,7 @@
-From 0230ada90db78b1af52c3b1c846cf2ba64ed5f36 Mon Sep 17 00:00:00 2001
+From 4b99a829c161bb57ea1a90a5d751d4083af7c2b4 Mon Sep 17 00:00:00 2001
 From: Martin Kaiser <martin@kaiser.cx>
 Date: Tue, 23 Dec 2025 14:50:06 +0100
-Subject: [PATCH 035/227] UPSTREAM: riscv: trace: fix snapshot deadlock with
+Subject: [PATCH 035/231] UPSTREAM: riscv: trace: fix snapshot deadlock with
  sbi ecall
 
 If sbi_ecall.c's functions are traceable,

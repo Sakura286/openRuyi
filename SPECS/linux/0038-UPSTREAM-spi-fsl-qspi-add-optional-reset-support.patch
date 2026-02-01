@@ -1,7 +1,7 @@
-From 3a3a0db8770bde44ae7562b759a4c57843ebaa7c Mon Sep 17 00:00:00 2001
+From 9911182c5d7fbe5dd0c8a97bad986774d2037092 Mon Sep 17 00:00:00 2001
 From: Alex Elder <elder@riscstar.com>
 Date: Mon, 27 Oct 2025 08:30:01 -0500
-Subject: [PATCH 038/227] UPSTREAM: spi: fsl-qspi: add optional reset support
+Subject: [PATCH 038/231] UPSTREAM: spi: fsl-qspi: add optional reset support
 
 Add support for one or more optional exclusive resets.  These simply need
 to be deasserted at probe time, and can remain that way for the life of the

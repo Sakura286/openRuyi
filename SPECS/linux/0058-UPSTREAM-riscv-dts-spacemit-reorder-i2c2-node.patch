@@ -1,7 +1,7 @@
-From 3fa05f97082212dbe06de9308f2522f4039e16fe Mon Sep 17 00:00:00 2001
+From f331691d85c37eb41517265093c45f0eca59d49b Mon Sep 17 00:00:00 2001
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Date: Wed, 5 Nov 2025 11:37:43 +0800
-Subject: [PATCH 058/227] UPSTREAM: riscv: dts: spacemit: reorder i2c2 node
+Subject: [PATCH 058/231] UPSTREAM: riscv: dts: spacemit: reorder i2c2 node
 
 Reorder the i2c2 node to its correct position according to its
 register address.This improves the readability and maintainability

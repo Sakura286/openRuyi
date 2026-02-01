@@ -1,7 +1,7 @@
-From 2a53ff98cf5ad108883eccd2feec8d4e92aff317 Mon Sep 17 00:00:00 2001
+From 09b5ae5cd39d8caafefd5c9d55f41efaa0397751 Mon Sep 17 00:00:00 2001
 From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 Date: Wed, 12 Nov 2025 04:44:42 +0000
-Subject: [PATCH 057/227] UPSTREAM: riscv: dts: spacemit: Add OrangePi R2S
+Subject: [PATCH 057/231] UPSTREAM: riscv: dts: spacemit: Add OrangePi R2S
  board device tree
 
 Add initial device tree support for the OrangePi RV2 board [1], which is
