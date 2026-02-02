@@ -33,7 +33,7 @@ BuildRequires:  grep
 BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  sed
-BuildRequires:  paper
+BuildRequires:  libpaper
 BuildRequires:  perl(base)
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(Fcntl)
