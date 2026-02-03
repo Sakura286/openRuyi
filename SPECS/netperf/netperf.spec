@@ -2,24 +2,24 @@
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
 # SPDX-FileContributor: Yafen Fang <yafen@iscas.ac.cn>
 # SPDX-FileContributor: Zheng Junjie <zhengjunjie@iscas.ac.cn>
+# SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
-%global commit_date  20250728
 %global commit       afc51ff9764741da4ed6702651fba9d9c23f8557
 %global shortcommit  %(c=%{commit}; echo ${c:0:7})
 
 Name:           netperf
-Version:        %{commit_date}+git%{shortcommit}
+Version:        0+git20260202.%{shortcommit}
 Release:        %autorelease
 Summary:        Benchmark to measure the performance of many different types of networking
 License:        MIT
 URL:            https://github.com/HewlettPackard/netperf
 #!RemoteAsset
 Source0:        https://github.com/HewlettPackard/netperf/archive/%{commit}/%{name}-%{commit}.tar.gz
-
 BuildSystem:    autotools
-BuildOption(build): CFLAGS="%{optflags} -fno-strict-aliasing -fcommon -std=c99 -D_GNU_SOURCE"
+
+BuildOption(build):  CFLAGS="%{optflags} -fno-strict-aliasing -fcommon -std=c99 -D_GNU_SOURCE"
 
 BuildRequires:  autoconf
 BuildRequires:  automake
