@@ -34,7 +34,7 @@ Preinstall: gmp
 
 Preinstall: libselinux pcre2 util-linux libcap zlib lua bzip2 libgcrypt
 Preinstall: bash coreutils cpio rpm-config-openruyi 
-Preinstall: zstd xz libgomp1 libgpg-error gzip tar patch 
+Preinstall: zstd xz libgomp-gcc15 libgpg-error gzip tar patch
 Preinstall: lz4
 
 
@@ -42,10 +42,8 @@ Support: glibc-gconv-modules-extra
 Support: systemd-rpm-macros
 Support: mold filesystem
 Support: perl file 
-Support: gcc cpp  gcc15-c++ libstdc++6-devel-gcc15
-Support: libasan8 libitm1 libtsan2 libubsan1
-Support: gcc15-PIE gcc15 cpp15 liblsan0 
-Support: liblsan0 libatomic1 libstdc++6 libgcc_s1
+Support: gcc cpp gcc15-c++
+Support: gcc15 cpp15 libgomp-gcc15
 Support: rpm-config-openruyi attr coreutils 
 Support: gcc sed xz grep patch diffutils bash findutils m4 
 Support: systemd-sysusers
@@ -59,25 +57,23 @@ Keep: mold libtasn1 libmount libblkid systemd-sysusers
 Keep: systemd-shared systemd-libs
 Keep: libseccomp
 Keep: ncurses-devel make findutils elfutils libxml2
-Keep: gawk sed gcc15 libgcc_s1 binutils perl python3 glibc libxcrypt gcc cpp-15
+Keep: gawk sed gcc15 binutils perl python3 glibc libxcrypt gcc cpp-15
 Keep: grep ncurses libatomic1 
-Keep: libstdc++6 libgcc_s1 gmp libgfortran5 
-Keep: libasan8 libgomp1 libubsan1 libitm1 liblsan0 liblsan0 libtsan2
+Keep: libstdc++ gmp libgfortran-gcc15
+Keep: libasan-gcc15 libgomp-gcc15 libubsan-gcc15 libitm-gcc15 liblsan-gcc15 libtsan-gcc15
 Keep: libelf isl
 Keep: libxcrypt mpc mpfr gcc-c++ gcc15-c++ perl-rpm-packaging 
 Keep: cpp15 pkgconf pkgconf-m4 attr popt pam elfutils libarchive
-Keep: libunistring libstdc++6 libstdc++6-devel-gcc15 libstdc++6-locale 
-Keep: libstdc++6-pp libtsan2 libubsan1 libasan8 gcc15-c++ 
-Keep: gcc15-PIE gcc15 cpp15 
-Keep: libgcc_s1 libgfortran5 liblsan0 liblsan0
-Keep: libisl23 libmpc3 libgdbm6 gmp libxcrypt libxcrypt-static libxcrypt-devel
+Keep: libunistring libstdc++6 libstdc++-devel-gcc15
+Keep: libgfortran-gcc15
+Keep: libisl23 mpc3 libgdbm6 gmp libxcrypt libxcrypt-static libxcrypt-devel
 Keep: mpfr-devel isl-devel libmpfr6 mpfr-devel gmp-c++ gmp-devel gmp debugedit
 Keep: python-setuptools-wheel libffi python3-setuptools python3-wheel pam pam-devel
 Keep: glib glib-devel ccache gpm jitterentropy openssl
 Keep: sqlite sqlite-devel python3-libs python3
 Keep: gettext-tools
 Keep: cmake m4 diffutils attr texinfo
-Keep: gcc15-fortran gcc15-go libgo24
+Keep: gcc15-fortran gcc15-go libgo-gcc15
 
 
 Order:  mold:binutils
