@@ -131,7 +131,8 @@ Development files for dnf5.
 
 %install -a
 ln -sf dnf5 %{buildroot}%{_bindir}/dnf
-
+# By default we don't want enable local plugin.
+sed -i 's/enabled = host-only/enabled = false/g' %{buildroot}%{_sysconfdir}/dnf/libdnf5-plugins/local.conf
 %find_lang %{name} --generate-subpackages --all-name
 
 %files
