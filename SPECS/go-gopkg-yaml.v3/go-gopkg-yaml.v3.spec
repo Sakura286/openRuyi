@@ -24,6 +24,8 @@ BuildRequires:  go
 BuildRequires:  go-rpm-macros
 BuildRequires:  go(gopkg.in/check.v1)
 
+Provides:       go(gopkg.in/yaml.v3) = %{version}
+# Somebody may use this, for example minio
 Provides:       go(go.yaml.in/yaml/v3) = %{version}
 
 %description
