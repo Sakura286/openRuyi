@@ -24,7 +24,7 @@ BuildRequires:  meson
 BuildRequires:  gettext-devel
 BuildRequires:  gi-docgen
 BuildRequires:  pkgconfig(gio-2.0)
-BuildRequires:  pkgconfig(gobject-introspection)
+BuildRequires:  pkgconfig(gobject-introspection-1.0)
 BuildRequires:  python3-docutils
 
 %description
