@@ -79,35 +79,13 @@ for gd, a graphics library for creating PNG and JPEG graphics.
 
 %conf -p
 autoreconf -fiv
+%ifnarch x86_64
+export CFLAGS="%{build_cflags} -ffp-contract=off"
+%endif
 
 %check -p
 # https://github.com/libgd/libgd/issues/763#issuecomment-918049103
 export TMPDIR=/tmp
-%ifarch riscv64
-# TODO: These tests are failing on riscv64, disable them for now - 251
-XFAIL_TESTS="freetype/bug00132 \
-gdimagearc/bug00079 \
-gdimagecopyresampled/basic \
-gdimagefilledarc/php_bug43828 \
-gdimagefilledpolygon/bug00100 \
-gdimagecopyresampled/basic_alpha \
-gdimagecopyresampled/bug00201 \
-gdimageflip/gdimageflip \
-gdimagecolor/basic \
-gdimageconvolution/basic \
-gdimagefilledarc/bug00351 \
-gdimageline/bug00072 \
-gdimagerotate/php_bug_65070 \
-gdimagesetpixel/alpha_blending \
-gdimagesquaretocircle/gdimagesquaretocircle \
-gdimagegrayscale/basic \
-gdimagenegate/basic \
-gdimagerotate/bug00067 \
-png/bug00088 \
-jpeg/bug_github_18 \
-tga/tga_read \
-jpeg/jpeg_read"
-%endif
 
 %files
 %doc README.md
