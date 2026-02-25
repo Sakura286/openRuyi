@@ -1,0 +1,52 @@
+# SPDX-FileCopyrightText: (C) 2026 Institute of Software, Chinese Academy of Sciences (ISCAS)
+# SPDX-FileCopyrightText: (C) 2026 openRuyi Project Contributors
+# SPDX-FileContributor: Suyun <ziyu.oerv@isrc.iscas.ac.cn>
+#
+# SPDX-License-Identifier: MulanPSL-2.0
+
+%global srcname jieba
+
+Name:           python-%{srcname}
+Version:        0.42.1
+Release:        %autorelease
+Summary:        Chinese text segmentation
+License:        MIT
+URL:            https://github.com/fxsjy/jieba
+#!RemoteAsset
+Source0:        https://files.pythonhosted.org/packages/source/j/%{srcname}/%{srcname}-%{version}.tar.gz
+# The tarball from PyPI does not have README.md and LICENSE. So we fetch files from GitHub additionally.
+#!RemoteAsset
+Source1:        https://raw.githubusercontent.com/fxsjy/jieba/refs/tags/v%{version}/README.md
+#!RemoteAsset
+Source2:        https://raw.githubusercontent.com/fxsjy/jieba/refs/tags/v%{version}/LICENSE
+BuildArch:      noarch
+BuildSystem:    pyproject
+
+BuildOption(install):  %{srcname}
+# PaddlePaddle does not support riscv64.
+BuildOption(check):  -e 'jieba.lac_small.*'
+
+BuildRequires:  pyproject-rpm-macros
+BuildRequires:  python3-devel
+BuildRequires:  python3dist(numpy)
+BuildRequires:  python3dist(whoosh)
+
+Provides:       python3-%{srcname}
+%python_provide python3-%{srcname}
+
+%description
+"Jieba" (Chinese for "to stutter") Chinese text segmentation: built to be the best Python Chinese word segmentation module.
+
+%generate_buildrequires
+%pyproject_buildrequires
+
+%prep -a
+cp %{SOURCE1} README.md
+cp %{SOURCE2} LICENSE
+
+%files -f %{pyproject_files}
+%doc README.md
+%license LICENSE
+
+%changelog
+%{?autochangelog}
