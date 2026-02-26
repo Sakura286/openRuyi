@@ -9,7 +9,7 @@
 %define real_version 6.10.1
 %define short_version 6.10
 
-Name:           qt6-graphs
+Name:           qt6-qtgraphs
 Version:        6.10.1
 Release:        %autorelease
 Summary:        The Qt Graphs module enables you to visualize data in 3D
