@@ -150,6 +150,7 @@ BuildRequires:  python-rpm-macros
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  pkgconfig(liblzma)
+BuildRequires:  pkgconfig(readline)
 
 %if %{with rpmwheels}
 # Python 3.12 removed the deprecated imp module,
@@ -623,7 +624,7 @@ EXCLUDES="-x test_ensurepip -x test_ctypes -x test_tools"
 %{dynload_dir}/math.*.so
 %{dynload_dir}/mmap.*.so
 %{dynload_dir}/pyexpat.*.so
-#{dynload_dir}/readline.*.so
+%{dynload_dir}/readline.*.so
 %{dynload_dir}/resource.*.so
 %{dynload_dir}/select.*.so
 %{dynload_dir}/syslog.*.so
