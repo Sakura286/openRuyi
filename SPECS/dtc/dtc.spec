@@ -21,6 +21,8 @@ BuildSystem:    autotools
 
 # https://github.com/dgibson/dtc/issues/163
 Patch0:         0001-Test-failure-with-newer-glibc.patch
+# From https://github.com/dgibson/dtc/commit/9a1c801a1a3c102bf95c5339c9e985b26b823a21
+Patch1:         0002-fix-discarded-const-qualifiers.patch
 # https://qemu.googlesource.com/dtc/+/9a969f3b70b07bbf1c9df44a38d7f8d1d3a6e2a5
 Patch1000:      1000-backport-pylibfdt-libfdt.i-fix-backwards-compatibility-of-return-values.patch
 
