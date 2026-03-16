@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: (C) 2025 Institute of Software, Chinese Academy of Sciences (ISCAS)
 # SPDX-FileCopyrightText: (C) 2025 openRuyi Project Contributors
+# SPDX-FileContributor: Jingkun Zheng <zhengjingkun@iscas.ac.cn>
 # SPDX-FileContributor: yyjeqhc <jialin.oerv@isrc.iscas.ac.cn>
 # SPDX-FileContributor: misaka00251 <liuxin@iscas.ac.cn>
 #
@@ -100,7 +101,7 @@ done
 %{_libdir}/libfftw3l.so.*
 %{_libdir}/libfftw3l_threads.so.*
 %{_libdir}/libfftw3l_omp.so.*
-%ifarch x64
+%ifarch x86_64
 %{_libdir}/libfftw3q.so.*
 %{_libdir}/libfftw3q_threads.so.*
 %{_libdir}/libfftw3q_omp.so.*
