@@ -1,0 +1,73 @@
+From 3ad5509ff8e7f465ab01f9fc69c4c88d279fcfa0 Mon Sep 17 00:00:00 2001
+From: Evgeni Burovski <evgeny.burovskiy@gmail.com>
+Date: Sun, 30 Nov 2025 18:21:39 +0100
+Subject: [PATCH] TST: replace (now-deprecared) suppress_warnings with stdlib
+ warnings.filterwarnings
+
+---
+ array_api_strict/tests/test_array_object.py          | 11 +++++++----
+ array_api_strict/tests/test_elementwise_functions.py | 11 +++++++----
+ 2 files changed, 14 insertions(+), 8 deletions(-)
+
+diff --git a/array_api_strict/tests/test_array_object.py b/array_api_strict/tests/test_array_object.py
+index 6e171a0..c98981b 100644
+--- a/array_api_strict/tests/test_array_object.py
++++ b/array_api_strict/tests/test_array_object.py
+@@ -1,8 +1,9 @@
+ import sys
++import warnings
+ import operator
+ from builtins import all as all_
+ 
+-from numpy.testing import assert_raises, suppress_warnings
++from numpy.testing import assert_raises
+ import numpy as np
+ import pytest
+ 
+@@ -269,10 +270,12 @@ def _check_op_array_scalar(dtypes, a, s, func, func_name, BIG_INT=BIG_INT):
+ 
+         else:
+             # Only test for no error
+-            with suppress_warnings() as sup:
++            with warnings.catch_warnings():
+                 # ignore warnings from pow(BIG_INT)
+-                sup.filter(RuntimeWarning,
+-                           "invalid value encountered in power")
++                warnings.filterwarnings(
++                    "ignore", category=RuntimeWarning,
++                    message="invalid value encountered in power"
++                )
+                 func(s)
+             return True
+ 
+diff --git a/array_api_strict/tests/test_elementwise_functions.py b/array_api_strict/tests/test_elementwise_functions.py
+index 0f740d3..e8a6d32 100644
+--- a/array_api_strict/tests/test_elementwise_functions.py
++++ b/array_api_strict/tests/test_elementwise_functions.py
+@@ -1,8 +1,8 @@
++import warnings
+ from inspect import signature, getmodule
+ 
+ import numpy as np
+ import pytest
+-from numpy.testing import suppress_warnings
+ 
+ 
+ from .. import asarray, _elementwise_functions
+@@ -300,10 +300,13 @@ def _array_vals():
+                     if allowed:
+                         conv_scalar = a._promote_scalar(s)
+ 
+-                        with suppress_warnings() as sup:
++                        with warnings.catch_warnings():
+                             # ignore warnings from pow(BIG_INT)
+-                            sup.filter(RuntimeWarning,
+-                                       "invalid value encountered in power")
++                            warnings.filterwarnings(
++                                "ignore", category=RuntimeWarning,
++                                message="invalid value encountered in power"
++                            )
++
+                             assert func(s, a) == func(conv_scalar, a)
+                             assert func(a, s) == func(a, conv_scalar)
+ 

@@ -1,0 +1,62 @@
+From f5d18a0dc88f729465cf2481af27965828390bca Mon Sep 17 00:00:00 2001
+From: Sakura286 <chenxuan@iscas.ac.cn>
+Date: Fri, 20 Mar 2026 11:41:53 +0800
+Subject: [PATCH] Fix serialization of Pandas 3.x extension array dtypes (e.g.
+ StringDtype)
+
+Pandas 3.x defaults to its own extension dtypes (StringDtype, etc.)
+instead of NumPy object dtype for certain column types. The downstream
+NumPy serialization layer in partd only understands np.ndarray/np.dtype
+and calls dt.str.encode(), which fails on extension dtypes that lack
+the .str attribute:
+
+  AttributeError: 'StringDtype' object has no attribute 'str'
+
+Convert extension arrays to plain NumPy arrays via np.asarray() in
+PandasColumns.append() before handing them off to the Numpy layer.
+Object-typed arrays still round-trip correctly because Pandas 3.x
+will infer extension dtypes back automatically when constructing
+DataFrames from object columns.
+
+Fixes test_PandasColumns and test_column_selection failures on
+Python 3.13 + Pandas >= 3.0.
+---
+ partd/pandas.py | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/partd/pandas.py b/partd/pandas.py
+index 880558c..e58ce61 100644
+--- a/partd/pandas.py
++++ b/partd/pandas.py
+@@ -1,3 +1,5 @@
++import numpy as np
++
+ from functools import partial
+ import pickle
+ 
+@@ -47,9 +49,19 @@ class PandasColumns(Interface):
+ 
+         # TODO: don't use values, it does some work.  Look at _blocks instead
+         #       pframe/cframe do this well
+-        arrays = {extend(k, col): df[col].values
+-                       for k, df in data.items()
+-                       for col in df.columns}
++        arrays = {}
++        for k, df in data.items():
++            for col in df.columns:
++                values = df[col].values
++                # Pandas 3.x uses extension arrays (e.g. StringDtype) by
++                # default for some column types.  The downstream NumPy
++                # serialisation layer only understands np.ndarray /
++                # np.dtype, so convert extension arrays to plain NumPy
++                # arrays here.
++                if is_extension_array_dtype(values.dtype):
++                    values = np.asarray(values)
++                arrays[extend(k, col)] = values
++
+         arrays.update({extend(k, '.index'): df.index.values
+                             for k, df in data.items()})
+         # TODO: handle categoricals
+-- 
+2.53.0
+
