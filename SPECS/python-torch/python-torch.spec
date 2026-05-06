@@ -109,6 +109,7 @@ Source8:       https://github.com/onnx/onnx/archive/refs/tags/v%{onnx_ver}.tar.g
 %endif
 
 BuildRequires:  cmake
+BuildRequires:  cmake(ONNX)
 BuildRequires:  concurrentqueue-devel
 # Although eigen3 enabled on openruyi, it cannot be detected during conf
 # TODO: Fix this
@@ -157,10 +158,6 @@ BuildRequires:  gcc-fortran
 %if "%{toolchain}" == "clang"
 BuildRequires:  clang
 BuildRequires:  flang
-%endif
-
-%if %{with system_onnx}
-BuildRequires:  onnx-devel
 %endif
 
 %if %{with mpi}
@@ -270,12 +267,6 @@ rm -rf third_party/kineto/*
 cp -r kineto-*/* third_party/kineto/
 %endif
 
-%if %{without system_onnx}
-tar xf %{SOURCE8}
-rm -rf third_party/onnx/*
-cp -r onnx-*/* third_party/onnx/
-%endif
-
 # Adjust for amd gpu targets currently supported
 # sed -i -e 's@"gfx1100", "gfx1101", "gfx1200", "gfx1201", "gfx908",@"gfx1100", "gfx1101", "gfx1200", "gfx1201", "gfx1151",@' aten/src/ATen/native/cuda/Blas.cpp
 sed -i -e 's@"gfx1100", "gfx1101", "gfx1200", "gfx1201", "gfx908",@"gfx1100", "gfx1101",@' aten/src/ATen/native/cuda/Blas.cpp
@@ -361,10 +352,6 @@ mv third_party/cpp-httplib .
 mv third_party/kineto .
 %endif
 
-%if %{without system_onnx}
-mv third_party/onnx .
-%endif
-
 %if %{without system_protobuf}
 mv third_party/protobuf .
 %endif
@@ -393,10 +380,6 @@ mv cpp-httplib third_party
 
 %if %{without system_kineto}
 mv kineto third_party
-%endif
-
-%if %{without system_onnx}
-mv onnx third_party
 %endif
 
 %if %{without system_protobuf}
@@ -506,9 +489,7 @@ export USE_PYTORCH_QNNPACK=OFF
 export USE_ROCM=OFF
 export USE_SYSTEM_SLEEF=ON
 export USE_SYSTEM_EIGEN_INSTALL=ON
-%if %{with system_onnx}
 export USE_SYSTEM_ONNX=ON
-%endif
 export USE_SYSTEM_PYBIND11=ON
 export USE_SYSTEM_LIBS=OFF
 export USE_SYSTEM_NCCL=OFF
