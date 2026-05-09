@@ -27,8 +27,9 @@
 # TODO: openmpi not included in openRuyi
 %bcond mpi 0
 
-# TODO: no flang on openRuyi, so we cannot enable clang
-%global toolchain gcc
+# https://github.com/pytorch/pytorch/commit/f474497cd35cc2997a18d06c64f401303c056e7c
+# Pytorch is officially built with clang
+%global toolchain clang
 %global _lto_cflags %nil
 
 # Disable dwz with rocm because memory can be exhausted
@@ -97,7 +98,7 @@ Source6:        https://github.com/pytorch/kineto/archive/%{ki_commit}/kineto-%{
 %global mslk_scommit 3d332d1
 Source7:        https://github.com/meta-pytorch/MSLK/archive/%{mslk_commit}/MSLK-%{mslk_scommit}.tar.gz
 
-
+BuildRequires:  clang
 BuildRequires:  cmake
 BuildRequires:  cmake(concurrentqueue)
 BuildRequires:  cmake(ONNX)
@@ -139,15 +140,6 @@ BuildRequires:  python3dist(typing-extensions)
 
 %if %{with system_httplib}
 BuildRequires:  cmake(httplib)
-%endif
-
-%if "%{toolchain}" == "gcc"
-BuildRequires:  gcc-c++
-BuildRequires:  gcc-fortran
-%endif
-%if "%{toolchain}" == "clang"
-BuildRequires:  clang
-BuildRequires:  flang
 %endif
 
 %if %{with mpi}
