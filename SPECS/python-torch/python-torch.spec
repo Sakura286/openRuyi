@@ -9,7 +9,7 @@
 
 %global srcname torch
 
-%global pypi_version 2.10.0
+%global pypi_version 2.11.0
 %global miniz_version 3.0.2
 
 # For -test subpackage
@@ -48,10 +48,6 @@
 %bcond system_httplib 0
 # TODO: kineto not included in openruyi
 %bcond system_kineto 0
-# TODO: on openRuyi, onnx lack of check_model symbol
-%bcond system_onnx 0
-# TODO: opentelemetry not included in openRuyi
-%bcond system_opentelemetry 0
 # TODO: tensorpipe not included in openRuyi
 %bcond system_tensorpipe 0
 
@@ -72,41 +68,35 @@ Source1:        https://github.com/google/flatbuffers/archive/refs/tags/v%{flatb
 %endif
 %if %{without system_tensorpipe}
 # Developement on tensorpipe has stopped, repo made read only July 1, 2023, this is the last commit
-%global tp_commit 52791a2fd214b2a9dc5759d36725909c1daa7f2e
-%global tp_scommit 52791a2
+%global tp_commit 2b4cd91092d335a697416b2a3cb398283246849d
+%global tp_scommit 2b4cd91
 #!RemoteAsset:  sha256:7ff0b84c0623f3360ec7c34b8c4fe02e7f9a87f8fa559c303f9574e44be0bc56
-Source2:       https://github.com/pytorch/tensorpipe/archive/%{tp_commit}/tensorpipe-%{tp_scommit}.tar.gz
+Source2:        https://github.com/pytorch/tensorpipe/archive/%{tp_commit}/tensorpipe-%{tp_scommit}.tar.gz
 # The old libuv tensorpipe uses
 #!RemoteAsset:  sha256:6cfeb5f4bab271462b4a2cc77d4ecec847fdbdc26b72019c27ae21509e6f94fa
-Source3:       https://github.com/libuv/libuv/archive/refs/tags/v1.41.0.tar.gz
+Source3:        https://github.com/libuv/libuv/archive/refs/tags/v1.41.0.tar.gz
 # Developement afaik on libnop has stopped, this is the last commit
 %global nop_commit 910b55815be16109f04f4180e9adee14fb4ce281
 %global nop_scommit 910b558
 #!RemoteAsset:  sha256:ec3604671f8ea11aed9588825f9098057ebfef7a8908e97459835150eea9f63a
-Source4:       https://github.com/google/libnop/archive/%{nop_commit}/libnop-%{nop_scommit}.tar.gz
-%endif
-%if %{without opentelemetry}
-%global ot_ver 1.14.2
-#!RemoteAsset:  sha256:c7e7801c9f6228751cdb9dd4724d0f04777ed53f524c8828e73bf4c9f894e0bd
-Source5:       https://github.com/open-telemetry/opentelemetry-cpp/archive/refs/tags/v%{ot_ver}.tar.gz
+Source4:        https://github.com/google/libnop/archive/%{nop_commit}/libnop-%{nop_scommit}.tar.gz
 %endif
 %if %{without system_httplib}
-%global hl_commit 89c932f313c6437c38f2982869beacc89c2f2246
-%global hl_scommit 89c932f
+%global hl_commit 4d7c9a788de136071ccf0dd4e96239151e2adadb
+%global hl_scommit 4d7c9a7
 #!RemoteAsset:  sha256:22ec970b3ecb60ef43293379a5cdc94b5fcdc34a888ebce2a3f6413c67262ab7
-Source6:       https://github.com/yhirose/cpp-httplib/archive/%{hl_commit}/cpp-httplib-%{hl_scommit}.tar.gz
+Source5:        https://github.com/yhirose/cpp-httplib/archive/%{hl_commit}/cpp-httplib-%{hl_scommit}.tar.gz
 %endif
 %if %{without system_kineto}
-%global ki_commit 31f85df8fbd89c188f14ef10f1ec65379786b943
-%global ki_scommit 31f85df
+%global ki_commit 23b5bb5764b3dec988e25c52098407e508d84bb4
+%global ki_scommit 23b5bb5
 #!RemoteAsset:  sha256:c0edae39511cf3d91d66d6b383254ba3b3bee1af024a567566cfe39cbc84e674
-Source7:       https://github.com/pytorch/kineto/archive/%{ki_commit}/kineto-%{ki_scommit}.tar.gz
+Source6:        https://github.com/pytorch/kineto/archive/%{ki_commit}/kineto-%{ki_scommit}.tar.gz
 %endif
-%if %{without system_onnx}
-%global onnx_ver 1.18.0
-#!RemoteAsset:  sha256:b466af96fd8d9f485d1bb14f9bbdd2dfb8421bc5544583f014088fb941a1d21e
-Source8:       https://github.com/onnx/onnx/archive/refs/tags/v%{onnx_ver}.tar.gz
-%endif
+%global mslk_commit 3d332d1c0c0ac7765852c97b3979c9ef913e037f
+%global mslk_scommit 3d332d1
+Source7:        https://github.com/meta-pytorch/MSLK/archive/%{mslk_commit}/MSLK-%{mslk_scommit}.tar.gz
+
 
 BuildRequires:  cmake
 BuildRequires:  cmake(concurrentqueue)
@@ -248,23 +238,21 @@ sed -i '/#include <tensorpipe.*/a#include <cstdint>' third_party/tensorpipe/tens
 sed -i '/#include <tensorpipe.*/a#include <cstdint>' third_party/tensorpipe/tensorpipe/common/memory.h
 %endif
 
-%if %{without system_opentelemetry}
-tar xf %{SOURCE5}
-rm -rf third_party/opentelemetry-cpp/*
-cp -r opentelemetry-cpp-*/* third_party/opentelemetry-cpp/
-%endif
-
 %if %{without system_httplib}
-tar xf %{SOURCE6}
+tar xf %{SOURCE5}
 rm -rf third_party/cpp-httplib/*
 cp -r cpp-httplib-*/* third_party/cpp-httplib/
 %endif
 
 %if %{without system_kineto}
-tar xf %{SOURCE7}
+tar xf %{SOURCE6}
 rm -rf third_party/kineto/*
 cp -r kineto-*/* third_party/kineto/
 %endif
+
+tar xf %{SOURCE7}
+rm -rf third_party/mslk/*
+cp -r MSLK-*/* third_party/mslk/
 
 # Adjust for amd gpu targets currently supported
 # sed -i -e 's@"gfx1100", "gfx1101", "gfx1200", "gfx1201", "gfx908",@"gfx1100", "gfx1101", "gfx1200", "gfx1201", "gfx1151",@' aten/src/ATen/native/cuda/Blas.cpp
@@ -339,10 +327,6 @@ mv third_party/flatbuffers .
 mv third_party/tensorpipe .
 %endif
 
-%if %{without system_opentelemetry}
-mv third_party/opentelemetry-cpp .
-%endif
-
 %if %{without system_httplib}
 mv third_party/cpp-httplib .
 %endif
@@ -351,9 +335,7 @@ mv third_party/cpp-httplib .
 mv third_party/kineto .
 %endif
 
-%if %{without system_protobuf}
-mv third_party/protobuf .
-%endif
+mv third_party/mslk .
 
 # Remove everything
 rm -rf third_party/*
@@ -369,10 +351,6 @@ mv flatbuffers third_party
 mv tensorpipe third_party
 %endif
 
-%if %{without system_opentelemetry}
-mv opentelemetry-cpp third_party
-%endif
-
 %if %{without system_httplib}
 mv cpp-httplib third_party
 %endif
@@ -381,9 +359,7 @@ mv cpp-httplib third_party
 mv kineto third_party
 %endif
 
-%if %{without system_protobuf}
-mv protobuf third_party
-%endif
+mv mslk third_party
 
 # Fake out pocketfft, and system header will be used
 mkdir third_party/pocketfft
@@ -403,10 +379,6 @@ sed -i -e 's@list(APPEND Caffe2_DEPENDENCY_LIBS foxi_loader)@#list(APPEND Caffe2
 # cmake version changed
 sed -i -e 's@cmake_minimum_required(VERSION 3.4)@cmake_minimum_required(VERSION 3.5)@' third_party/tensorpipe/third_party/libuv/CMakeLists.txt
 sed -i -e 's@cmake_minimum_required(VERSION 3.4)@cmake_minimum_required(VERSION 3.5)@' libuv*/CMakeLists.txt
-%endif
-
-%if %{without system_opentelemetry}
-sed -i -e 's@cmake_minimum_required(VERSION 3.1)@cmake_minimum_required(VERSION 3.5)@' third_party/opentelemetry-cpp/CMakeLists.txt
 %endif
 
 %if %{with rocm}
