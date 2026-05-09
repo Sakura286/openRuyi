@@ -109,12 +109,14 @@ Source8:       https://github.com/onnx/onnx/archive/refs/tags/v%{onnx_ver}.tar.g
 %endif
 
 BuildRequires:  cmake
+BuildRequires:  cmake(concurrentqueue)
 BuildRequires:  cmake(ONNX)
-BuildRequires:  concurrentqueue-devel
 # Although eigen3 enabled on openruyi, it cannot be detected during conf
 # TODO: Fix this
 BuildRequires:  eigen3
 BuildRequires:  foxi-devel
+BuildRequires:  fp16-devel
+BuildRequires:  fxdiv-devel
 BuildRequires:  libomp-devel
 BuildRequires:  ninja
 BuildRequires:  pkgconfig(fmt)
@@ -123,15 +125,13 @@ BuildRequires:  pkgconfig(nlohmann_json)
 BuildRequires:  pkgconfig(numa)
 BuildRequires:  pkgconfig(openblas64)
 BuildRequires:  pkgconfig(protobuf)
+BuildRequires:  pkgconfig(python3)
+BuildRequires:  pkgconfig(sleef)
 BuildRequires:  pkgconfig(valgrind)
 BuildRequires:  pocketfft-devel
-BuildRequires:  pthreadpool-devel
-BuildRequires:  fp16-devel
-BuildRequires:  fxdiv-devel
 BuildRequires:  psimd-devel
-BuildRequires:  sleef-devel
+BuildRequires:  pthreadpool-devel
 BuildRequires:  xnnpack-devel = 0+git20260211.312eb7e
-BuildRequires:  pkgconfig(python3)
 BuildRequires:  python3dist(filelock)
 # TODO: enable on openRuyi
 # BuildRequires:  python3dist(fsspec)
@@ -148,7 +148,7 @@ BuildRequires:  python3dist(sympy)
 BuildRequires:  python3dist(typing-extensions)
 
 %if %{with system_httplib}
-BuildRequires:  cpp-httplib-devel
+BuildRequires:  cmake(httplib)
 %endif
 
 %if "%{toolchain}" == "gcc"
@@ -169,31 +169,30 @@ BuildRequires:  pkgconfig(flatbuffers)
 %endif
 
 %if %{with rocm}
-BuildRequires:  hipblas-devel
-BuildRequires:  hipblaslt-devel
-BuildRequires:  hipcub-devel
-BuildRequires:  hipfft-devel
-BuildRequires:  hiprand-devel
-BuildRequires:  hipsparse-devel
-BuildRequires:  hipsparselt-devel
-BuildRequires:  hipsolver-devel
-BuildRequires:  magma-devel
-BuildRequires:  miopen-devel
-BuildRequires:  rocblas-devel
-BuildRequires:  rocrand-devel
-BuildRequires:  rocfft-devel
-BuildRequires:  rccl-devel
-BuildRequires:  rocprim-devel
+BuildRequires:  cmake(hipblas)
+BuildRequires:  cmake(amd_comgr)
+BuildRequires:  cmake(hip)
+BuildRequires:  cmake(hipblaslt)
+BuildRequires:  cmake(hipcub)
+BuildRequires:  cmake(hipfft)
+BuildRequires:  cmake(hiprand)
+BuildRequires:  cmake(hipsolver)
+BuildRequires:  cmake(hipsparse)
+BuildRequires:  cmake(hipsparselt)
+BuildRequires:  cmake(hsa-runtime64)
+BuildRequires:  cmake(miopen)
+BuildRequires:  cmake(rccl)
+BuildRequires:  cmake(rocblas)
+BuildRequires:  cmake(rocfft)
+BuildRequires:  cmake(rocm_smi)
+BuildRequires:  cmake(rocm-core)
+BuildRequires:  cmake(rocprim)
+BuildRequires:  cmake(rocrand)
+BuildRequires:  cmake(rocsolver)
+BuildRequires:  cmake(rocthrust)
+BuildRequires:  pkgconfig(magma)
 BuildRequires:  rocm-cmake
-BuildRequires:  rocm-comgr-devel
-BuildRequires:  rocm-compilersupport-macros
-BuildRequires:  rocm-core-devel
-BuildRequires:  rocm-hip-devel
-BuildRequires:  rocm-runtime-devel
-BuildRequires:  rocm-rpm-macros
-BuildRequires:  rocsolver-devel
-BuildRequires:  rocm-smi-devel
-BuildRequires:  rocthrust-devel
+BuildRequires:  rocm-llvm-macros
 BuildRequires:  roctracer-devel
 %endif
 
