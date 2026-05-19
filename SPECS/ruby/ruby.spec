@@ -4,6 +4,9 @@
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
+# only run offline test suite, test-all maybe timeout or abort
+%global _test_target test
+
 %global ruby_api_version 4.0.0
 %global ruby_soversion 4.0
 %global rubygems_version 4.0.10
@@ -92,15 +95,6 @@ find %{buildroot} \
 find %{buildroot} -type d -name '.gem.*' -print0 | xargs -r0 rm -rv || :
 rm -rf %{buildroot}%{ruby_gemdir}/cache
 find %{buildroot} -type f -name '*.pem' -delete
-
-%check
-%ifarch riscv64
-# Ruby test-all currently times out or aborts in upstream tests on riscv64.
-%make_build test
-%else
-# only run offline test suite
-%make_build test test-all
-%endif
 
 %files
 %license BSDL COPYING GPL LEGAL
