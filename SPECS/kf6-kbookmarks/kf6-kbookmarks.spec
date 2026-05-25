@@ -7,20 +7,22 @@
 %define qt6_version 6.8.0
 
 %define rname kbookmarks
-# Full KF6 version (e.g. 6.22.0)
+# Full KF6 version (e.g. 6.26.0)
 %{!?_kf6_version: %global _kf6_version %{version}}
 
 Name:           kf6-kbookmarks
-Version:        6.22.0
+Version:        6.26.0
 Release:        %autorelease
 Summary:        Framework for manipulating bookmarks in XBEL format
 License:        LGPL-2.1-or-later
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/frameworks/kbookmarks
-#!RemoteAsset
-Source:         https://download.kde.org/stable/frameworks/6.22/%{rname}-%{version}.tar.xz
+#!RemoteAsset:  sha256:82e8794281870686da9e7e7b5ddc0839f50b15d919357490d508faccb2635030
+Source:         https://download.kde.org/stable/frameworks/6.26/%{rname}-%{version}.tar.xz
+BuildSystem:    cmake
 
-BuildRequires:  fdupes
+BuildOption(conf):  -DBUILD_TESTING=OFF
+
 BuildRequires:  kf6-extra-cmake-modules >= %{_kf6_version}
 BuildRequires:  cmake(KF6Config) >= %{_kf6_version}
 BuildRequires:  cmake(KF6ConfigWidgets) >= %{_kf6_version}
@@ -49,26 +51,14 @@ Requires:       cmake(Qt6Xml) >= %{qt6_version}
 Development files for kbookmarks, a framework for accessing and
 manipulating bookmarks using the XBEL format
 
-%prep
-%autosetup -p1 -n %{rname}-%{version}
-
-%build
-%cmake_kf6
-
-%kf6_build
-
-%install
-%kf6_install
-
-%fdupes %{buildroot}
-
+%install -a
 # todo: fix the name error.
 # Avoid illegal package names
 rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/*@*
 # Use langpacks macro to auto-split translations
-%find_lang %{name}6 --with-qt --all-name --generate-subpackages
+%find_lang %{name} --with-qt --all-name --generate-subpackages
 
-%files -f %{name}6.lang
+%files -f %{name}.lang
 %license LICENSES/*
 %doc README.md
 %{_kf6_debugdir}/kbookmarks.categories
@@ -85,4 +75,4 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/*@*
 %{_kf6_includedir}/KBookmarksWidgets/
 
 %changelog
-%{?autochangelog}
+%autochangelog
