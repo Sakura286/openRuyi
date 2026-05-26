@@ -4,20 +4,17 @@
 #
 # SPDX-License-Identifier: MulanPSL-2.0
 
-%global debug_package %{nil}
-%global __debug_install_post %{nil}
-
 %global crate_name wasm-bindgen-macro
-%global full_version 0.2.118
+%global full_version 0.2.121
 %global pkgname wasm-bindgen-macro-0.2
 
 Name:           rust-wasm-bindgen-macro-0.2
-Version:        0.2.118
+Version:        0.2.121
 Release:        %autorelease
 Summary:        Rust crate "wasm-bindgen-macro"
 License:        MIT OR Apache-2.0
 URL:            https://wasm-bindgen.github.io/wasm-bindgen/
-#!RemoteAsset:  sha256:eeff24f84126c0ec2db7a449f0c2ec963c6a49efe0698c4242929da037ca28ed
+#!RemoteAsset:  sha256:8e68e6f4afd367a562002c05637acb8578ff2dea1943df76afb9e83d177c8578
 Source:         https://crates.io/api/v1/crates/%{crate_name}/%{full_version}/download#/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 BuildSystem:    rustcrates
@@ -25,7 +22,8 @@ BuildSystem:    rustcrates
 BuildRequires:  rust-rpm-macros
 
 Requires:       crate(quote-1.0/default) >= 1.0.45
-Requires:       crate(wasm-bindgen-macro-support-0.2/default) >= 0.2.118
+Requires:       crate(wasm-bindgen-macro-support-0.2/default) >= 0.2.121
+Provides:       crate(wasm-bindgen-macro) = %{version}
 Provides:       crate(%{pkgname})
 Provides:       crate(%{pkgname}/default)
 
@@ -35,7 +33,7 @@ Source code for takopackized Rust crate "wasm-bindgen-macro"
 %package     -n %{name}+strict-macro
 Summary:        Definition of the `#[wasm_bindgen]` attribute, an internal dependency - feature "strict-macro"
 Requires:       crate(%{pkgname})
-Requires:       crate(wasm-bindgen-macro-support-0.2/strict-macro) >= 0.2.118
+Requires:       crate(wasm-bindgen-macro-support-0.2/strict-macro) >= 0.2.121
 Provides:       crate(%{pkgname}/strict-macro)
 
 %description -n %{name}+strict-macro
