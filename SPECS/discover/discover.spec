@@ -68,7 +68,7 @@ Requires:       kf6-kdeclarative >= %{kf6_version}
 Requires:       kf6-kirigami >= %{kf6_version}
 Requires:       kf6-kuserfeedback >= %{kf6_version}
 Requires:       kirigami-addons
-Requires:       qt6-declarative >= %{qt6_version}
+Requires:       qt6-qtdeclarative >= %{qt6_version}
 
 Recommends:     discover-backend-flatpak
 Recommends:     discover-backend-fwupd
