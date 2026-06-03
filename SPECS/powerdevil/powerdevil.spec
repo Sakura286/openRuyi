@@ -67,7 +67,7 @@ BuildRequires:  pkgconfig(xcb-dpms)
 BuildRequires:  pkgconfig(xcb-randr)
 
 Requires:       kf6-kidletime-plugins
-Requires:       kf6-knotifications-imports
+Requires:       kf6-knotifications
 %requires_ge    plasma-workspace-libs
 
 Recommends:     upower
