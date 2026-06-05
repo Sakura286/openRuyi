@@ -13,19 +13,20 @@
 %{!?_plasma6_version: %define _plasma6_version %(echo %{_plasma6_bugfix} | awk -F. '{print $1"."$2}')}
 
 Name:           milou
-Version:        6.5.5
+Version:        6.6.5
 Release:        %autorelease
 Summary:        Dedicated search application built on top of Baloo
 License:        GPL-2.0-or-later AND LGPL-2.1-or-later
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/plasma/milou.git
-#!RemoteAsset:  sha256:15bbb74ec3f7a64e02c1e881ee25025c0b738fbfc387e225c8064e94faecf6ae
+#!RemoteAsset:  sha256:700c77213622e9f914f407e6c5e42dad28846b6704d40cfc8cbdfb8f316ba96f
 Source:         https://invent.kde.org/plasma/%{name}/-/archive/v%{version}/%{name}-v%{version}.tar.gz
 BuildSystem:    cmake
 
 BuildOption(conf):  -DBUILD_TESTING=OFF
 
 BuildRequires:  kf6-extra-cmake-modules >= %{kf6_version}
+BuildRequires:  cmake(KF6KirigamiPlatform) >= %{kf6_version}
 BuildRequires:  cmake(KF6CoreAddons) >= %{kf6_version}
 BuildRequires:  cmake(KF6I18n) >= %{kf6_version}
 BuildRequires:  cmake(KF6ItemModels) >= %{kf6_version}
@@ -52,7 +53,7 @@ rm -rf $RPM_BUILD_ROOT%{_kf6_htmldir}/*@*
 %files -f %{name}.lang
 %license LICENSES/*
 %{_kf6_qmldir}/org/kde/milou/
-%{_kf6_plasmadir}/plasmoids/org.kde.milou/
+%{_kf6_plugindir}/plasma/applets/org.kde.milou.so
 
 %changelog
 %autochangelog
