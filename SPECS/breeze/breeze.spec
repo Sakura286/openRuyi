@@ -13,13 +13,13 @@
 %{!?_plasma6_version: %define _plasma6_version %(echo %{_plasma6_bugfix} | awk -F. '{print $1"."$2}')}
 
 Name:           breeze
-Version:        6.5.5
+Version:        6.6.5
 Release:        %autorelease
 Summary:        Plasma Desktop artwork, styles and assets
 License:        GPL-2.0-or-later
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/plasma/breeze
-#!RemoteAsset:  sha256:33c69d10454e1eb1c5908bb7b50a955eabf3264d836bd82dc02f3ba8d97692b0
+#!RemoteAsset:  sha256:1ad18862e585bfa1d51b20ab48feb00a7fd14705c6d771943bcc605ac348e970
 Source:         https://invent.kde.org/plasma/%{name}/-/archive/v%{version}/%{name}-v%{version}.tar.gz
 BuildSystem:    cmake
 
