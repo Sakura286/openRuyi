@@ -8,13 +8,13 @@
 %define qt6_version 6.9.0
 
 Name:           dolphin-plugins
-Version:        25.12.3
+Version:        26.04.2
 Release:        %autorelease
 Summary:        Version control plugins for Dolphin
 License:        GPL-2.0-or-later
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/system/dolphin-plugins.git
-#!RemoteAsset:  sha256:a738d4f9f1148283ff0552ffc5a440cabc5f216aa2473c22e699593b3b01a7c0
+#!RemoteAsset:  sha256:8c53ce19b2b910f087de42180c034dd9c087598d3b145815a3eba713006e22e7
 Source0:        https://download.kde.org/stable/release-service/%{version}/src/%{name}-%{version}.tar.xz
 BuildSystem:    cmake
 
