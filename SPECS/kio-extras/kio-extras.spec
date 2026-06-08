@@ -9,13 +9,13 @@
 %define qt6_version 6.9.0
 
 Name:           kio-extras
-Version:        25.12.3
+Version:        26.04.2
 Release:        %autorelease
 Summary:        Additional KIO slaves for KDE applications
 License:        GPL-2.0-or-later
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/utilities/kio-extras.git
-#!RemoteAsset:  sha256:b161e363320f96cffba0195e4045a88049fc3c5b93272532dce5ab6ce886916a
+#!RemoteAsset:  sha256:af4941af624f883891d33701aa0ce4216d6de114db3e4a250099c52d3d42acaa
 Source0:        https://download.kde.org/stable/release-service/%{version}/src/%{name}-%{version}.tar.xz
 BuildSystem:    cmake
 
