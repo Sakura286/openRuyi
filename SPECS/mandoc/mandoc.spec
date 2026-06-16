@@ -49,12 +49,10 @@ INSTALL_LIBMANDOC=1
 CFLAGS="%{optflags} -fPIC"
 EOF
 
-%install -a
-find %{buildroot} -type f -name "*.a" -delete -print
-
 %files
 %license LICENSE
 %{_includedir}/*.h
+%{_libdir}/libmandoc.a
 %{_bindir}/apropos
 %{_bindir}/demandoc
 %{_bindir}/man
