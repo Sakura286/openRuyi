@@ -7,18 +7,18 @@
 %define qt6_version 6.8.0
 
 %define rname baloo
-# Full KF6 version (e.g. 6.26.0)
+# Full KF6 version (e.g. 6.27.0)
 %{!?_kf6_version: %global _kf6_version %{version}}
 
 Name:           kf6-baloo
-Version:        6.26.0
+Version:        6.27.0
 Release:        %autorelease
 Summary:        Framework for searching and managing metadata
 License:        GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-only
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/frameworks/baloo.git
-#!RemoteAsset:  sha256:702f5b868aaef48153c6c3828111b3b335403079491a8f37043ebd89c6995b30
-Source:         https://download.kde.org/stable/frameworks/6.26/%{rname}-%{version}.tar.xz
+#!RemoteAsset:  sha256:6b226118bde28e81217f8cd6129f6e24c5d422bd7a322fe682e592b028b72db7
+Source:         https://download.kde.org/stable/frameworks/6.27/%{rname}-%{version}.tar.xz
 BuildSystem:    cmake
 
 BuildOption(conf):  -DBUILD_TESTING=OFF
@@ -78,7 +78,6 @@ package contains aditional command line utilities.
 Summary:        Development package for baloo6
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       lmdb-devel
-Requires:       cmake(KF6Config) >= %{_kf6_version}
 Requires:       cmake(KF6CoreAddons) >= %{_kf6_version}
 Requires:       cmake(KF6FileMetaData) >= %{_kf6_version}
 Requires:       cmake(Qt6Core) >= %{qt6_version}
