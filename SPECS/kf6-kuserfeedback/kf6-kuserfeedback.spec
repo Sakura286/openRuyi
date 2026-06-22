@@ -7,18 +7,18 @@
 %define qt6_version 6.8.0
 
 %define rname kuserfeedback
-# Full KF6 version (e.g. 6.26.0)
+# Full KF6 version (e.g. 6.27.0)
 %{!?_kf6_version: %global _kf6_version %{version}}
 
 Name:           kf6-kuserfeedback
-Version:        6.26.0
+Version:        6.27.0
 Release:        %autorelease
 Summary:        Framework for collecting feedback from application users
 License:        MIT
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/frameworks/kuserfeedback.git
-#!RemoteAsset:  sha256:6cc18dca65a24af2ac262cb9c8761991701c8081a7133487b4ec936003f3f864
-Source:         https://download.kde.org/stable/frameworks/6.26/%{rname}-%{version}.tar.xz
+#!RemoteAsset:  sha256:5ad0228aa4872f6238b93827e99d263aebcc7e0bfc4f28ba3cf39c0fd2add7a9
+Source:         https://download.kde.org/stable/frameworks/6.27/%{rname}-%{version}.tar.xz
 BuildSystem:    cmake
 
 BuildOption(conf):  -DQT_MAJOR_VERSION:STRING=6
@@ -50,7 +50,7 @@ KDE Telemetry Policy, which forbids the usage of unique identification.
 
 %package        server
 Summary:        Server component of kf6-kuserfeedback
-Requires:       (php-sqlite or php-mysql or php-pgsql)
+Recommends:     (php-sqlite or php-mysql or php-pgsql)
 Requires:       kf6-kuserfeedback >= %{version}
 Requires:       php
 
