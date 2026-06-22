@@ -7,18 +7,18 @@
 %define qt6_version 6.8.0
 
 %define rname kconfig
-# Full KF6 version (e.g. 6.26.0)
+# Full KF6 version (e.g. 6.27.0)
 %{!?_kf6_version: %global _kf6_version %{version}}
 
 Name:           kf6-kconfig
-Version:        6.26.0
+Version:        6.27.0
 Release:        %autorelease
 Summary:        Advanced configuration system
 License:        LGPL-2.1-or-later AND GPL-2.0-or-later
 URL:            https://www.kde.org
 VCS:            https://invent.kde.org/frameworks/kconfig
-#!RemoteAsset:  sha256:8bb5aa918d8e60ec140a33db3c329414d2319dc97a1644b368da5576125c92b5
-Source:         https://download.kde.org/stable/frameworks/6.26/%{rname}-%{version}.tar.xz
+#!RemoteAsset:  sha256:e19728b80e6cc017502fcb50fe6d7e9b5ba9727871ac3a4e9811875e01cb5fe9
+Source:         https://download.kde.org/stable/frameworks/6.27/%{rname}-%{version}.tar.xz
 BuildSystem:    cmake
 
 BuildOption(conf):  -DBUILD_TESTING=OFF
@@ -88,6 +88,8 @@ their changes to their respective configuration files. Development files.
 %{_kf6_libdir}/libKF6ConfigCore.so.*
 %{_kf6_libdir}/libKF6ConfigGui.so.*
 %{_kf6_libdir}/libKF6ConfigQml.so.*
+%{_kf6_libdir}/qt6/metatypes/qt6kf6configcore_metatypes.json
+%{_kf6_libdir}/qt6/metatypes/qt6kf6configgui_metatypes.json
 %{_datadir}/locale/*/LC_MESSAGES/kconfig6_qt.qm
 %{_kf6_libexecdir}/kconf_update
 %{_kf6_qmldir}/org/kde/config/
