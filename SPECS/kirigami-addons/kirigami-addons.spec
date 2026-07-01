@@ -8,13 +8,13 @@
 %define qt6_version 6.6.0
 
 Name:           kirigami-addons
-Version:        1.10.0
+Version:        1.12.1
 Release:        %autorelease
 Summary:        Add-ons for the Kirigami framework
 License:        LGPL-3.0-only
 URL:            https://www.kde.org
 VCS:            https://invent.kde.org/libraries/kirigami-addons.git
-#!RemoteAsset:  sha256:c98f92bf7c452e12f6dc403404215413db3959fe904ad830ead0db6bb09b3d11
+#!RemoteAsset:  sha256:c543a493ce5875f405fb1c9ff6d531060ed082cc6d710e56d46ac42d164207bb
 Source:         https://download.kde.org/stable/%{name}/%{name}-%{version}.tar.xz
 BuildSystem:    cmake
 
@@ -72,6 +72,7 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/*@*
 %{_kf6_qmldir}/org/kde/kirigamiaddons/
 %{_kf6_libdir}/libKirigamiAddonsStatefulApp.so.*
 %{_kf6_libdir}/libKirigamiApp.so.*
+%{_kf6_libdir}/libKirigamiAddonsComponents.so.*
 
 %files devel
 %{_kf6_cmakedir}/KF6KirigamiAddons/
@@ -79,6 +80,7 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/*@*
 %{_includedir}/KirigamiAddonsStatefulApp/
 %{_kf6_libdir}/libKirigamiAddonsStatefulApp.so
 %{_kf6_libdir}/libKirigamiApp.so
+%{_kf6_libdir}/libKirigamiAddonsComponents.so
 %dir %{_kf6_sharedir}/kdevappwizard/
 %dir %{_kf6_sharedir}/kdevappwizard/templates/
 %{_kf6_sharedir}/kdevappwizard/templates/kirigamiaddons6.tar.bz2
