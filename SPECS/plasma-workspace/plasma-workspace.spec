@@ -20,13 +20,13 @@
 %{!?_plasma6_version: %define _plasma6_version %(echo %{_plasma6_bugfix} | awk -F. '{print $1"."$2}')}
 
 Name:           plasma-workspace
-Version:        6.6.5
+Version:        6.7.1
 Release:        %autorelease
 Summary:        The KDE Plasma Workspace Components
 License:        GPL-2.0-or-later
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/plasma/plasma-workspace.git
-#!RemoteAsset:  sha256:2cb458d0830bdc1a49ffa404e8042f80efeeed575b111df929e8a87f3f7bd2f4
+#!RemoteAsset:  sha256:0a822d6f371a73757ad496f68908dd2ca64439e418074d9e5c5380c0817073ff
 Source:         https://invent.kde.org/plasma/%{name}/-/archive/v%{version}/%{name}-v%{version}.tar.gz
 Source1:        sddm.conf
 Source2:        waitforkded.conf
@@ -142,6 +142,7 @@ BuildRequires:  pkgconfig(xcb)
 BuildRequires:  pkgconfig(xcb-composite)
 BuildRequires:  pkgconfig(xcb-cursor)
 BuildRequires:  pkgconfig(xcb-damage)
+BuildRequires:  pkgconfig(xcb-icccm)
 BuildRequires:  pkgconfig(xcb-image)
 BuildRequires:  pkgconfig(xcb-randr)
 BuildRequires:  pkgconfig(xcb-shm)
@@ -167,7 +168,7 @@ Requires:       kde-cli-tools >= %{_plasma6_bugfix}
 Requires:       kf6-kded
 Requires:       kf6-kquickcharts
 Requires:       kglobalacceld >= %{_plasma6_bugfix}
-Requires:       kirigami-addons >= 0.10.0
+Requires:       kirigami-addons >= 1.12.1
 Requires:       kscreen >= %{_plasma6_bugfix}
 Requires:       kscreenlocker >= %{_plasma6_bugfix}
 Requires:       kwin >= %{_plasma6_bugfix}
@@ -482,7 +483,7 @@ install -Dm 0644 %{SOURCE2} %{buildroot}%{_userunitdir}/plasma-plasmashell.servi
 %{_kf6_notificationsdir}/donationmessage.notifyrc
 %{_kf6_notificationsdir}/freespacenotifier.notifyrc
 %{_kf6_notificationsdir}/libnotificationmanager.notifyrc
-%{_kf6_notificationsdir}/oom-notifier.notifyrc
+%{_kf6_notificationsdir}/oom_notifier.notifyrc
 %{_kf6_plasmadir}/avatars/
 %{_kf6_plasmadir}/look-and-feel/
 %{_kf6_plasmadir}/plasmoids/
@@ -527,6 +528,8 @@ install -Dm 0644 %{SOURCE2} %{buildroot}%{_userunitdir}/plasma-plasmashell.servi
 %{_kf6_sharedir}/timezonefiles/timezones.json
 %dir %{_kf6_sharedir}/xdg-desktop-portal/
 %{_kf6_sharedir}/xdg-desktop-portal/kde-portals.conf
+%dir %{_kf6_sharedir}/xdg-desktop-portal/portals/
+%{_kf6_sharedir}/xdg-desktop-portal/portals/plasmanotify.portal
 %{_libexecdir}/baloorunner
 %{_libexecdir}/ksecretprompter
 %{_kf6_libexecdir}/kauth/fontinst
@@ -541,6 +544,7 @@ install -Dm 0644 %{SOURCE2} %{buildroot}%{_userunitdir}/plasma-plasmashell.servi
 %{_libexecdir}/plasma-fallback-session-restore
 %{_libexecdir}/plasma-fallback-session-save
 %{_libexecdir}/plasma-sourceenv.sh
+%{_libexecdir}/plasma-startup-sound
 %{_userunitdir}/plasma-baloorunner.service
 %{_userunitdir}/plasma-core.target
 %{_userunitdir}/plasma-gmenudbusmenuproxy.service
@@ -553,6 +557,7 @@ install -Dm 0644 %{SOURCE2} %{buildroot}%{_userunitdir}/plasma-plasmashell.servi
 %dir %{_userunitdir}/plasma-plasmashell.service.d/
 %{_userunitdir}/plasma-plasmashell.service.d/waitforkded.conf
 %{_userunitdir}/plasma-restoresession.service
+%{_userunitdir}/plasma-startupsound.service
 %if %{with x11}
 %{_userunitdir}/plasma-workspace-{wayland,x11}.target
 %else
