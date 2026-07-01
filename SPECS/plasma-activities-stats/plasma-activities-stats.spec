@@ -12,13 +12,13 @@
 %{!?_plasma6_version: %define _plasma6_version %(echo %{_plasma6_bugfix} | awk -F. '{print $1"."$2}')}
 
 Name:           plasma-activities-stats
-Version:        6.6.5
+Version:        6.7.1
 Release:        %autorelease
 Summary:        KDE Plasma Activities support
 License:        LGPL-2.0-or-later
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/plasma/plasma-activities-stats
-#!RemoteAsset:  sha256:cc49ff6f2909baba210105643af836b90514e39c5526e0ebae109c521de94068
+#!RemoteAsset:  sha256:2edc329d0bd96e00a8b32ead6fb0bf797d53cc46995e7141a2e7ae2439317d0f
 Source:         https://invent.kde.org/plasma/%{name}/-/archive/v%{version}/%{name}-v%{version}.tar.gz
 BuildSystem:    cmake
 
