@@ -15,13 +15,13 @@
 %{!?_plasma6_version: %define _plasma6_version %(echo %{_plasma6_bugfix} | awk -F. '{print $1"."$2}')}
 
 Name:           plasma-nm
-Version:        6.6.5
+Version:        6.7.1
 Release:        %autorelease
 Summary:        Plasma applet written in QML for managing network connections
 License:        (GPL-2.0-only OR GPL-3.0-only) AND (LGPL-2.1-only OR LGPL-3.0-only)
 URL:            https://www.kde.org
 VCS:            git:https://invent.kde.org/plasma/plasma-nm.git
-#!RemoteAsset:  sha256:9dc99c1849970c6925ca47723a5832add25f21ed1defd414fa5cccf9401ef21a
+#!RemoteAsset:  sha256:9d368d63f60d7743e900e0aebaf1de800226961d403a25c0362bfeb9c4ffa107
 Source:         https://invent.kde.org/plasma/%{name}/-/archive/v%{version}/%{name}-v%{version}.tar.gz
 BuildSystem:    cmake
 
@@ -29,6 +29,7 @@ BuildOption(conf):  -DBUILD_TESTING=OFF
 BuildOption(conf):  -DQT_QML_NO_CACHEGEN:BOOL=TRUE
 
 BuildRequires:  kf6-extra-cmake-modules >= %{kf6_version}
+BuildRequires:  kirigami-addons
 BuildRequires:  pkgconfig
 BuildRequires:  cmake(KF6ColorScheme) >= %{kf6_version}
 BuildRequires:  cmake(KF6Completion) >= %{kf6_version}
@@ -42,6 +43,8 @@ BuildRequires:  cmake(KF6KirigamiPlatform) >= %{kf6_version}
 BuildRequires:  cmake(KF6ModemManagerQt) >= %{kf6_version}
 BuildRequires:  cmake(KF6NetworkManagerQt) >= %{kf6_version}
 BuildRequires:  cmake(KF6Notifications) >= %{kf6_version}
+BuildRequires:  cmake(KF6Prison) >= %{kf6_version}
+BuildRequires:  cmake(KF6QuickCharts) >= %{kf6_version}
 BuildRequires:  cmake(KF6Service) >= %{kf6_version}
 BuildRequires:  cmake(KF6Solid) >= %{kf6_version}
 BuildRequires:  cmake(KF6Svg) >= %{kf6_version}
@@ -55,14 +58,17 @@ BuildRequires:  cmake(Qca-qt6) >= 2.1.0
 BuildRequires:  cmake(Qt6Core) >= %{qt6_version}
 BuildRequires:  cmake(Qt6DBus) >= %{qt6_version}
 BuildRequires:  cmake(Qt6Gui) >= %{qt6_version}
+BuildRequires:  cmake(Qt6Keychain)
 BuildRequires:  cmake(Qt6Network) >= %{qt6_version}
 BuildRequires:  cmake(Qt6Quick) >= %{qt6_version}
 BuildRequires:  cmake(Qt6QuickWidgets) >= %{qt6_version}
 BuildRequires:  cmake(Qt6UiTools) >= %{qt6_version}
 BuildRequires:  cmake(Qt6WebEngineWidgets) >= %{qt6_version}
+BuildRequires:  pkgconfig(cups)
 BuildRequires:  pkgconfig(libnm) >= 1.4.0
 BuildRequires:  pkgconfig(mobile-broadband-provider-info)
 BuildRequires:  pkgconfig(openconnect) >= 5.2
+BuildRequires:  pkgconfig(openssl)
 
 Requires:       NetworkManager
 Requires:       kf6-kded
@@ -232,6 +238,7 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/*@*
 %{_kf6_applicationsdir}/kcm_networkmanagement.desktop
 %{_kf6_applicationsdir}/org.kde.vpnimport.desktop
 %{_kf6_debugdir}/plasma-nm.categories
+%{_kf6_libdir}/libplasmanm_cellular.so
 %{_kf6_libdir}/libplasmanm_editor.so
 %{_kf6_libdir}/libplasmanm_internal.so
 %{_kf6_notificationsdir}/networkmanagement.notifyrc
