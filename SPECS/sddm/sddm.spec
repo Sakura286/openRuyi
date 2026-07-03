@@ -21,18 +21,8 @@ Source5:        sddm.sysusers
 BuildSystem:    cmake
 
 Patch0:         0001-CMake-Raise-required-version-to-3.5.patch
-# https://github.com/sddm/sddm/pull/1779
-Patch1:         0002-Redesign-login-shell-use-in-session-scripts.patch
-# Part of https://github.com/sddm/sddm/pull/1896
-Patch2:         0003-Fix-terminal-clearing.patch
-# https://github.com/sddm/sddm/pull/1904
-Patch3:         0004-Use-xrdb-to-set-Xcursor.theme.patch
-# https://github.com/sddm/sddm/pull/1969
-Patch4:         0005-Remove-unused-Display-m_relogin-variable.patch
-Patch5:         0006-Set-Display-m_started-early.patch
-Patch6:         0007-Load-autologin-configuration-in-Display-Display.patch
-Patch7:         0008-Reset-daemonApp-first-in-the-Display-constructor.patch
-Patch8:         0009-If-autologin-is-used-avoid-starting-a-display-server.patch
+# https://github.com/sddm/sddm/commit/abb9f9eea9ffb31506a89d5f5de1060bea076056
+Patch1:         0002-UserSession-Only-act-on-the-VT-when-XDG_VTNR-is-set.patch
 
 BuildOption(conf):  -DBUILD_WITH_QT6:BOOL=ON
 BuildOption(conf):  -DBUILD_MAN_PAGES:BOOL=ON
