@@ -115,6 +115,15 @@ cp %{buildroot}%{_datadir}/alsa/alsa.conf.d/50-pipewire.conf \
 cp %{buildroot}%{_datadir}/alsa/alsa.conf.d/99-pipewire-default.conf \
         %{buildroot}%{_sysconfdir}/alsa/conf.d/99-pipewire-default.conf
 
+# Register PipeWire's JACK replacement libraries in the dynamic linker
+# search path, otherwise applications linked against libjack.so.0
+# (e.g. mpv) fail to start with "cannot open shared object file".
+# A real jack2 install (libjack.so.0 in %{_libdir}, a trusted default
+# dir) still takes precedence over this drop-in.
+install -d -m 0755 %{buildroot}%{_sysconfdir}/ld.so.conf.d/
+echo "%{_libdir}/pipewire-%{apiversion}/jack" \
+        > %{buildroot}%{_sysconfdir}/ld.so.conf.d/pipewire-jack.conf
+
 install -d -m 0755 %{buildroot}%{_datadir}/pipewire/pipewire-pulse.conf.d/
 ln -s ../pipewire-pulse.conf.avail/20-upmix.conf \
         %{buildroot}%{_datadir}/pipewire/pipewire-pulse.conf.d/20-upmix.conf
@@ -270,6 +279,7 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/*@*
 %{_datadir}/alsa/alsa.conf.d/99-pipewire-default.conf
 %config(noreplace) %{_sysconfdir}/alsa/conf.d/50-pipewire.conf
 %config(noreplace) %{_sysconfdir}/alsa/conf.d/99-pipewire-default.conf
+%{_sysconfdir}/ld.so.conf.d/pipewire-jack.conf
 # vulkan
 %{_libdir}/spa-%{spaversion}/vulkan/
 # pulseaudio
