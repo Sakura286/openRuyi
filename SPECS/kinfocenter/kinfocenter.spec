@@ -59,11 +59,10 @@ Requires:       pciutils
 # GLX is always present
 Requires:       /usr/bin/glxinfo
 # Vulkan might not be needed
-Requires:       (/usr/bin/vulkaninfo if libvulkan1)
+Requires:       (vulkan-tools if vulkan-loader)
 # Plasma Wayland is always installed
 Requires:       /usr/bin/wayland-info
-# The "Firmware Security" page does fwupdmgr ... | aha | ...
-Requires:       (aha if fwupd)
+Requires:       aha
 
 Recommends:      /usr/bin/xdpyinfo
 # Note: Not available as /usr/bin/eglinfo yet (boo#1195695)
