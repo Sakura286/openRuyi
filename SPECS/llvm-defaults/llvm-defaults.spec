@@ -293,10 +293,10 @@ ln -sfn ../../%{_lib}/llvm%{maj_ver}/lib/clang/%{maj_ver} \
   %{buildroot}%{_prefix}/lib/clang/%{maj_ver}
 
 # libomp symlinks
-ln -sfn llvm%{maj_ver}/%{_lib}/libarcher.so %{buildroot}%{_libdir}/libarcher.so
-ln -sfn llvm%{maj_ver}/%{_lib}/libomp.so    %{buildroot}%{_libdir}/libomp.so
-ln -sfn llvm%{maj_ver}/%{_lib}/libompd.so   %{buildroot}%{_libdir}/libompd.so
-ln -sfn ../llvm%{maj_ver}/%{_lib}/cmake/openmp %{buildroot}%{_libdir}/cmake/openmp
+ln -sfn llvm%{maj_ver}/lib/%{_target_platform}/libarcher.so %{buildroot}%{_libdir}/libarcher.so
+ln -sfn llvm%{maj_ver}/lib/%{_target_platform}/libomp.so    %{buildroot}%{_libdir}/libomp.so
+ln -sfn llvm%{maj_ver}/lib/%{_target_platform}/libompd.so   %{buildroot}%{_libdir}/libompd.so
+ln -sfn ../llvm%{maj_ver}/lib/%{_target_platform}/cmake/openmp %{buildroot}%{_libdir}/cmake/openmp
 
 # clang-tools-extra symlinks
 ln -sf clang-format-%{maj_ver} %{buildroot}%{_bindir}/clang-format
