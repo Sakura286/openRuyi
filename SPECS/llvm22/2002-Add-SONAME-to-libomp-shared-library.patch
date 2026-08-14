@@ -1,0 +1,32 @@
+From 747959a483fb3c8a229510b758918b7f64f49c24 Mon Sep 17 00:00:00 2001
+From: CHEN Xuan <chenxuan@iscas.ac.cn>
+Date: Fri, 14 Aug 2026 17:30:14 +0800
+Subject: [PATCH] Add SONAME to libomp shared library
+
+Append the OpenMP ABI major version to the libomp shared library file
+name, so that the resulting library is installed as libomp.so.5 with
+SONAME libomp.so.5 instead of an unversioned libomp.so.
+
+This mirrors the openmp-soname.diff patch from the Debian
+llvm-toolchain packaging:
+https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/-/blob/21/debian/patches/openmp-soname.diff
+---
+ openmp/runtime/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/openmp/runtime/CMakeLists.txt b/openmp/runtime/CMakeLists.txt
+index 9332ca3..e71c20d 100644
+--- a/openmp/runtime/CMakeLists.txt
++++ b/openmp/runtime/CMakeLists.txt
+@@ -419,7 +419,7 @@ else()
+   set(LIBOMP_INSTALL_KIND ARCHIVE)
+ endif()
+ 
+-set(LIBOMP_LIB_FILE ${LIBOMP_LIB_NAME}${LIBOMP_LIBRARY_SUFFIX})
++set(LIBOMP_LIB_FILE ${LIBOMP_LIB_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}.${LIBOMP_VERSION_MAJOR})
+ 
+ # Optional backwards compatibility aliases.
+ set(LIBOMP_INSTALL_ALIASES TRUE CACHE BOOL
+-- 
+2.53.0
+
