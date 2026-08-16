@@ -293,13 +293,11 @@ ln -sfn ../../%{_lib}/llvm%{maj_ver}/lib/clang/%{maj_ver} \
   %{buildroot}%{_prefix}/lib/clang/%{maj_ver}
 
 # libomp symlinks
-# libomp.so points at the SONAME-versioned symlink %{_libdir}/libomp.so.5
-# shipped by libomp%{maj_ver}, which in turn points into the versioned
-# LLVM private library directory. This indirection keeps the runtime
-# library resolvable through the standard linker search path.
-ln -sfn llvm%{maj_ver}/lib/%{_target_platform}/libarcher.so %{buildroot}%{_libdir}/libarcher.so
-ln -sfn libomp.so.5                                         %{buildroot}%{_libdir}/libomp.so
-ln -sfn llvm%{maj_ver}/lib/%{_target_platform}/libompd.so   %{buildroot}%{_libdir}/libompd.so
+# TODO(Sakura286):
+for l in libomp libompd libarcher; do
+  so=`basename $(ls %{_libdir}/${l}.so.* | head -n 1)`
+  ln -sfn ${so} %{buildroot}%{_libdir}/${l}.so
+done
 ln -sfn ../llvm%{maj_ver}/lib/%{_target_platform}/cmake/openmp %{buildroot}%{_libdir}/cmake/openmp
 
 # clang-tools-extra symlinks
