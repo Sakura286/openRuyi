@@ -70,6 +70,8 @@
 # openmp
 %global so_suffix %{maj_ver}.%{min_ver}
 %global libomp_arch %{_arch}
+# TODO(Sakura286):
+%global libomp_soversion 5
 
 Name:           llvm%{maj_ver}
 Version:        %{maj_ver}.%{min_ver}.%{patch_ver}%{?rc_ver:~%{rc_ver}}
@@ -86,7 +88,7 @@ Source0:        https://github.com/llvm/llvm-project/releases/download/llvmorg-%
 Patch2000:         2000-Add-riscv64-openruyi-linux-triple-and-set-it-to-rva2.patch
 %endif
 Patch2001:         2001-Add-openruyi-linux-to-X86_64Triples-and-RISCV64Tripl.patch
-Patch2002:         2002-Add-SONAME-to-libomp-shared-library.patch
+Patch2002:         2002-Add-SONAME-to-OpenMP-shared-libraries.patch
 
 # clang patches
 
@@ -709,24 +711,15 @@ for e in `ls %{buildroot}/%{install_libdir} | grep -e '-%{maj_ver}.so' -e '.so.%
 done
 popd
 
-# libomp lives in the per-target runtime directory and now carries an
-# SONAME with the OpenMP ABI major version (libomp.so.5).
-# * Expose the versioned name at the standard library directory so that
-#   binaries with DT_NEEDED=libomp.so.5 resolve at runtime through the
-#   default linker search path (this also lets rpm auto-generate
-#   Requires: libomp.so.5()(64bit) that resolves to libomp%{maj_ver}).
-#   Only the distro-default LLVM major (the one matching llvm-defaults)
-#   may own %{_libdir}/libomp.so.5, otherwise libompNN packages would
-#   conflict with each other.
-# * Provide the unversioned linker symlink next to the real library so
-#   that -lomp keeps working for users of the versioned toolchain
-#   (libomp-devel(major) users without llvm-defaults installed).
+# TODO(Sakura286):
 pushd %{buildroot}/%{install_libdir}/%{llvm_triple}
-ln -sf libomp.so.5 libomp.so
+ln -sf libomp.so.%{libomp_soversion} libomp.so
 popd
 pushd %{buildroot}/%{_libdir}
-e_src=`realpath --relative-to=. %{buildroot}/%{install_libdir}/%{llvm_triple}/libomp.so.5`
-ln -sf ${e_src} libomp.so.5
+for l in libomp libompd libarcher; do
+  e_src=`realpath --relative-to=. %{buildroot}/%{install_libdir}/%{llvm_triple}/${l}.so.%{libomp_soversion}`
+  ln -sf ${e_src} ${l}.so.%{libomp_soversion}
+done
 popd
 
 mkdir -p %{buildroot}/%{install_python3mod}
@@ -1053,10 +1046,13 @@ echo "%%clang%{maj_ver}_resource_dir %%{install_prefix}/lib/clang/%{maj_ver}" > 
 
 %files -n libomp%{maj_ver}
 %license openmp/LICENSE.TXT
-%{install_libdir}/%{llvm_triple}/libomp.so.5
-%{_libdir}/libomp.so.5
-%{install_libdir}/%{llvm_triple}/libompd.so
+%{install_libdir}/%{llvm_triple}/libomp.so.%{libomp_soversion}
+%{install_libdir}/%{llvm_triple}/libompd.so.%{libomp_soversion}
+%{install_libdir}/%{llvm_triple}/libarcher.so.%{libomp_soversion}
 %{install_libdir}/%{llvm_triple}/libarcher.so
+%{_libdir}/libomp.so.%{libomp_soversion}
+%{_libdir}/libompd.so.%{libomp_soversion}
+%{_libdir}/libarcher.so.%{libomp_soversion}
 
 %files -n libomp%{maj_ver}-devel
 %license openmp/LICENSE.TXT
@@ -1065,9 +1061,8 @@ echo "%%clang%{maj_ver}_resource_dir %%{install_prefix}/lib/clang/%{maj_ver}" > 
 %{install_libdir}/clang/%{maj_ver}/include/omp-tools.h
 %{install_libdir}/clang/%{maj_ver}/include/ompt.h
 %{install_libdir}/clang/%{maj_ver}/include/ompt-multiplex.h
-# Unversioned linker symlink (libomp.so -> libomp.so.5) for -lomp
 %{install_libdir}/%{llvm_triple}/libomp.so
-%{install_libdir}/%{llvm_triple}/libarcher.so
+%{install_libdir}/%{llvm_triple}/libompd.so
 %{install_libdir}/%{llvm_triple}/libarcher_static.a
 %{install_libdir}/%{llvm_triple}/cmake/openmp
 %{install_datadir}/gdb/python/ompd
