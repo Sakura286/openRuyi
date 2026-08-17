@@ -1,0 +1,13 @@
+# Find hipSPARSELt before Torch so the roc::hipsparselt target exists when
+# Torch's exported CMake targets reference it.
+
+--- a/CMakeLists.txt	2026-08-15 17:43:32.072075675 +0800
++++ b/CMakeLists.txt	2026-08-15 17:43:50.127802862 +0800
+@@ -100,6 +100,7 @@
+ # so there is no need to do this explicitly with check_language/enable_language,
+ # etc.
+ #
++find_package(hipsparselt CONFIG REQUIRED)
+ find_package(Torch REQUIRED)
+ 
+ # Supported NVIDIA architectures.

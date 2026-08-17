@@ -1,0 +1,22 @@
+# CPU backend: use CMake's canonical OpenMP target when PyTorch does not ship
+# libgomp, and explicitly link the selected OpenMP runtime into every x86 CPU
+# extension.  Passing -fopenmp only as a compile option does not add libgomp to
+# the extension's DT_NEEDED entries.
+#
+# No matching upstream fix was found.  oneDNN documents libgomp as the runtime
+# dependency for GCC builds with ONEDNN_CPU_RUNTIME=OMP:
+# https://github.com/uxlfoundation/oneDNN#runtime-dependencies
+#
+--- a/cmake/cpu_extension.cmake
++++ b/cmake/cpu_extension.cmake
+@@ -51 +51,2 @@
+-        find_library(OPEN_MP NAMES gomp REQUIRED)
++        find_package(OpenMP REQUIRED)
++        set(OPEN_MP OpenMP::OpenMP_CXX)
+@@ -458,3 +459,3 @@
+-    set(_C_LIBS numa dnnl_ext)
+-    set(_C_AVX512_LIBS numa dnnl_ext)
+-    set(_C_AVX2_LIBS numa dnnl_ext)
++    set(_C_LIBS numa dnnl_ext ${OPEN_MP})
++    set(_C_AVX512_LIBS numa dnnl_ext ${OPEN_MP})
++    set(_C_AVX2_LIBS numa dnnl_ext ${OPEN_MP})

@@ -1,0 +1,13 @@
+# Define USE_ROCM explicitly because cumem_allocator is a CXX target
+# It falls into CUDA by default
+
+--- a/CMakeLists.txt	2026-08-16 10:27:52.415763533 +0800
++++ b/CMakeLists.txt	2026-08-16 10:28:58.093633169 +0800
+@@ -1508,3 +1508,7 @@
+     # vllm-flash-attn should be last as it overwrites some CMake functions
+     include(cmake/external_projects/vllm_flash_attn.cmake)
+ endif ()
++
++if(VLLM_GPU_LANG STREQUAL "HIP" AND TARGET cumem_allocator)
++  target_compile_definitions(cumem_allocator PRIVATE USE_ROCM)
++endif()
